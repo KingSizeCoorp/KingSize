@@ -58,4 +58,8 @@ public class LocalCardRepository {
             return null;
         }
     }
+
+    public void clearCards(){
+        cardDao.clearCards();
+    }
 }

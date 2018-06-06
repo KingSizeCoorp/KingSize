@@ -15,7 +15,7 @@ public class Card {
     public String title;
 
     @ColumnInfo(name = "typ")
-    public String typ;
+    public String type;
 
     @ColumnInfo(name = "description")
     public String description;
@@ -30,14 +30,14 @@ public class Card {
     /**
      * Constructor for room database integration
      * @param title
-     * @param typ
+     * @param type
      * @param description
      * @param upvotes
      * @param downvotes
      */
-    public Card(String title, String typ, String description, int upvotes, int downvotes){
+    public Card(String title, String type, String description, int upvotes, int downvotes){
         this.title = title;
-        this.typ = typ;
+        this.type = type;
         this.description = description;
         this.upvotes = upvotes;
         this.downvotes = downvotes;

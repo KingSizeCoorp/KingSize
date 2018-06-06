@@ -16,8 +16,20 @@ import java.util.List;
 
 public class ShowMyCardsActivity extends AppCompatActivity {
 
+    public static final String EXTRA_TITLE = "EXTRA_TITLE";
+    public static final String EXTRA_TYPE = "EXTRA_TYPE";
+    public static final String EXTRA_DESCRIPTION = "EXTRA_DESCRIPTION";
+    public static final int RC_SHOW_SINGLE_CARD_ACTIVITY = 1;
+
     private MyCardsListAdapter myCardsListAdapter;
     private ShowMyCardsViewModel showMyCardsViewModel;
+
+    // last card picked from the recycler-view
+    private Card currentCard;
+
+    // id of currentCard
+    private long currentCardId = -1;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,8 +43,18 @@ public class ShowMyCardsActivity extends AppCompatActivity {
         myCardsListAdapter = new MyCardsListAdapter(new CustomListItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                //TODO: show the clicked card
-                Toast.makeText(getApplicationContext(), "Card with index "+position, Toast.LENGTH_SHORT).show();
+                currentCard = showMyCardsViewModel.getAllCards().getValue().get(position);
+                currentCardId = currentCard.id;
+
+                // create intent and start ShowSingleCardActivity
+                Intent intent = new Intent(ShowMyCardsActivity.this, ShowSingleCardActivity.class);
+                intent.putExtra(EXTRA_TITLE, currentCard.title);
+                intent.putExtra(EXTRA_TYPE, currentCard.type);
+                intent.putExtra(EXTRA_DESCRIPTION, currentCard.description);
+                startActivityForResult(intent, RC_SHOW_SINGLE_CARD_ACTIVITY);
+
+
+                //Toast.makeText(getApplicationContext(), "Card with index "+position, Toast.LENGTH_SHORT).show();
             }
         });
 

@@ -52,8 +52,10 @@ public abstract class KingSizeLocalDatabase extends RoomDatabase{
 
         @Override
         protected Void doInBackground(final Void... params){
-                Card card = new Card("Spiegel","token","Schlücke zurückwerfen", 0, 0);
-                cardDao.insertCard(card);
+            cardDao.clearCards();
+
+            Card card = new Card("Spiegel","token","Schlücke zurückwerfen", 0, 0);
+            cardDao.insertCard(card);
             return null;
         }
     }

@@ -19,7 +19,8 @@
         <activity android:name=".ShowMyCardsActivity" />
         <activity android:name=".ShowFeedActivity" />
         <activity android:name=".AddCustomCardActivity" />
-        <activity android:name=".AddOrEditCardActivity"></activity>
+        <activity android:name=".AddOrEditCardActivity" />
+        <activity android:name=".ShowSingleCardActivity"></activity>
     </application>
 
 </manifest>

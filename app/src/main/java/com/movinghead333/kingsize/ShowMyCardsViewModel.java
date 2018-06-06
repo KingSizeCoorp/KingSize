@@ -29,4 +29,8 @@ public class ShowMyCardsViewModel extends AndroidViewModel{
     public void insertCard(Card card){
         localCardRepository.insertCard(card);
     }
+
+    public void clearCards(){
+        localCardRepository.clearCards();
+    }
 }
