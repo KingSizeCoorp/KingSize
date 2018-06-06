@@ -16,11 +16,13 @@ public class MyCardsListAdapter extends RecyclerView.Adapter<MyCardsListAdapter.
 
     public MyCardsListAdapter(CustomListItemClickListener listener){
         this.listener = listener;
+        /*
         Card[] exampleCards = new Card[20];
         for(int i = 0; i < exampleCards.length; i++){
             exampleCards[i] = new Card("Karte "+(i+1));
         }
         cards = Arrays.asList(exampleCards);
+        */
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
@@ -67,5 +69,10 @@ public class MyCardsListAdapter extends RecyclerView.Adapter<MyCardsListAdapter.
         }else{
             return cards.size();
         }
+    }
+
+    public void setCards(List<Card> cards) {
+        this.cards = cards;
+        notifyDataSetChanged();
     }
 }

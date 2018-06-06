@@ -18,7 +18,8 @@
         </activity>
         <activity android:name=".ShowMyCardsActivity" />
         <activity android:name=".ShowFeedActivity" />
-        <activity android:name=".AddCustomCardActivity"></activity>
+        <activity android:name=".AddCustomCardActivity" />
+        <activity android:name=".AddOrEditCardActivity"></activity>
     </application>
 
 </manifest>
