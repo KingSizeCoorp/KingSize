@@ -62,4 +62,8 @@ public class LocalCardRepository {
     public void clearCards(){
         cardDao.clearCards();
     }
+
+    public void updateCard(Card card){
+        cardDao.updateCard(card);
+    }
 }

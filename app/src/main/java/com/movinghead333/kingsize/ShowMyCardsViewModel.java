@@ -33,4 +33,8 @@ public class ShowMyCardsViewModel extends AndroidViewModel{
     public void clearCards(){
         localCardRepository.clearCards();
     }
+
+    public void updateCard(Card card){
+        localCardRepository.updateCard(card);
+    }
 }

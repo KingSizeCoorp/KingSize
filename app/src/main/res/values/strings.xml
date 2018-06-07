@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">KingSize</string>
+    <string name="card_type_simple_action">Aktionskarte</string>
+    <string name="card_type_token">Tokenkarte</string>
+    <string name="card_type_status">Statuskarte</string>
+    <string name="yes">Ja</string>
+    <string name="no">nein</string>
+    <string name="delete_current_card">Möchten sie die aktuelle Karte wirklich löschen?</string>
+    <string name="edit">Bearbeiten</string>
+    <string name="delete">Löschen</string>
 </resources>
