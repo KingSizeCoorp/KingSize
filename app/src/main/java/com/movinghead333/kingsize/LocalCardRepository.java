@@ -29,6 +29,14 @@ public class LocalCardRepository {
         new insertAsyncTaskDao(cardDao).execute(card);
     }
 
+    public void updateCard(Card card){
+        new updateAsyncTaskDao(cardDao).execute(card);
+    }
+
+    public void clearCards(){
+        cardDao.clearCards();
+    }
+
     private static class insertAsyncTaskDao extends AsyncTask<Card, Void, Void> {
 
         private CardDao mAsyncTaskDao;
@@ -59,11 +67,18 @@ public class LocalCardRepository {
         }
     }
 
-    public void clearCards(){
-        cardDao.clearCards();
-    }
+    private static class updateAsyncTaskDao extends AsyncTask<Card, Void, Void> {
 
-    public void updateCard(Card card){
-        cardDao.updateCard(card);
+        private CardDao mAsyncTaskDao;
+
+        updateAsyncTaskDao(CardDao dao){
+            mAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(final Card... params){
+            mAsyncTaskDao.updateCard(params[0]);
+            return null;
+        }
     }
 }

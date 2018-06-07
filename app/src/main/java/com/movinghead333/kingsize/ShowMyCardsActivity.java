@@ -113,7 +113,7 @@ public class ShowMyCardsActivity extends AppCompatActivity {
                 String edescription = data.getStringExtra(EXTRA_DESCRIPTION);
                 Card enewCard = new Card(etitle, etype, edescription, 0, 0);
                 enewCard.id = currentCardId;
-                //showMyCardsViewModel.updateCard(enewCard);
+                showMyCardsViewModel.updateCard(enewCard);
                 break;
 
         }
