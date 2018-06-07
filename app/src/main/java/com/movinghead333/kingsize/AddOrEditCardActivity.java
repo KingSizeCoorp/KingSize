@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
@@ -52,6 +53,8 @@ public class AddOrEditCardActivity extends AppCompatActivity {
             int spinnerPosition = spinnerAdapter.getPosition(type);
             typeSpinner.setSelection(spinnerPosition);
 
+            Button saveButton = findViewById(R.id.aoec_btn_save);
+            saveButton.setText("Änderungen speichern");
         }
     }
 

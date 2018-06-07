@@ -1,5 +1,6 @@
 package com.movinghead333.kingsize;
 
+import android.app.Activity;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
@@ -100,12 +101,13 @@ public class ShowMyCardsActivity extends AppCompatActivity {
                 }
                 break;
             case REQUEST_CODE_ADD_NEW_CARD:
-                String title = data.getStringExtra(EXTRA_TITLE);
-                String type = data.getStringExtra(EXTRA_TYPE);
-                String description = data.getStringExtra(EXTRA_DESCRIPTION);
-                Card newCard = new Card(title, type, description, 0, 0);
-                showMyCardsViewModel.insertCard(newCard);
-
+                if(resultCode == Activity.RESULT_OK) {
+                    String title = data.getStringExtra(EXTRA_TITLE);
+                    String type = data.getStringExtra(EXTRA_TYPE);
+                    String description = data.getStringExtra(EXTRA_DESCRIPTION);
+                    Card newCard = new Card(title, type, description, 0, 0);
+                    showMyCardsViewModel.insertCard(newCard);
+                }
                 break;
             case REQUEST_CODE_EDIT_CARD:
                 String etitle = data.getStringExtra(EXTRA_TITLE);

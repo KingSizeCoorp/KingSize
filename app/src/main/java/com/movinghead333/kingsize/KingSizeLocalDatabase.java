@@ -37,7 +37,7 @@ public abstract class KingSizeLocalDatabase extends RoomDatabase{
                 @Override
                 public void onOpen(@NonNull SupportSQLiteDatabase db){
                     super.onOpen(db);
-                    new PopulateDbAsync(INSTANCE).execute();
+                    //new PopulateDbAsync(INSTANCE).execute();
                 }
             };
 
@@ -56,6 +56,7 @@ public abstract class KingSizeLocalDatabase extends RoomDatabase{
 
             Card card = new Card("Spiegel","token","Schlücke zurückwerfen", 0, 0);
             cardDao.insertCard(card);
+
             return null;
         }
     }
