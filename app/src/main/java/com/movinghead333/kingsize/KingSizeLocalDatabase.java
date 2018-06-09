@@ -8,7 +8,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 
-@Database(entities = {Card.class, CardDeck.class}, version = 2)
+@Database(entities = {Card.class, CardDeck.class, CardInCardDeckRelation.class}, version = 3)
 public abstract class KingSizeLocalDatabase extends RoomDatabase{
 
     private static final String DATABASE_NAME = "kingsize_database";
