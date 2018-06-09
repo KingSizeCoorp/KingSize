@@ -22,7 +22,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void showDecks(View view){
-
+        Intent intent = new Intent(MainActivity.this, ShowMyDecksActivity.class);
+        startActivity(intent);
     }
 
     public void showMyCards(View view){
