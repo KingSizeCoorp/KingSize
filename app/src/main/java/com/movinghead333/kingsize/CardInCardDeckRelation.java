@@ -4,8 +4,9 @@ import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.Index;
+import android.arch.persistence.room.PrimaryKey;
 
-@Entity(tableName = "cards_to_card_deck", indices = {@Index("name"),
+@Entity(tableName = "cards_to_card_deck",primaryKeys = {"card_deck_id", "card_id"}, indices = {
         @Index(value = {"card_deck_id","card_id"})},
 foreignKeys = {@ForeignKey(entity = CardDeck.class, parentColumns = "id", childColumns = "card_deck_id"),
                @ForeignKey(entity = Card.class, parentColumns = "id", childColumns = "card_id")})
