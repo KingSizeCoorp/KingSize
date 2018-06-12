@@ -63,14 +63,14 @@ public abstract class KingSizeLocalDatabase extends RoomDatabase{
 
         @Override
         protected Void doInBackground(final Card... params){
-            cardDao.clearCards();
+            //cardDao.clearCards();
             cardDeckDao.clearCardDecks();
 
-            for(int i = 0; i < params.length; i++){
-                cardDao.insertCard(params[i]);
+            if(cardDao.getStandardCardAvailable() == 0){
+                for(int i = 0; i < params.length; i++){
+                    cardDao.insertCard(params[i]);
+                }
             }
-
-
             CardDeck cardDeck = new CardDeck("Kingseis", 36);
             cardDeckDao.insertCardDeck(cardDeck);
 

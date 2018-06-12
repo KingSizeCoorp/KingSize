@@ -9,7 +9,7 @@
     <string name="edit">Bearbeiten</string>
     <string name="delete">Löschen</string>
     <string name="source_feed">Feed</string>
-    <string name="source_standard">Standard-set</string>
+    <string name="source_standard">Standard</string>
     <string name="source_my_cards">Eigenen</string>
     <string name="card_title_waterfall">Wasserfall</string>
     <string name="card_title_joker">Joker</string>

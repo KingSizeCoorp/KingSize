@@ -25,4 +25,7 @@ public interface CardDao {
 
     @Update
     void updateCard(Card card);
+
+    @Query("SELECT COUNT(id) FROM card_table WHERE source = 'Standard'")
+    int getStandardCardAvailable();
 }
