@@ -20,7 +20,7 @@
         <activity android:name=".ShowFeedActivity" />
         <activity android:name=".AddOrEditCardActivity" />
         <activity android:name=".ShowSingleCardActivity" />
-        <activity android:name=".ShowMyDecksActivity"></activity>
+        <activity android:name=".ShowMyDecksActivity" />
     </application>
 
 </manifest>
