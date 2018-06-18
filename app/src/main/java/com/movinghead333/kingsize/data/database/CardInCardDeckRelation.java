@@ -1,10 +1,12 @@
-package com.movinghead333.kingsize;
+package com.movinghead333.kingsize.data.database;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.Index;
-import android.arch.persistence.room.PrimaryKey;
+
+import com.movinghead333.kingsize.data.database.Card;
+import com.movinghead333.kingsize.data.database.CardDeck;
 
 @Entity(tableName = "cards_to_card_deck",primaryKeys = {"card_deck_id", "card_id"}, indices = {
         @Index(value = {"card_deck_id","card_id"})},

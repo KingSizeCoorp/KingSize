@@ -1,4 +1,4 @@
-package com.movinghead333.kingsize;
+package com.movinghead333.kingsize.data.database;
 
 import android.arch.persistence.db.SupportSQLiteDatabase;
 import android.arch.persistence.room.Database;
@@ -9,9 +9,7 @@ import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import com.movinghead333.kingsize.R;
 
 @Database(entities = {Card.class, CardDeck.class, CardInCardDeckRelation.class}, version = 4)
 public abstract class KingSizeLocalDatabase extends RoomDatabase{

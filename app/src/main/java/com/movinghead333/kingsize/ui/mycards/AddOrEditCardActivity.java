@@ -1,4 +1,4 @@
-package com.movinghead333.kingsize;
+package com.movinghead333.kingsize.ui.mycards;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -9,6 +9,9 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+
+import com.movinghead333.kingsize.R;
+import com.movinghead333.kingsize.ui.mycards.showmycards.ShowMyCardsActivity;
 
 import java.util.ArrayList;
 import java.util.List;

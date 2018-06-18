@@ -1,4 +1,4 @@
-package com.movinghead333.kingsize;
+package com.movinghead333.kingsize.ui.mycards;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -9,6 +9,9 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.TextView;
+
+import com.movinghead333.kingsize.R;
+import com.movinghead333.kingsize.ui.mycards.showmycards.ShowMyCardsActivity;
 
 public class ShowSingleCardActivity extends AppCompatActivity {
 

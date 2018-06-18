@@ -1,10 +1,14 @@
-package com.movinghead333.kingsize;
+package com.movinghead333.kingsize.ui.mydecks.showdecks;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.movinghead333.kingsize.R;
+import com.movinghead333.kingsize.data.database.CardDeck;
+import com.movinghead333.kingsize.ui.CustomListItemClickListener;
 
 import java.util.List;
 

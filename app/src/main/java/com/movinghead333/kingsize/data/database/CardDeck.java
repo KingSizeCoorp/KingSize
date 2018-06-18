@@ -1,4 +1,4 @@
-package com.movinghead333.kingsize;
+package com.movinghead333.kingsize.data.database;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
@@ -9,7 +9,7 @@ public class CardDeck {
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
-    long id;
+    public long id;
 
     @ColumnInfo(name = "deck_name")
     public String deckName;

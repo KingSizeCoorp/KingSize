@@ -1,8 +1,10 @@
-package com.movinghead333.kingsize;
+package com.movinghead333.kingsize.ui.mydecks.showdecks;
 
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
+
+import com.movinghead333.kingsize.data.database.CardDeck;
 
 import java.util.List;
 

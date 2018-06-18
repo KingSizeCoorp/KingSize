@@ -1,7 +1,9 @@
-package com.movinghead333.kingsize;
+package com.movinghead333.kingsize.ui.myfeed;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.movinghead333.kingsize.R;
 
 public class ShowFeedActivity extends AppCompatActivity {
 
