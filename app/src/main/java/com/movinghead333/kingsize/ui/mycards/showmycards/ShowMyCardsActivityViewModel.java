@@ -1,7 +1,5 @@
 package com.movinghead333.kingsize.ui.mycards.showmycards;
 
-import android.app.Application;
-import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.ViewModel;
 
@@ -15,16 +13,7 @@ public class ShowMyCardsActivityViewModel extends ViewModel {
     private KingSizeRepository mRepository;
     private LiveData<List<Card>> allCards;
 
-    /*
-    public ShowMyCardsActivityViewModel(Application application){
-        super(application);
-
-        localCardRepository = new LocalCardRepository(application);
-        allCards = localCardRepository.getAllCards();
-    }
-    */
-
-    public ShowMyCardsActivityViewModel(KingSizeRepository repository){
+    ShowMyCardsActivityViewModel(KingSizeRepository repository){
         this.mRepository = repository;
         allCards = repository.getAllCards();
     }

@@ -1,20 +1,16 @@
 package com.movinghead333.kingsize.ui.mydecks.showdecks;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -23,7 +19,7 @@ import android.widget.Spinner;
 import com.movinghead333.kingsize.R;
 import com.movinghead333.kingsize.data.database.CardDeck;
 import com.movinghead333.kingsize.ui.CustomListItemClickListener;
-import com.movinghead333.kingsize.ui.mycards.showmycards.ShowMyCardsActivity;
+import com.movinghead333.kingsize.utilities.InjectorUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,7 +36,9 @@ public class ShowMyDecksActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_my_decks);
 
-        showMyDecksViewModel = ViewModelProviders.of(this).get(ShowMyDecksViewModel.class);
+        ShowMyDecksViewModelFactory factory =
+                InjectorUtils.provideShowMyDecksViewModelFactory(this.getApplicationContext());
+        showMyDecksViewModel = ViewModelProviders.of(this, factory).get(ShowMyDecksViewModel.class);
 
         RecyclerView recyclerView = (RecyclerView)findViewById(R.id.smd_recycler_view);
 

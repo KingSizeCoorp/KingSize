@@ -38,7 +38,7 @@ public abstract class KingSizeLocalDatabase extends RoomDatabase{
 
     public abstract CardDao cardDao();
     public abstract CardDeckDao cardDeckDao();
-
+    public abstract CardInCardDeckRelationDao cardInCardDeckRelationDao();
     private static RoomDatabase.Callback sKingSizeDatabaseCallback =
             new RoomDatabase.Callback(){
                 @Override

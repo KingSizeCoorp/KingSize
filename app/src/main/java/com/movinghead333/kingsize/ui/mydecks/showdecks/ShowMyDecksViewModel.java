@@ -1,39 +1,36 @@
 package com.movinghead333.kingsize.ui.mydecks.showdecks;
 
-import android.app.Application;
-import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
-
+import android.arch.lifecycle.ViewModel;
+import com.movinghead333.kingsize.data.KingSizeRepository;
 import com.movinghead333.kingsize.data.database.CardDeck;
 
 import java.util.List;
 
-public class ShowMyDecksViewModel extends AndroidViewModel{
+public class ShowMyDecksViewModel extends ViewModel {
 
-    private LocalCardDeckRepository localCardDeckRepository;
+    private KingSizeRepository mRepository;
     private LiveData<List<CardDeck>> allCardDecks;
 
-    public ShowMyDecksViewModel(Application application){
-        super(application);
-
-        localCardDeckRepository = new LocalCardDeckRepository(application);
-        allCardDecks = localCardDeckRepository.getAllCardDecks();
+    ShowMyDecksViewModel(KingSizeRepository repository){
+        this.mRepository = repository;
+        allCardDecks = mRepository.getAllDecks();
     }
 
     public void insertCardDeck(CardDeck cardDeck){
-        localCardDeckRepository.insertCardDeck(cardDeck);
+        mRepository.insertCardDeck(cardDeck);
     }
 
     public void updateCardDeck(CardDeck cardDeck){
-        localCardDeckRepository.updateCardDeck(cardDeck);
+        mRepository.updateCardDeck(cardDeck);
     }
 
     public void deleteCardDeckById(long id){
-        localCardDeckRepository.deleteCarddDeckById(id);
+        mRepository.deleteCardDeckById(id);
     }
 
     public void clearCardDecks(){
-        localCardDeckRepository.clearCardDecks();
+        mRepository.clearCardDecks();
     }
 
     public LiveData<List<CardDeck>> getAllCardDecks() {
