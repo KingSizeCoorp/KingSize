@@ -10,7 +10,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 
 import com.movinghead333.kingsize.ui.mycards.AddOrEditCardActivity;
@@ -18,6 +17,7 @@ import com.movinghead333.kingsize.R;
 import com.movinghead333.kingsize.data.database.Card;
 import com.movinghead333.kingsize.ui.CustomListItemClickListener;
 import com.movinghead333.kingsize.ui.mycards.ShowSingleCardActivity;
+import com.movinghead333.kingsize.utilities.InjectorUtils;
 
 import java.util.List;
 
@@ -32,7 +32,7 @@ public class ShowMyCardsActivity extends AppCompatActivity {
     public static final int REQUEST_CODE_EDIT_CARD = 3;
 
     private MyCardsListAdapter myCardsListAdapter;
-    private ShowMyCardsViewModel showMyCardsViewModel;
+    private ShowMyCardsActivityViewModel showMyCardsActivityViewModel;
 
     // last card picked from the recycler-view
     private Card currentCard;
@@ -46,14 +46,16 @@ public class ShowMyCardsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_my_cards);
 
-        showMyCardsViewModel = ViewModelProviders.of(this).get(ShowMyCardsViewModel.class);
+        //showMyCardsActivityViewModel = ViewModelProviders.of(this).get(ShowMyCardsActivityViewModel.class);
+        ShowMyCardsViewModelFactory factory = InjectorUtils.provideShowMyCardsViewModelFactory(this.getApplicationContext());
+        showMyCardsActivityViewModel = ViewModelProviders.of(this, factory).get(ShowMyCardsActivityViewModel.class);
 
         RecyclerView recyclerView = (RecyclerView)findViewById(R.id.smc_recycler_view);
 
         myCardsListAdapter = new MyCardsListAdapter(new CustomListItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                currentCard = showMyCardsViewModel.getAllCards().getValue().get(position);
+                currentCard = showMyCardsActivityViewModel.getAllCards().getValue().get(position);
                 currentCardId = currentCard.id;
 
                 // create intent and start ShowSingleCardActivity
@@ -74,7 +76,7 @@ public class ShowMyCardsActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
 
         // Set LiveData-observation
-        showMyCardsViewModel.getAllCards().observe(this, new Observer<List<Card>>() {
+        showMyCardsActivityViewModel.getAllCards().observe(this, new Observer<List<Card>>() {
             @Override
             public void onChanged(@Nullable List<Card> cards) {
                 myCardsListAdapter.setCards(cards);
@@ -97,7 +99,7 @@ public class ShowMyCardsActivity extends AppCompatActivity {
         switch(requestCode) {
             case REQUEST_CODE_SHOW_SINGLE_CARD_ACTIVITY:
                 if(resultCode == ShowSingleCardActivity.RESULT_CODE_DELETE_CARD)
-                    showMyCardsViewModel.deleteCardById(currentCardId);
+                    showMyCardsActivityViewModel.deleteCardById(currentCardId);
                 if(resultCode == ShowSingleCardActivity.RESULT_CODE_EDIT_CARD) {
                     Intent intent = new Intent(ShowMyCardsActivity.this, AddOrEditCardActivity.class);
                     intent.putExtra(EXTRA_IS_EDIT, true);
@@ -113,7 +115,7 @@ public class ShowMyCardsActivity extends AppCompatActivity {
                     String type = data.getStringExtra(EXTRA_TYPE);
                     String description = data.getStringExtra(EXTRA_DESCRIPTION);
                     Card newCard = new Card(title, type, description, 0, 0, getResources().getString(R.string.source_my_cards));
-                    showMyCardsViewModel.insertCard(newCard);
+                    showMyCardsActivityViewModel.insertCard(newCard);
                 }
                 break;
             case REQUEST_CODE_EDIT_CARD:
@@ -122,7 +124,7 @@ public class ShowMyCardsActivity extends AppCompatActivity {
                 String edescription = data.getStringExtra(EXTRA_DESCRIPTION);
                 Card enewCard = new Card(etitle, etype, edescription, 0, 0, getResources().getString(R.string.source_my_cards));
                 enewCard.id = currentCardId;
-                showMyCardsViewModel.updateCard(enewCard);
+                showMyCardsActivityViewModel.updateCard(enewCard);
                 break;
         }
     }

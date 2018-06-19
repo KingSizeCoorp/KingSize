@@ -17,7 +17,7 @@ public interface CardDao {
     void insertCard(Card card);
 
     @Query("DELETE FROM card_table WHERE id == :id")
-    void delete(long id);
+    void deleteCardById(long id);
 
     @Query("DELETE FROM card_table")
     void clearCards();

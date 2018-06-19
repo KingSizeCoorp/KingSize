@@ -3,25 +3,34 @@ package com.movinghead333.kingsize.ui.mycards.showmycards;
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.ViewModel;
 
+import com.movinghead333.kingsize.data.KingSizeRepository;
 import com.movinghead333.kingsize.data.database.Card;
 
 import java.util.List;
 
-public class ShowMyCardsViewModel extends AndroidViewModel{
+public class ShowMyCardsActivityViewModel extends ViewModel {
 
-    private LocalCardRepository localCardRepository;
+    private KingSizeRepository mRepository;
     private LiveData<List<Card>> allCards;
 
-    public ShowMyCardsViewModel(Application application){
+    /*
+    public ShowMyCardsActivityViewModel(Application application){
         super(application);
 
         localCardRepository = new LocalCardRepository(application);
         allCards = localCardRepository.getAllCards();
     }
+    */
+
+    public ShowMyCardsActivityViewModel(KingSizeRepository repository){
+        this.mRepository = repository;
+        allCards = repository.getAllCards();
+    }
 
     public void deleteCardById(long id){
-        localCardRepository.deleteCardById(id);
+        mRepository.deleteCardById(id);
     }
 
     public LiveData<List<Card>> getAllCards(){
@@ -29,14 +38,14 @@ public class ShowMyCardsViewModel extends AndroidViewModel{
     }
 
     public void insertCard(Card card){
-        localCardRepository.insertCard(card);
+        mRepository.insertCard(card);
     }
 
     public void clearCards(){
-        localCardRepository.clearCards();
+        mRepository.clearCards();
     }
 
     public void updateCard(Card card){
-        localCardRepository.updateCard(card);
+        mRepository.updateCard(card);
     }
 }
