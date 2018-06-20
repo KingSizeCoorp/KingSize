@@ -11,7 +11,7 @@ import android.support.annotation.NonNull;
 
 import com.movinghead333.kingsize.R;
 
-@Database(entities = {Card.class, CardDeck.class, CardInCardDeckRelation.class}, version = 4)
+@Database(entities = {Card.class, CardDeck.class, CardInCardDeckRelation.class}, version = 8)
 public abstract class KingSizeLocalDatabase extends RoomDatabase{
 
     private static final String DATABASE_NAME = "kingsize_database";
@@ -39,6 +39,7 @@ public abstract class KingSizeLocalDatabase extends RoomDatabase{
     public abstract CardDao cardDao();
     public abstract CardDeckDao cardDeckDao();
     public abstract CardInCardDeckRelationDao cardInCardDeckRelationDao();
+
     private static RoomDatabase.Callback sKingSizeDatabaseCallback =
             new RoomDatabase.Callback(){
                 @Override
@@ -53,10 +54,12 @@ public abstract class KingSizeLocalDatabase extends RoomDatabase{
 
         private final CardDao cardDao;
         private final CardDeckDao cardDeckDao;
+        private final CardInCardDeckRelationDao cardInCardDeckRelationDao;
 
         PopulateDbAsync(KingSizeLocalDatabase db){
             cardDao = db.cardDao();
             cardDeckDao = db.cardDeckDao();
+            cardInCardDeckRelationDao = db.cardInCardDeckRelationDao();
         }
 
         @Override
@@ -69,11 +72,16 @@ public abstract class KingSizeLocalDatabase extends RoomDatabase{
                     cardDao.insertCard(params[i]);
                 }
             }
+
             CardDeck cardDeck = new CardDeck("Kingseis", 36);
-            cardDeckDao.insertCardDeck(cardDeck);
+            long idd = cardDeckDao.insertCardDeck(cardDeck);
 
             cardDeck = new CardDeck("Poker lol", 52);
             cardDeckDao.insertCardDeck(cardDeck);
+
+            CardInCardDeckRelation rel = new CardInCardDeckRelation(idd, 1, "6");
+            cardInCardDeckRelationDao.insertSingleRelation(rel);
+
 
             return null;
         }

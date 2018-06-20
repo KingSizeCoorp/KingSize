@@ -16,8 +16,10 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import com.movinghead333.kingsize.ArrayResource;
 import com.movinghead333.kingsize.R;
 import com.movinghead333.kingsize.data.database.CardDeck;
+import com.movinghead333.kingsize.data.database.CardInCardDeckRelation;
 import com.movinghead333.kingsize.ui.CustomListItemClickListener;
 import com.movinghead333.kingsize.utilities.InjectorUtils;
 
@@ -29,6 +31,7 @@ public class ShowMyDecksActivity extends AppCompatActivity {
     private MyDecksListAdapter myDecksListAdapter;
     private ShowMyDecksViewModel showMyDecksViewModel;
     private Context acitivityContext;
+    private Spinner dialogSpinner;
 
 
     @Override
@@ -89,8 +92,8 @@ public class ShowMyDecksActivity extends AppCompatActivity {
                 new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, entries);
         //spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-        Spinner cardAmountSpinner = (Spinner)customLayout.findViewById(R.id.dcnd_spinner_card_count);
-        cardAmountSpinner.setAdapter(spinnerAdapter);
+        dialogSpinner = (Spinner)customLayout.findViewById(R.id.dcnd_spinner_card_count);
+        dialogSpinner.setAdapter(spinnerAdapter);
         //cardAmountSpinner.setSelection(0);
 
         // set cancelable
@@ -102,6 +105,8 @@ public class ShowMyDecksActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 // send data from the AlertDialog to the Activity
                 EditText editText = customLayout.findViewById(R.id.dcnd_et_deck_name);
+                createCardDeckInDatabase(editText.getText().toString(),
+                        Integer.parseInt(dialogSpinner.getSelectedItem().toString()));
             }
         });
 
@@ -114,5 +119,16 @@ public class ShowMyDecksActivity extends AppCompatActivity {
         AlertDialog dialog = builder.create();
 
         dialog.show();
+    }
+
+    public void createCardDeckInDatabase(String name, int cardCount){
+        CardDeck newDeck = new CardDeck(name, cardCount);
+        long newDeckId = showMyDecksViewModel.insertCardDeck(newDeck);
+
+        CardInCardDeckRelation rel = new CardInCardDeckRelation(newDeckId,
+                showMyDecksViewModel.getStandardCardByName(),
+                ArrayResource.CARDS_IN_36_CARDSDECK[0]);
+
+        //showMyDecksViewModel.insertCardInCardDeckRelation(rel);
     }
 }

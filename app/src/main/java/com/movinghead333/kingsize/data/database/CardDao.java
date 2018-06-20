@@ -30,4 +30,8 @@ public interface CardDao {
 
     @Query("SELECT COUNT(id) FROM card_table WHERE source = 'Standard'")
     int getStandardCardAvailable();
+
+    @Query("SELECT id FROM card_table WHERE title LIKE 'Wasserfall'")
+    long getStandardCardByName();
+
 }

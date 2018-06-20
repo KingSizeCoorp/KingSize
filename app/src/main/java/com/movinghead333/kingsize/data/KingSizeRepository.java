@@ -8,6 +8,7 @@ import com.movinghead333.kingsize.data.database.Card;
 import com.movinghead333.kingsize.data.database.CardDao;
 import com.movinghead333.kingsize.data.database.CardDeck;
 import com.movinghead333.kingsize.data.database.CardDeckDao;
+import com.movinghead333.kingsize.data.database.CardInCardDeckRelation;
 import com.movinghead333.kingsize.data.database.CardInCardDeckRelationDao;
 import com.movinghead333.kingsize.data.network.KingSizeNetworkDataSource;
 
@@ -26,6 +27,10 @@ public class KingSizeRepository {
     private final KingSizeNetworkDataSource mKingSizeNetworkDataSource;
     private final AppExecutors mExecutors;
     private boolean mInitialized;
+
+    // access variables
+    private static long insertionId;
+    private static long standardCardId;
 
 
     private KingSizeRepository(CardDao cardDao, CardDeckDao cardDeckDao, CardInCardDeckRelationDao
@@ -99,6 +104,16 @@ public class KingSizeRepository {
         });
     }
 
+    public long getStandardCardByName(){
+        mExecutors.diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                standardCardId = mCardDao.getStandardCardByName();
+            }
+        });
+        return standardCardId;
+    }
+
 
     /*
         CardDeck interaction
@@ -116,13 +131,14 @@ public class KingSizeRepository {
         });
     }
 
-    public void insertCardDeck(final CardDeck cardDeck){
+    public long insertCardDeck(final CardDeck cardDeck){
         mExecutors.diskIO().execute(new Runnable() {
             @Override
             public void run() {
-                mCardDeckDao.insertCardDeck(cardDeck);
+                insertionId = mCardDeckDao.insertCardDeck(cardDeck);
             }
         });
+        return insertionId;
     }
 
     public void updateCardDeck(final CardDeck cardDeck){
@@ -142,4 +158,50 @@ public class KingSizeRepository {
             }
         });
     }
+
+
+    /*
+        CardInCardDeckRelation interaction
+     */
+    public LiveData<List<CardInCardDeckRelation>> getCardsInDeck(final long id){
+        return mCardInCardDeckRelationDao.getCardsInCardDeck(id);
+    }
+
+    public void clearCardsInCardDeckRelations(){
+        mExecutors.diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                mCardInCardDeckRelationDao.clearCardsInCardDeckRelations();
+            }
+        });
+    }
+
+    public void insertCardToCardDeckRelation(final CardInCardDeckRelation... cardInCardDeckRelations){
+        mExecutors.diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                mCardInCardDeckRelationDao.insertMultiple(cardInCardDeckRelations);
+            }
+        });
+    }
+
+    public void updateCardInCardDeckRelation(final CardInCardDeckRelation cardInCardDeckRelation){
+        mExecutors.diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                mCardInCardDeckRelationDao.updateRelation(cardInCardDeckRelation);
+            }
+        });
+    }
+
+    public void deleteCardsInCardDeckRelations(final CardInCardDeckRelation... cardInCardDeckRelations){
+        mExecutors.diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                mCardInCardDeckRelationDao.deleteCardInCardDeckRelations(cardInCardDeckRelations);
+            }
+        });
+    }
+
+
 }

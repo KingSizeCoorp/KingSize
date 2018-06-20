@@ -3,7 +3,9 @@ package com.movinghead333.kingsize.ui.mydecks.showdecks;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.ViewModel;
 import com.movinghead333.kingsize.data.KingSizeRepository;
+import com.movinghead333.kingsize.data.database.Card;
 import com.movinghead333.kingsize.data.database.CardDeck;
+import com.movinghead333.kingsize.data.database.CardInCardDeckRelation;
 
 import java.util.List;
 
@@ -17,8 +19,8 @@ public class ShowMyDecksViewModel extends ViewModel {
         allCardDecks = mRepository.getAllDecks();
     }
 
-    public void insertCardDeck(CardDeck cardDeck){
-        mRepository.insertCardDeck(cardDeck);
+    public long insertCardDeck(CardDeck cardDeck){
+        return mRepository.insertCardDeck(cardDeck);
     }
 
     public void updateCardDeck(CardDeck cardDeck){
@@ -35,5 +37,13 @@ public class ShowMyDecksViewModel extends ViewModel {
 
     public LiveData<List<CardDeck>> getAllCardDecks() {
         return allCardDecks;
+    }
+
+    public void insertCardInCardDeckRelation(CardInCardDeckRelation cardInCardDeckRelation){
+        mRepository.insertCardToCardDeckRelation(cardInCardDeckRelation);
+    }
+
+    public long getStandardCardByName(){
+        return mRepository.getStandardCardByName();
     }
 }
