@@ -25,9 +25,7 @@ import com.movinghead333.kingsize.data.database.Card;
 
 public class ShowFeedActivity extends AppCompatActivity {
     // search parameters for json-array
-    private static final String KEY_SUCCESS = "id";
-    private static final String KEY_DATA = "data";
-    private static final String KEY_ID = "id";
+    private static final String KEY_SUCCESS = "success";
     private static final String KEY_TYPE = "type";
     private static final String KEY_TITLE= "title";
     private static final String KEY_DESCRIPTION = "description";
@@ -79,7 +77,7 @@ public class ShowFeedActivity extends AppCompatActivity {
 
                         response = jsonParser.makeHttpRequest(url, "GET", null);
                         jsonObject = (JSONObject) response.get(0);
-                        success = jsonObject.getInt(KEY_ID);
+                        success = jsonObject.getInt(KEY_SUCCESS);
 
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -102,7 +100,7 @@ public class ShowFeedActivity extends AppCompatActivity {
                         try {
                             List<Card> employeeList = new ArrayList<>();
                             //Populate the EmployeeDetails list from response
-                            for (int i = 0; i < response.length(); i++) {
+                            for (int i = 1; i < response.length(); i++) {
                                 jsonObject = (JSONObject) response.get(i);
 
                                 Card tempCard = new Card(
