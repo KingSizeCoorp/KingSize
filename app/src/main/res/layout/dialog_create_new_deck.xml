@@ -63,7 +63,7 @@
         <Spinner
             android:id="@+id/dcnd_spinner_card_count"
             android:layout_width="wrap_content"
-            android:layout_height="27dp"
+            android:layout_height="40dp"
             android:layout_marginLeft="8dp"
             android:layout_marginStart="8dp"
             android:entries="@array/cardDeckSizes"

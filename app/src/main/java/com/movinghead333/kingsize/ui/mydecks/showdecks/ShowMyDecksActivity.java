@@ -1,29 +1,27 @@
 package com.movinghead333.kingsize.ui.mydecks.showdecks;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import com.movinghead333.kingsize.ArrayResource;
 import com.movinghead333.kingsize.R;
 import com.movinghead333.kingsize.data.database.CardDeck;
+import com.movinghead333.kingsize.data.database.CardInCardDeckRelation;
 import com.movinghead333.kingsize.ui.CustomListItemClickListener;
-import com.movinghead333.kingsize.ui.mycards.showmycards.ShowMyCardsActivity;
+import com.movinghead333.kingsize.utilities.InjectorUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +30,9 @@ public class ShowMyDecksActivity extends AppCompatActivity {
 
     private MyDecksListAdapter myDecksListAdapter;
     private ShowMyDecksViewModel showMyDecksViewModel;
-    private Context acitivityContext;
+    private Spinner dialogSpinner;
+
+    public String[] STANDARD_CARDS = new String[9];
 
 
     @Override
@@ -40,7 +40,11 @@ public class ShowMyDecksActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_my_decks);
 
-        showMyDecksViewModel = ViewModelProviders.of(this).get(ShowMyDecksViewModel.class);
+        setUpStandardCards();
+
+        ShowMyDecksViewModelFactory factory =
+                InjectorUtils.provideShowMyDecksViewModelFactory(this.getApplicationContext());
+        showMyDecksViewModel = ViewModelProviders.of(this, factory).get(ShowMyDecksViewModel.class);
 
         RecyclerView recyclerView = (RecyclerView)findViewById(R.id.smd_recycler_view);
 
@@ -72,6 +76,21 @@ public class ShowMyDecksActivity extends AppCompatActivity {
         });
     }
 
+    private void setUpStandardCards(){
+        STANDARD_CARDS = new String[]{
+                getResources().getString(R.string.card_title_waterfall),
+                getResources().getString(R.string.card_title_joker),
+                getResources().getString(R.string.card_title_right_mate_drinks),
+                getResources().getString(R.string.card_title_distribute_two_shots),
+                getResources().getString(R.string.card_title_drinking_rule),
+                getResources().getString(R.string.card_title_thumb_master),
+                getResources().getString(R.string.card_title_category),
+                getResources().getString(R.string.card_title_question_master),
+                getResources().getString(R.string.card_title_rhymetime)
+        };
+
+    }
+
     private void createDialog(){
         // create an alert builder
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -91,8 +110,8 @@ public class ShowMyDecksActivity extends AppCompatActivity {
                 new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, entries);
         //spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-        Spinner cardAmountSpinner = (Spinner)customLayout.findViewById(R.id.dcnd_spinner_card_count);
-        cardAmountSpinner.setAdapter(spinnerAdapter);
+        dialogSpinner = (Spinner)customLayout.findViewById(R.id.dcnd_spinner_card_count);
+        dialogSpinner.setAdapter(spinnerAdapter);
         //cardAmountSpinner.setSelection(0);
 
         // set cancelable
@@ -104,6 +123,10 @@ public class ShowMyDecksActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 // send data from the AlertDialog to the Activity
                 EditText editText = customLayout.findViewById(R.id.dcnd_et_deck_name);
+                String deckName = editText.getText().toString();
+                int cardCount = Integer.parseInt(dialogSpinner.getSelectedItem().toString());
+                CardDeck newDeck = new CardDeck(deckName, cardCount);
+                showMyDecksViewModel.createDeck(newDeck, STANDARD_CARDS);
             }
         });
 
@@ -117,4 +140,5 @@ public class ShowMyDecksActivity extends AppCompatActivity {
 
         dialog.show();
     }
+
 }

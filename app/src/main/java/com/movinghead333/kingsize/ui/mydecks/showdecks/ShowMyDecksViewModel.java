@@ -1,42 +1,61 @@
 package com.movinghead333.kingsize.ui.mydecks.showdecks;
 
-import android.app.Application;
-import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.ViewModel;
 
+import com.movinghead333.kingsize.ArrayResource;
+import com.movinghead333.kingsize.data.KingSizeRepository;
+import com.movinghead333.kingsize.data.database.Card;
 import com.movinghead333.kingsize.data.database.CardDeck;
+import com.movinghead333.kingsize.data.database.CardInCardDeckRelation;
 
 import java.util.List;
 
-public class ShowMyDecksViewModel extends AndroidViewModel{
+public class ShowMyDecksViewModel extends ViewModel {
 
-    private LocalCardDeckRepository localCardDeckRepository;
+    private KingSizeRepository mRepository;
     private LiveData<List<CardDeck>> allCardDecks;
 
-    public ShowMyDecksViewModel(Application application){
-        super(application);
-
-        localCardDeckRepository = new LocalCardDeckRepository(application);
-        allCardDecks = localCardDeckRepository.getAllCardDecks();
+    ShowMyDecksViewModel(KingSizeRepository repository){
+        this.mRepository = repository;
+        allCardDecks = mRepository.getAllDecks();
     }
 
-    public void insertCardDeck(CardDeck cardDeck){
-        localCardDeckRepository.insertCardDeck(cardDeck);
+    public long insertCardDeck(CardDeck cardDeck){
+        return mRepository.insertCardDeck(cardDeck);
     }
 
     public void updateCardDeck(CardDeck cardDeck){
-        localCardDeckRepository.updateCardDeck(cardDeck);
+        mRepository.updateCardDeck(cardDeck);
     }
 
     public void deleteCardDeckById(long id){
-        localCardDeckRepository.deleteCarddDeckById(id);
+        mRepository.deleteCardDeckById(id);
     }
 
     public void clearCardDecks(){
-        localCardDeckRepository.clearCardDecks();
+        mRepository.clearCardDecks();
     }
 
     public LiveData<List<CardDeck>> getAllCardDecks() {
         return allCardDecks;
     }
+
+    public void insertCardInCardDeckRelation(CardInCardDeckRelation cardInCardDeckRelation){
+        mRepository.insertCardToCardDeckRelation(cardInCardDeckRelation);
+    }
+
+    public long getStandardCardByName(){
+        return mRepository.getStandardCardByName();
+    }
+
+    public void createDeck(CardDeck cardDeck, String[] standardCards){
+        mRepository.insertFullDeck(cardDeck, standardCards);
+    }
+
+
+
+
+
+
 }

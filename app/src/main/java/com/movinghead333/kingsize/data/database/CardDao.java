@@ -17,7 +17,7 @@ public interface CardDao {
     void insertCard(Card card);
 
     @Query("DELETE FROM card_table WHERE id == :id")
-    void delete(long id);
+    void deleteCardById(long id);
 
     @Query("DELETE FROM card_table")
     void clearCards();
@@ -30,4 +30,8 @@ public interface CardDao {
 
     @Query("SELECT COUNT(id) FROM card_table WHERE source = 'Standard'")
     int getStandardCardAvailable();
+
+    @Query("SELECT id FROM card_table WHERE title LIKE :title")
+    long getStandardCardByName(String title);
+
 }

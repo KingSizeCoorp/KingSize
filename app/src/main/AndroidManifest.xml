@@ -23,6 +23,7 @@
         <activity android:name=".ui.mycards.AddOrEditCardActivity" />
         <activity android:name=".ui.mycards.ShowSingleCardActivity" />
         <activity android:name=".ui.mydecks.showdecks.ShowMyDecksActivity" />
+        <activity android:name=".ui.mydecks.showsingledeckactivity.ShowSingleDeckActivity"></activity>
     </application>
 
 </manifest>
