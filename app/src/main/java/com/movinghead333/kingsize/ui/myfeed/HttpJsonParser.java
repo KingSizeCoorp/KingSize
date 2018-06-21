@@ -4,6 +4,7 @@ import android.net.Uri;
 import android.util.Log;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -49,7 +50,7 @@ public class HttpJsonParser {
             }
 
             if ("GET".equals(method)) {
-                //url = url + "?" + encodedParams;
+                url = url + "?" + encodedParams;
                 urlObj = new URL(url);
                 urlConnection = (HttpURLConnection) urlObj.openConnection();
                 urlConnection.setRequestMethod(method);
@@ -96,4 +97,5 @@ public class HttpJsonParser {
 
         return jsonArray;
     }
+
 }
