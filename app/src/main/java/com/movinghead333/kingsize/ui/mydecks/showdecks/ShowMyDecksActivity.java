@@ -5,22 +5,27 @@ import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.movinghead333.kingsize.ArrayResource;
 import com.movinghead333.kingsize.R;
 import com.movinghead333.kingsize.data.database.CardDeck;
 import com.movinghead333.kingsize.data.database.CardInCardDeckRelation;
 import com.movinghead333.kingsize.ui.CustomListItemClickListener;
+import com.movinghead333.kingsize.ui.mycards.showmycards.MyCardsListAdapter;
+import com.movinghead333.kingsize.ui.mydecks.showsingledeckactivity.ShowSingleDeckActivity;
 import com.movinghead333.kingsize.utilities.InjectorUtils;
 
 import java.util.ArrayList;
@@ -48,12 +53,16 @@ public class ShowMyDecksActivity extends AppCompatActivity {
 
         RecyclerView recyclerView = (RecyclerView)findViewById(R.id.smd_recycler_view);
 
-        myDecksListAdapter = new MyDecksListAdapter(new CustomListItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
 
+
+        myDecksListAdapter = new MyDecksListAdapter(new CustomListItemClickListener() {
+            public void onItemClick(View view, int position) {
+                Intent intent = new Intent(ShowMyDecksActivity.this,
+                        ShowSingleDeckActivity.class);
+                startActivity(intent);
             }
         });
+
 
         recyclerView.setAdapter(myDecksListAdapter);
 
@@ -74,6 +83,8 @@ public class ShowMyDecksActivity extends AppCompatActivity {
                 createDialog();
             }
         });
+
+
     }
 
     private void setUpStandardCards(){

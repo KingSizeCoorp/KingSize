@@ -79,10 +79,6 @@ public abstract class KingSizeLocalDatabase extends RoomDatabase{
             cardDeck = new CardDeck("Poker lol", 52);
             cardDeckDao.insertCardDeck(cardDeck);
 
-            CardInCardDeckRelation rel = new CardInCardDeckRelation(idd, 1, "6");
-            cardInCardDeckRelationDao.insertSingleRelation(rel);
-
-
             return null;
         }
     }
