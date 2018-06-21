@@ -4,9 +4,6 @@ import android.net.Uri;
 import android.util.Log;
 
 import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.json.JSONStringer;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -20,24 +17,16 @@ import java.util.Map;
 
 public class HttpJsonParser {
 
-    private static JSONArray JA  ;
-    private static InputStream is = null;
-    private static JSONObject jObj = null;
-    private static JSONObject JArray = null;
-    private static String json = "";
+    private static JSONArray jsonArray;
+    private static InputStream inputStream = null;
     private HttpURLConnection urlConnection = null;
     String data="";
-    String dataParsed = "";
-    String singleParsed = "";
-
-
-
 
 
     /**
      * This method helps in retrieving data from HTTP server using HttpURLConnection.
      *
-     * @param url    The HTTP URL where JSON data is exposed
+     * @param url    The HTTP URL where JSON data inputStream exposed
      * @param method HTTP method: GET or POST
      * @param params Query parameters for the request
      * @return This method returns the JSON object fetched from the server
@@ -78,28 +67,21 @@ public class HttpJsonParser {
             //Connect to the server
             urlConnection.connect();
             //Read the response
-            is = urlConnection.getInputStream();
-            BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-            StringBuilder sb = new StringBuilder();
+            inputStream = urlConnection.getInputStream();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
             String line = "";
-            String sooos = "";
 
             //Parse the response
 
             while (line != null){
                 line = reader.readLine();
+                //TODO: optimize with Stringbuilder
                 data = data + line;
             }
 
-            JA = new JSONArray(data);
+            jsonArray = new JSONArray(data);
 
-            is.close();
-
-            //Convert the response to JSON Object
-            //jObj = new JSONObject(sooos);
-
-
-
+            inputStream.close();
 
 
         } catch (UnsupportedEncodingException e) {
@@ -112,22 +94,6 @@ public class HttpJsonParser {
             Log.e("Exception", "Error parsing data " + e.toString());
         }
 
-
-        /*
-        try {
-
-        //{"id":"1","data":[{"negative_votes":"0","positive_votes":"0","title":"Spiegel","type":"tokens","description":"Looooooooolllllllllllllll"}]}
-        maaaan = new JSONObject(" {\"id\":\"1\",\"data\":[{\"negative_votes\":\"0\",\"positive_votes\":\"0\",\"title\":\"Spiegel\",\"type\":\"tokens\",\"description\":\"Looooooooolllllllllllllll\"}]}");
-        } catch (JSONException e) {
-        e.printStackTrace();
-        }
-        return JSON Object
-        */
-
-
-        return JA;
-
-
-
+        return jsonArray;
     }
 }

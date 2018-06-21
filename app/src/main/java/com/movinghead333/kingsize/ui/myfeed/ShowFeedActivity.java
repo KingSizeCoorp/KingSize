@@ -5,9 +5,7 @@ import android.os.Bundle;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 
-import android.util.Log;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -20,6 +18,7 @@ import java.util.List;
 import com.movinghead333.kingsize.R;
 
 public class ShowFeedActivity extends AppCompatActivity {
+    // search parameters for json-array
     private static final String KEY_SUCCESS = "id";
     private static final String KEY_DATA = "data";
     private static final String KEY_ID = "id";
@@ -34,7 +33,7 @@ public class ShowFeedActivity extends AppCompatActivity {
 
     private int success;
     private CardAdapter adapter;
-    private JSONObject JO;
+    private JSONObject jsonObject;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,19 +73,20 @@ public class ShowFeedActivity extends AppCompatActivity {
                 public void run() {
 
                     ListView listView =(ListView)findViewById(R.id.employeeList);
+                    //TODO: check if data was transmitted
                     //if (success == 1) {
                         try {
                             List<CardDetails> employeeList = new ArrayList<>();
                             //Populate the EmployeeDetails list from response
                             for (int i = 0; i < response.length(); i++) {
                                 CardDetails carddetails = new CardDetails();
-                                JO = (JSONObject) response.get(i);
-                                carddetails.setId(JO.getInt(KEY_ID));
-                                carddetails.setType(JO.getString(KEY_TYPE));
-                                carddetails.setTitle(JO.getString(KEY_TITLE));
-                                carddetails.setDescription(JO.getString(KEY_DESCRIPTION));
-                                carddetails.setPositive_votes(JO.getString(KEY_POSITIVE_VOTES));
-                                carddetails.setNegative_votes(JO.getString(KEY_NEGATIVE_VOTES));
+                                jsonObject = (JSONObject) response.get(i);
+                                carddetails.setId(jsonObject.getInt(KEY_ID));
+                                carddetails.setType(jsonObject.getString(KEY_TYPE));
+                                carddetails.setTitle(jsonObject.getString(KEY_TITLE));
+                                carddetails.setDescription(jsonObject.getString(KEY_DESCRIPTION));
+                                carddetails.setPositive_votes(jsonObject.getString(KEY_POSITIVE_VOTES));
+                                carddetails.setNegative_votes(jsonObject.getString(KEY_NEGATIVE_VOTES));
                                 employeeList.add(carddetails);
                             }
                             //Create an adapter with the EmployeeDetails List and set it to the LstView
