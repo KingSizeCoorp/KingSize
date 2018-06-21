@@ -17,7 +17,7 @@ public class MyCardsListAdapter extends RecyclerView.Adapter<MyCardsListAdapter.
     private CustomListItemClickListener listener;
     private List<Card> cards;
 
-    public MyCardsListAdapter(CustomListItemClickListener listener){
+    MyCardsListAdapter(CustomListItemClickListener listener){
         this.listener = listener;
         /*
         Card[] exampleCards = new Card[20];

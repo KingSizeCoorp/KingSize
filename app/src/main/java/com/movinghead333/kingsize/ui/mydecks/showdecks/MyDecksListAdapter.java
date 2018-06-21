@@ -17,7 +17,7 @@ public class MyDecksListAdapter extends RecyclerView.Adapter<MyDecksListAdapter.
     private CustomListItemClickListener listener;
     private List<CardDeck> cardDecks;
 
-    public MyDecksListAdapter(CustomListItemClickListener listener){
+    MyDecksListAdapter(CustomListItemClickListener listener){
         this.listener = listener;
     }
 
@@ -36,7 +36,14 @@ public class MyDecksListAdapter extends RecyclerView.Adapter<MyDecksListAdapter.
     public MyDecksListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, final int viewType){
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_deck_list_item, parent, false);
 
-        ViewHolder viewHolder = new ViewHolder(view);
+        final ViewHolder viewHolder = new ViewHolder(view);
+
+        view.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                listener.onItemClick(v, viewHolder.getLayoutPosition());
+            }
+        });
 
         return viewHolder;
     }
