@@ -21,6 +21,7 @@ import java.util.jar.JarEntry;
 
 
 import com.movinghead333.kingsize.R;
+import com.movinghead333.kingsize.data.database.Card;
 
 public class ShowFeedActivity extends AppCompatActivity {
     // search parameters for json-array
@@ -99,18 +100,20 @@ public class ShowFeedActivity extends AppCompatActivity {
                     //TODO: check if data was transmitted when WLAN is connected, but NO INTERNET CONNECTION AVAILABLE
                     if (success == 1) {
                         try {
-                            List<CardDetails> employeeList = new ArrayList<>();
+                            List<Card> employeeList = new ArrayList<>();
                             //Populate the EmployeeDetails list from response
                             for (int i = 0; i < response.length(); i++) {
-                                CardDetails carddetails = new CardDetails();
                                 jsonObject = (JSONObject) response.get(i);
-                                carddetails.setId(jsonObject.getInt(KEY_ID));
-                                carddetails.setType(jsonObject.getString(KEY_TYPE));
-                                carddetails.setTitle(jsonObject.getString(KEY_TITLE));
-                                carddetails.setDescription(jsonObject.getString(KEY_DESCRIPTION));
-                                carddetails.setPositive_votes(jsonObject.getString(KEY_POSITIVE_VOTES));
-                                carddetails.setNegative_votes(jsonObject.getString(KEY_NEGATIVE_VOTES));
-                                employeeList.add(carddetails);
+
+                                Card tempCard = new Card(
+                                        jsonObject.getString(KEY_TITLE),
+                                        jsonObject.getString(KEY_TYPE),
+                                        jsonObject.getString(KEY_DESCRIPTION),
+                                        jsonObject.getInt(KEY_POSITIVE_VOTES),
+                                        jsonObject.getInt((KEY_NEGATIVE_VOTES)),
+                                        getResources().getString(R.string.source_feed)
+                                );
+                                employeeList.add(tempCard);
                             }
                             //Create an adapter with the EmployeeDetails List and set it to the LstView
                             adapter = new CardAdapter(employeeList, getApplicationContext());
