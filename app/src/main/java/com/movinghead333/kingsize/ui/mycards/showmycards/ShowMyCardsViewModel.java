@@ -1,14 +1,16 @@
-package com.movinghead333.kingsize;
+package com.movinghead333.kingsize.ui.mycards.showmycards;
 
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
 
+import com.movinghead333.kingsize.data.database.Card;
+
 import java.util.List;
 
 public class ShowMyCardsViewModel extends AndroidViewModel{
 
-    private LocalCardRepository  localCardRepository;
+    private LocalCardRepository localCardRepository;
     private LiveData<List<Card>> allCards;
 
     public ShowMyCardsViewModel(Application application){
@@ -22,7 +24,7 @@ public class ShowMyCardsViewModel extends AndroidViewModel{
         localCardRepository.deleteCardById(id);
     }
 
-    LiveData<List<Card>> getAllCards(){
+    public LiveData<List<Card>> getAllCards(){
         return allCards;
     }
 

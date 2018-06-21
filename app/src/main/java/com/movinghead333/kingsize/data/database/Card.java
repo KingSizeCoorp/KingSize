@@ -1,4 +1,4 @@
-package com.movinghead333.kingsize;
+package com.movinghead333.kingsize.data.database;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
@@ -26,6 +26,9 @@ public class Card {
     @ColumnInfo(name = "downvotes")
     public int downvotes;
 
+    @ColumnInfo(name = "source")
+    public String source;
+
 
     /**
      * Constructor for room database integration
@@ -35,11 +38,12 @@ public class Card {
      * @param upvotes
      * @param downvotes
      */
-    public Card(String title, String type, String description, int upvotes, int downvotes){
+    public Card(String title, String type, String description, int upvotes, int downvotes, String source){
         this.title = title;
         this.type = type;
         this.description = description;
         this.upvotes = upvotes;
         this.downvotes = downvotes;
+        this.source = source;
     }
 }

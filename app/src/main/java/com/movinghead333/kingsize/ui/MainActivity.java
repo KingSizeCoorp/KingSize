@@ -1,9 +1,14 @@
-package com.movinghead333.kingsize;
+package com.movinghead333.kingsize.ui;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+
+import com.movinghead333.kingsize.R;
+import com.movinghead333.kingsize.ui.mycards.showmycards.ShowMyCardsActivity;
+import com.movinghead333.kingsize.ui.mydecks.showdecks.ShowMyDecksActivity;
+import com.movinghead333.kingsize.ui.myfeed.ShowFeedActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -18,11 +23,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void showFeed(View view){
-
+        Intent intent = new Intent(MainActivity.this, ShowFeedActivity.class);
+        startActivity(intent);
     }
 
     public void showDecks(View view){
-
+        Intent intent = new Intent(MainActivity.this, ShowMyDecksActivity.class);
+        startActivity(intent);
     }
 
     public void showMyCards(View view){

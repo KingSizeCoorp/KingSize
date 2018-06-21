@@ -8,4 +8,17 @@
     <string name="delete_current_card">Möchten sie die aktuelle Karte wirklich löschen?</string>
     <string name="edit">Bearbeiten</string>
     <string name="delete">Löschen</string>
+    <string name="source_feed">Feed</string>
+    <string name="source_standard">Standard</string>
+    <string name="source_my_cards">Eigenen</string>
+    <string name="card_title_waterfall">Wasserfall</string>
+    <string name="card_title_joker">Joker</string>
+    <string name="card_title_right_mate_drinks">Rechter Sitznachbar trinkt</string>
+    <string name="card_title_distribute_two_shots">Zwei Schlücke verteilen</string>
+    <string name="card_title_drinking_rule">Trinkregel</string>
+    <string name="card_title_thumb_master">Daumenkönig</string>
+    <string name="card_title_category">Kategorie</string>
+    <string name="card_title_question_master">Fragekönig</string>
+    <string name="card_title_rhymetime">Rhymetime</string>
+    <string name="card_description_no_description">Keine Beschreibung vorhanden</string>
 </resources>

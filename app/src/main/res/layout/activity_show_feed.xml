@@ -4,6 +4,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ShowFeedActivity">
+    tools:context=".ui.myfeed.ShowFeedActivity">
+
+    <ListView
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:id="@+id/employeeList"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="5dp"
+        android:scrollbars="vertical"
+        />
 
 </android.support.constraint.ConstraintLayout>
+
+
+
+
