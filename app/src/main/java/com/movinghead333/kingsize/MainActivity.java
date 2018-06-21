@@ -30,5 +30,5 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    //git test 1 ändering
+    //git test 1 ändering dank memes git test branch
 }
