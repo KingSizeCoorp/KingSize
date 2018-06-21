@@ -36,4 +36,6 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(MainActivity.this, ShowMyCardsActivity.class);
         startActivity(intent);
     }
+
+    //git test 1 ändering dank memes git test branch
 }
