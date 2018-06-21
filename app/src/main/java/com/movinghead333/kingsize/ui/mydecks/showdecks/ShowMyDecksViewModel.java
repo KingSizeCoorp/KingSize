@@ -49,8 +49,8 @@ public class ShowMyDecksViewModel extends ViewModel {
         return mRepository.getStandardCardByName();
     }
 
-    public void createDeck(CardDeck cardDeck){
-        mRepository.insertFullDeck(cardDeck);
+    public void createDeck(CardDeck cardDeck, String[] standardCards){
+        mRepository.insertFullDeck(cardDeck, standardCards);
     }
 
 

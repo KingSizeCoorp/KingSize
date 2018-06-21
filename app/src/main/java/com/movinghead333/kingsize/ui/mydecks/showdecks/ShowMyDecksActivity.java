@@ -30,14 +30,17 @@ public class ShowMyDecksActivity extends AppCompatActivity {
 
     private MyDecksListAdapter myDecksListAdapter;
     private ShowMyDecksViewModel showMyDecksViewModel;
-    private Context acitivityContext;
     private Spinner dialogSpinner;
+
+    public String[] STANDARD_CARDS = new String[9];
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_my_decks);
+
+        setUpStandardCards();
 
         ShowMyDecksViewModelFactory factory =
                 InjectorUtils.provideShowMyDecksViewModelFactory(this.getApplicationContext());
@@ -71,6 +74,21 @@ public class ShowMyDecksActivity extends AppCompatActivity {
                 createDialog();
             }
         });
+    }
+
+    private void setUpStandardCards(){
+        STANDARD_CARDS = new String[]{
+                getResources().getString(R.string.card_title_waterfall),
+                getResources().getString(R.string.card_title_joker),
+                getResources().getString(R.string.card_title_right_mate_drinks),
+                getResources().getString(R.string.card_title_distribute_two_shots),
+                getResources().getString(R.string.card_title_drinking_rule),
+                getResources().getString(R.string.card_title_thumb_master),
+                getResources().getString(R.string.card_title_category),
+                getResources().getString(R.string.card_title_question_master),
+                getResources().getString(R.string.card_title_rhymetime)
+        };
+
     }
 
     private void createDialog(){
@@ -108,7 +126,7 @@ public class ShowMyDecksActivity extends AppCompatActivity {
                 String deckName = editText.getText().toString();
                 int cardCount = Integer.parseInt(dialogSpinner.getSelectedItem().toString());
                 CardDeck newDeck = new CardDeck(deckName, cardCount);
-                showMyDecksViewModel.createDeck(newDeck);
+                showMyDecksViewModel.createDeck(newDeck, STANDARD_CARDS);
             }
         });
 

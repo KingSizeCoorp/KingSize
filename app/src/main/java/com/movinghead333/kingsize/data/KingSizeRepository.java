@@ -110,7 +110,7 @@ public class KingSizeRepository {
         mExecutors.diskIO().execute(new Runnable() {
             @Override
             public void run() {
-                standardCardId = mCardDao.getStandardCardByName();
+                //standardCardId = mCardDao.getStandardCardByName();
             }
         });
         return standardCardId;
@@ -161,8 +161,9 @@ public class KingSizeRepository {
         });
     }
 
-    public void insertFullDeck(CardDeck cardDeck){
-        new insertAsyncTaskDao(mCardDao, mCardDeckDao, mExecutors, mCardInCardDeckRelationDao)
+    public void insertFullDeck(CardDeck cardDeck, String[] standardCards){
+        new insertAsyncTaskDao(mCardDao, mCardDeckDao, mExecutors, mCardInCardDeckRelationDao,
+                standardCards)
                 .execute(cardDeck);
     }
 
@@ -173,13 +174,15 @@ public class KingSizeRepository {
         private CardInCardDeckRelationDao mRelationDao;
         private static long insertionId;
         private AppExecutors executors;
+        private static String[] STANDARD_CARDS;
 
         insertAsyncTaskDao(CardDao cardDao, CardDeckDao cardDeckDao, AppExecutors executors,
-                           CardInCardDeckRelationDao relationDao){
+                           CardInCardDeckRelationDao relationDao, String[] standardCards){
             mAsyncTaskDao = cardDeckDao;
             mRelationDao = relationDao;
             mAsyncCardDao = cardDao;
             this.executors = executors;
+            STANDARD_CARDS = standardCards;
             //mRelation = relation;
         }
 
@@ -196,18 +199,16 @@ public class KingSizeRepository {
             executors.diskIO().execute(new Runnable() {
                 @Override
                 public void run() {
-                    CardInCardDeckRelation rel = new CardInCardDeckRelation(insertionId,
-                            mAsyncCardDao.getStandardCardByName(),
-                            ArrayResource.CARDS_IN_36_CARDSDECK[0]);
-                    mRelationDao.insertSingleRelation(rel);
+                    for(int i = 0; i < STANDARD_CARDS.length; i++){
+                        CardInCardDeckRelation currentRel = new CardInCardDeckRelation(insertionId,
+                                mAsyncCardDao.getStandardCardByName(STANDARD_CARDS[i]),
+                                ArrayResource.CARDS_IN_36_CARDSDECK[i]);
+                        mRelationDao.insertSingleRelation(currentRel);
+                        Log.d(LOG_TAG, "Relation inserted");
+                    }
                 }
             });
         }
-    }
-
-    public static void insertStandardCardRelations(CardDao cardDao, CardInCardDeckRelationDao
-                                                   cardInCardDeckRelationDao, long insertId){
-        
     }
 
 
