@@ -28,6 +28,7 @@ public class MyCardsListAdapter extends RecyclerView.Adapter<MyCardsListAdapter.
         */
     }
 
+
     public static class ViewHolder extends RecyclerView.ViewHolder{
         public TextView cardTitle;
         public TextView cardType;

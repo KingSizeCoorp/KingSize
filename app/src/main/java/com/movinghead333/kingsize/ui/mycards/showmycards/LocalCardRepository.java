@@ -26,11 +26,11 @@ public class LocalCardRepository {
     }
 
     public void deleteCardById(long id){
-        new deleteAsyncTaskDao(cardDao).execute(id);
+         new deleteAsyncTaskDao(cardDao).execute(id);
     }
 
     public void insertCard(Card card){
-        new insertAsyncTaskDao(cardDao).execute(card);
+         new insertAsyncTaskDao(cardDao).execute(card);
     }
 
     public void updateCard(Card card){
