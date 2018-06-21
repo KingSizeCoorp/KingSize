@@ -63,7 +63,7 @@ public class MyCardsListAdapter extends RecyclerView.Adapter<MyCardsListAdapter.
             Card currentCard = cards.get(position);
             viewHolder.cardTitle.setText(currentCard.title);
             viewHolder.cardType.setText(currentCard.type);
-            viewHolder.cardSource.setText(currentCard.source);
+            viewHolder.cardSource.setText(currentCard.id+" "+currentCard.source);
         }else{
             viewHolder.cardTitle.setText("No cards");
             viewHolder.cardType.setText("...");

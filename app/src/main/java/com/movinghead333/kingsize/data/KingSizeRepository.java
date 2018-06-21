@@ -1,9 +1,11 @@
 package com.movinghead333.kingsize.data;
 
 import android.arch.lifecycle.LiveData;
+import android.os.AsyncTask;
 import android.util.Log;
 
 import com.movinghead333.kingsize.AppExecutors;
+import com.movinghead333.kingsize.ArrayResource;
 import com.movinghead333.kingsize.data.database.Card;
 import com.movinghead333.kingsize.data.database.CardDao;
 import com.movinghead333.kingsize.data.database.CardDeck;
@@ -157,6 +159,55 @@ public class KingSizeRepository {
                 mCardDeckDao.deleteCardDeck(id);
             }
         });
+    }
+
+    public void insertFullDeck(CardDeck cardDeck){
+        new insertAsyncTaskDao(mCardDao, mCardDeckDao, mExecutors, mCardInCardDeckRelationDao)
+                .execute(cardDeck);
+    }
+
+    private static class insertAsyncTaskDao extends AsyncTask<CardDeck, Void, Void> {
+
+        private CardDao mAsyncCardDao;
+        private CardDeckDao mAsyncTaskDao;
+        private CardInCardDeckRelationDao mRelationDao;
+        private static long insertionId;
+        private AppExecutors executors;
+
+        insertAsyncTaskDao(CardDao cardDao, CardDeckDao cardDeckDao, AppExecutors executors,
+                           CardInCardDeckRelationDao relationDao){
+            mAsyncTaskDao = cardDeckDao;
+            mRelationDao = relationDao;
+            mAsyncCardDao = cardDao;
+            this.executors = executors;
+            //mRelation = relation;
+        }
+
+        @Override
+        protected Void doInBackground(final CardDeck... params){
+            insertionId = mAsyncTaskDao.insertCardDeck(params[0]);
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void v){
+            //insert relation-objects after new CardDeck has been inserted (async. on diskIO-thread)
+            executors.diskIO().execute(new Runnable() {
+                @Override
+                public void run() {
+                    CardInCardDeckRelation rel = new CardInCardDeckRelation(insertionId,
+                            mAsyncCardDao.getStandardCardByName(),
+                            ArrayResource.CARDS_IN_36_CARDSDECK[0]);
+                    mRelationDao.insertSingleRelation(rel);
+                }
+            });
+        }
+    }
+
+    public static void insertStandardCardRelations(CardDao cardDao, CardInCardDeckRelationDao
+                                                   cardInCardDeckRelationDao, long insertId){
+        
     }
 
 

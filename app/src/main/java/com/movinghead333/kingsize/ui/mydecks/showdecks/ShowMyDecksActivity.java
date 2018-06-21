@@ -105,8 +105,10 @@ public class ShowMyDecksActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 // send data from the AlertDialog to the Activity
                 EditText editText = customLayout.findViewById(R.id.dcnd_et_deck_name);
-                createCardDeckInDatabase(editText.getText().toString(),
-                        Integer.parseInt(dialogSpinner.getSelectedItem().toString()));
+                String deckName = editText.getText().toString();
+                int cardCount = Integer.parseInt(dialogSpinner.getSelectedItem().toString());
+                CardDeck newDeck = new CardDeck(deckName, cardCount);
+                showMyDecksViewModel.createDeck(newDeck);
             }
         });
 
@@ -121,14 +123,4 @@ public class ShowMyDecksActivity extends AppCompatActivity {
         dialog.show();
     }
 
-    public void createCardDeckInDatabase(String name, int cardCount){
-        CardDeck newDeck = new CardDeck(name, cardCount);
-        long newDeckId = showMyDecksViewModel.insertCardDeck(newDeck);
-
-        CardInCardDeckRelation rel = new CardInCardDeckRelation(newDeckId,
-                showMyDecksViewModel.getStandardCardByName(),
-                ArrayResource.CARDS_IN_36_CARDSDECK[0]);
-
-        //showMyDecksViewModel.insertCardInCardDeckRelation(rel);
-    }
 }
