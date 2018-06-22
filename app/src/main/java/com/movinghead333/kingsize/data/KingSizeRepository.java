@@ -202,7 +202,7 @@ public class KingSizeRepository {
                     for(int i = 0; i < STANDARD_CARDS.length; i++){
                         CardInCardDeckRelation currentRel = new CardInCardDeckRelation(insertionId,
                                 mAsyncCardDao.getStandardCardByName(STANDARD_CARDS[i]),
-                                ArrayResource.CARDS_IN_36_CARDSDECK[i]);
+                                0);
                         mRelationDao.insertSingleRelation(currentRel);
                         Log.d(LOG_TAG, "Relation inserted");
                     }
