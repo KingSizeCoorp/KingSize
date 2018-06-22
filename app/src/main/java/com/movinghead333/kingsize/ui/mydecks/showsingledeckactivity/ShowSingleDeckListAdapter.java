@@ -9,7 +9,6 @@ import android.widget.TextView;
 import com.movinghead333.kingsize.R;
 import com.movinghead333.kingsize.data.database.Card;
 import com.movinghead333.kingsize.ui.CustomListItemClickListener;
-import com.movinghead333.kingsize.ui.mydecks.showdecks.MyDecksListAdapter;
 
 import java.util.List;
 
@@ -75,5 +74,10 @@ public class ShowSingleDeckListAdapter extends RecyclerView.Adapter<ShowSingleDe
         }else{
             return cardsInDeck.size();
         }
+    }
+
+    public void setCardsInDeck(List<Card> cardsInDeck) {
+        this.cardsInDeck = cardsInDeck;
+        notifyDataSetChanged();
     }
 }

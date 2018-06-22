@@ -11,7 +11,7 @@ import android.support.annotation.NonNull;
 
 import com.movinghead333.kingsize.R;
 
-@Database(entities = {Card.class, CardDeck.class, CardInCardDeckRelation.class}, version = 9)
+@Database(entities = {Card.class, CardDeck.class, CardInCardDeckRelation.class}, version = 10)
 public abstract class KingSizeLocalDatabase extends RoomDatabase{
 
     private static final String DATABASE_NAME = "kingsize_database";
