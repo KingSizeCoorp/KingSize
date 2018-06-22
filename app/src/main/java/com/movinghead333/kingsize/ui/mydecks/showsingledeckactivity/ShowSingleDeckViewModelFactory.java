@@ -1,4 +1,20 @@
 package com.movinghead333.kingsize.ui.mydecks.showsingledeckactivity;
 
-public class ShowSingleDeckViewModelFactory {
+import android.arch.lifecycle.ViewModel;
+import android.arch.lifecycle.ViewModelProvider;
+
+import com.movinghead333.kingsize.data.KingSizeRepository;
+
+public class ShowSingleDeckViewModelFactory extends ViewModelProvider.NewInstanceFactory{
+
+    private final KingSizeRepository mRepository;
+
+    public ShowSingleDeckViewModelFactory(KingSizeRepository repository){
+        this.mRepository = repository;
+    }
+
+    @Override
+    public <T extends ViewModel> T create(Class<T> modelClass){
+        return (T) new ShowSingleDeckViewModel(mRepository);
+    }
 }
