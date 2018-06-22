@@ -8,6 +8,7 @@ import com.movinghead333.kingsize.data.database.KingSizeLocalDatabase;
 import com.movinghead333.kingsize.data.network.KingSizeNetworkDataSource;
 import com.movinghead333.kingsize.ui.mycards.showmycards.ShowMyCardsViewModelFactory;
 import com.movinghead333.kingsize.ui.mydecks.showdecks.ShowMyDecksViewModelFactory;
+import com.movinghead333.kingsize.ui.mydecks.showsingledeckactivity.ShowSingleDeckViewModelFactory;
 
 public class InjectorUtils {
 
@@ -33,5 +34,10 @@ public class InjectorUtils {
     public static ShowMyDecksViewModelFactory provideShowMyDecksViewModelFactory(Context context){
         KingSizeRepository repository = provideRepository(context);
         return  new ShowMyDecksViewModelFactory(repository);
+    }
+
+    public static ShowSingleDeckViewModelFactory provideShowSingleDeckViewModelFactory(Context context){
+        KingSizeRepository repository = provideRepository(context);
+        return new ShowSingleDeckViewModelFactory(repository);
     }
 }

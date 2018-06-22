@@ -29,12 +29,12 @@ public class MyCardsListAdapter extends RecyclerView.Adapter<MyCardsListAdapter.
     }
 
 
-    public static class ViewHolder extends RecyclerView.ViewHolder{
-        public TextView cardTitle;
-        public TextView cardType;
-        public TextView cardSource;
+    static class ViewHolder extends RecyclerView.ViewHolder{
+        TextView cardTitle;
+        TextView cardType;
+        TextView cardSource;
 
-        public ViewHolder(View itemView){
+        ViewHolder(View itemView){
             super(itemView);
             this.cardTitle = itemView.findViewById(R.id.detailed_card_item_title);
             this.cardType = itemView.findViewById(R.id.detailed_card_item_type);

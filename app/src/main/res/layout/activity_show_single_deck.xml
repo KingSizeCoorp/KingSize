@@ -7,7 +7,7 @@
     tools:context=".ui.mydecks.showsingledeckactivity.ShowSingleDeckActivity">
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/show_single_deck_deck_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -33,9 +33,10 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView">
+        app:layout_constraintTop_toBottomOf="@+id/show_single_deck_deck_title">
 
         <android.support.v7.widget.RecyclerView
+            android:id="@+id/show_single_Deck_recycler_view"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginBottom="8dp"

@@ -21,11 +21,11 @@ public class MyDecksListAdapter extends RecyclerView.Adapter<MyDecksListAdapter.
         this.listener = listener;
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder{
-        public TextView deckName;
-        public TextView cardCount;
+    static class ViewHolder extends RecyclerView.ViewHolder{
+        TextView deckName;
+        TextView cardCount;
 
-        public ViewHolder(View itemView){
+        ViewHolder(View itemView){
             super(itemView);
             this.deckName = itemView.findViewById(R.id.card_deck_list_item_deckname);
             this.cardCount = itemView.findViewById(R.id.card_deck_list_item_cardcount);
