@@ -12,9 +12,11 @@ import com.movinghead333.kingsize.data.database.CardDeck;
 import com.movinghead333.kingsize.data.database.CardDeckDao;
 import com.movinghead333.kingsize.data.database.CardInCardDeckRelation;
 import com.movinghead333.kingsize.data.database.CardInCardDeckRelationDao;
+import com.movinghead333.kingsize.data.datawrappers.CardWithSymbol;
 import com.movinghead333.kingsize.data.network.KingSizeNetworkDataSource;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class KingSizeRepository {
 
@@ -123,6 +125,39 @@ public class KingSizeRepository {
     public LiveData<List<CardDeck>> getAllDecks(){
         return mCardDeckDao.getAllCardDecks();
     }
+
+    public LiveData<List<CardWithSymbol>> getCardsWithSymbolById(long deckId){
+        try {
+            return (new getCardsWithSymbolAsyncTaskDao(mCardDao).execute(deckId)).get();
+        } catch (InterruptedException e) {
+            Log.d(LOG_TAG, "getCardsWithSymbol throws InterruptedException");
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            Log.d(LOG_TAG, "getCardsWithSymbol throws ExecutionException");
+            e.printStackTrace();
+        }
+        Log.d(LOG_TAG, "getCardsWithSymbol returning null caused by exception");
+        return null;
+    }
+
+
+
+    private static class getCardsWithSymbolAsyncTaskDao extends AsyncTask<Long, Void, LiveData<List<CardWithSymbol>>> {
+
+        private CardDao mAsyncTaskDao;
+
+        getCardsWithSymbolAsyncTaskDao(CardDao dao){
+            mAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected LiveData<List<CardWithSymbol>> doInBackground(final Long... params){
+            return mAsyncTaskDao.getCardsWithSymbolInCardDeckById(params[0]);
+
+        }
+    }
+
+
 
     public void clearCardDecks(){
         mExecutors.diskIO().execute(new Runnable() {
