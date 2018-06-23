@@ -35,9 +35,9 @@ public interface CardDao {
     @Query("SELECT id FROM card_table WHERE title LIKE :title")
     long getStandardCardByName(String title);
 
-    @Query("SELECT cards_to_card_deck.symbol, card_table.title, card_table.typ, card_table.source " +
-            "FROM card_table JOIN cards_to_card_deck ON card_table.id = cards_to_card_deck.card_id "+
-            "WHERE cards_to_card_deck.card_deck_id = :cardDeckId")
+    @Query("SELECT  R.symbol, C.title, C.type, C.source " +
+            "FROM card_table C JOIN cards_to_card_deck R "+
+            "WHERE R.card_deck_id = :cardDeckId")
     LiveData<List<CardWithSymbol>> getCardsWithSymbolInCardDeckById(long cardDeckId);
 
 }

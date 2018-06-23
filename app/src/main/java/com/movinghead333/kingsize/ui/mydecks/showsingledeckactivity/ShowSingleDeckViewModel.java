@@ -5,14 +5,22 @@ import android.arch.lifecycle.ViewModel;
 
 import com.movinghead333.kingsize.data.KingSizeRepository;
 import com.movinghead333.kingsize.data.database.Card;
+import com.movinghead333.kingsize.data.datawrappers.CardWithSymbol;
+
+import java.util.List;
 
 public class ShowSingleDeckViewModel extends ViewModel{
 
     private KingSizeRepository mRepository;
-    private LiveData<Card> cardsInDeck;
+    private LiveData<List<CardWithSymbol>> cardsInDeck;
     private long deckId;
 
-    ShowSingleDeckViewModel(KingSizeRepository repository){
+    ShowSingleDeckViewModel(KingSizeRepository repository, long cardDeckId){
         this.mRepository = repository;
+        cardsInDeck = mRepository.getCardsWithSymbolByCardDeckId(cardDeckId);
+    }
+
+    public LiveData<List<CardWithSymbol>> getCardWithSymbolByCardDeckId(){
+        return cardsInDeck;
     }
 }

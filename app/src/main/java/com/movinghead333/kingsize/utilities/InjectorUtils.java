@@ -36,8 +36,8 @@ public class InjectorUtils {
         return  new ShowMyDecksViewModelFactory(repository);
     }
 
-    public static ShowSingleDeckViewModelFactory provideShowSingleDeckViewModelFactory(Context context){
+    public static ShowSingleDeckViewModelFactory provideShowSingleDeckViewModelFactory(Context context, long id){
         KingSizeRepository repository = provideRepository(context);
-        return new ShowSingleDeckViewModelFactory(repository);
+        return new ShowSingleDeckViewModelFactory(repository, id);
     }
 }

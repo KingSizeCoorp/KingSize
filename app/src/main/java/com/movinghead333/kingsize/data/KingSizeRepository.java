@@ -126,7 +126,7 @@ public class KingSizeRepository {
         return mCardDeckDao.getAllCardDecks();
     }
 
-    public LiveData<List<CardWithSymbol>> getCardsWithSymbolById(long deckId){
+    public LiveData<List<CardWithSymbol>> getCardsWithSymbolByCardDeckId(long deckId){
         try {
             return (new getCardsWithSymbolAsyncTaskDao(mCardDao).execute(deckId)).get();
         } catch (InterruptedException e) {
@@ -235,9 +235,12 @@ public class KingSizeRepository {
                 @Override
                 public void run() {
                     for(int i = 0; i < STANDARD_CARDS.length; i++){
+                        Log.d(LOG_TAG, "Relinsert:"+insertionId+"_"+
+                                mAsyncCardDao.getStandardCardByName(STANDARD_CARDS[i])+
+                                "_"+i+"_end");
                         CardInCardDeckRelation currentRel = new CardInCardDeckRelation(insertionId,
                                 mAsyncCardDao.getStandardCardByName(STANDARD_CARDS[i]),
-                                0);
+                                i);
                         mRelationDao.insertSingleRelation(currentRel);
                         Log.d(LOG_TAG, "Relation inserted");
                     }
