@@ -13,7 +13,6 @@ public class ShowSingleDeckViewModel extends ViewModel{
 
     private KingSizeRepository mRepository;
     private LiveData<List<CardWithSymbol>> cardsInDeck;
-    private long deckId;
 
     ShowSingleDeckViewModel(KingSizeRepository repository, long cardDeckId){
         this.mRepository = repository;
