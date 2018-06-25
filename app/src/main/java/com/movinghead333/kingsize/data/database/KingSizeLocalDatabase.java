@@ -72,13 +72,13 @@ public abstract class KingSizeLocalDatabase extends RoomDatabase{
                     cardDao.insertCard(params[i]);
                 }
             }
-
+            /*
             CardDeck cardDeck = new CardDeck("Kingseis", 36);
             long idd = cardDeckDao.insertCardDeck(cardDeck);
 
             cardDeck = new CardDeck("Poker lol", 52);
             cardDeckDao.insertCardDeck(cardDeck);
-
+            */
             return null;
         }
     }

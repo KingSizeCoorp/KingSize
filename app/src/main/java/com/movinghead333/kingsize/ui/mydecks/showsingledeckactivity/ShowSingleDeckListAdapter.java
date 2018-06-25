@@ -68,7 +68,7 @@ public class ShowSingleDeckListAdapter extends RecyclerView.Adapter<ShowSingleDe
                 Log.d("ShowSingleDeckAdapter","Message:"+currentCard.symbol+"X");
             Log.d("ShowSingleDeckAdapter","Message:"+cardsInDeck.size());
 
-            viewHolder.cardSymbol.setText(currentCard.symbol);
+            viewHolder.cardSymbol.setText(String.valueOf(currentCard.symbol));
             viewHolder.cardName.setText(currentCard.cardName);
             viewHolder.cardType.setText(currentCard.cardType);
             viewHolder.cardSource.setText(currentCard.cardSource);
