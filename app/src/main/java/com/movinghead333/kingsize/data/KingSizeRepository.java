@@ -68,6 +68,10 @@ public class KingSizeRepository {
     /*
         CardDao interaction
     */
+    public  LiveData<Card> getCardById(long id){
+        return  mCardDao.getCardById(id);
+    }
+
     public LiveData<List<Card>> getAllCards(){
         return mCardDao.getAllCards();
     }

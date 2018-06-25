@@ -3,7 +3,7 @@
     package="com.movinghead333.kingsize">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"></uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
@@ -25,7 +25,8 @@
         <activity android:name=".ui.mycards.ShowSingleCardActivity" />
         <activity android:name=".ui.mydecks.showdecks.ShowMyDecksActivity" />
         <activity android:name=".ui.mydecks.showsingledeckactivity.ShowSingleDeckActivity" />
-        <activity android:name=".ui.mydecks.showcardindeckactivity.ShowCardInDeckActivity"></activity>
+        <activity android:name=".ui.mydecks.showcardindeckactivity.ShowCardInDeckActivity" />
+        <activity android:name=".ui.mydecks.changercardactivity.ChangeCardActivity"></activity>
     </application>
 
 </manifest>

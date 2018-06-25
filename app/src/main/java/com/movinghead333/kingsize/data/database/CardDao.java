@@ -29,13 +29,16 @@ public interface CardDao {
     @Update
     void updateCard(Card card);
 
+    @Query("SELECT * FROM card_table WHERE id = :id")
+    LiveData<Card> getCardById(long id);
+
     @Query("SELECT COUNT(id) FROM card_table WHERE source = 'Standard'")
     int getStandardCardAvailable();
 
     @Query("SELECT id FROM card_table WHERE title LIKE :title")
     long getStandardCardByName(String title);
 
-    @Query("SELECT  R.symbol, C.title, C.type, C.source " +
+    @Query("SELECT C.id, R.symbol, C.title, C.type, C.source, C.description " +
             "FROM card_table C JOIN cards_to_card_deck R ON C.id = R.card_id "+
             "WHERE R.card_deck_id = :cardDeckId")
     LiveData<List<CardWithSymbol>> getCardsWithSymbolInCardDeckById(long cardDeckId);

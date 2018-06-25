@@ -19,7 +19,11 @@ public class ShowSingleDeckViewModel extends ViewModel{
         cardsInDeck = mRepository.getCardsWithSymbolByCardDeckId(cardDeckId);
     }
 
-    public LiveData<List<CardWithSymbol>> getCardWithSymbolByCardDeckId(){
+    public LiveData<List<CardWithSymbol>> getCardsWithSymbol(){
         return cardsInDeck;
+    }
+
+    public LiveData<Card> getCardById(long id){
+        return mRepository.getCardById(id);
     }
 }

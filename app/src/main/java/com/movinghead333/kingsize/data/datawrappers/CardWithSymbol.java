@@ -4,6 +4,9 @@ import android.arch.persistence.room.ColumnInfo;
 
 public class CardWithSymbol {
 
+    @ColumnInfo(name = "id")
+    public long cardId;
+
     @ColumnInfo(name  = "symbol")
     public int symbol;
 
@@ -16,10 +19,16 @@ public class CardWithSymbol {
     @ColumnInfo(name = "source")
     public String cardSource;
 
-    public CardWithSymbol(int symbol, String cardName, String cardType, String cardSource){
+    @ColumnInfo(name = "description")
+    public String description;
+
+    public CardWithSymbol(long cardId, int symbol, String cardName, String cardType,
+                          String cardSource, String description){
+        this.cardId = cardId;
         this.symbol = symbol;
         this.cardName = cardName;
         this.cardType = cardType;
         this.cardSource = cardSource;
+        this.description = description;
     }
 }

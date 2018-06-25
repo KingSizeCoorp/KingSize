@@ -8,12 +8,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
 import com.movinghead333.kingsize.R;
+import com.movinghead333.kingsize.data.database.Card;
 import com.movinghead333.kingsize.data.datawrappers.CardWithSymbol;
 import com.movinghead333.kingsize.ui.CustomListItemClickListener;
+import com.movinghead333.kingsize.ui.mydecks.showcardindeckactivity.ShowCardInDeckActivity;
 import com.movinghead333.kingsize.ui.mydecks.showdecks.ShowMyDecksActivity;
 import com.movinghead333.kingsize.utilities.InjectorUtils;
 
@@ -21,7 +24,12 @@ import java.util.List;
 
 public class ShowSingleDeckActivity extends AppCompatActivity {
 
+    public static final String STRING_EXTRA_CURRENT_DECK = "STRING_EXTRA_CURRENT_DECK";
+    public static final String STRING_EXTRA_CURRENT_CARD = "STRING_EXTRA_CURRENT_CARD";
+    public static final String STRING_ARRAY_EXTRA_CARD_DETAILS = "STRING_ARRAY_EXTRA_CARD_DETAILS";
+
     private ShowSingleDeckViewModel mViewModel;
+    private long selectedDeckId = -1;
 
 
     @Override
@@ -31,7 +39,7 @@ public class ShowSingleDeckActivity extends AppCompatActivity {
 
         // get id from selected deck
         Intent intent = getIntent();
-        long selectedDeckId = intent.getLongExtra(ShowMyDecksActivity.EXTRA_CARD_DECK_ID, -1);
+        selectedDeckId = intent.getLongExtra(ShowMyDecksActivity.EXTRA_CARD_DECK_ID, -1);
 
         TextView tv = (TextView)findViewById(R.id.show_single_deck_deck_title);
         tv.setText(String.valueOf(selectedDeckId));
@@ -47,8 +55,18 @@ public class ShowSingleDeckActivity extends AppCompatActivity {
         // create adapter for recyclerView
         final ShowSingleDeckListAdapter adapter = new ShowSingleDeckListAdapter(new CustomListItemClickListener() {
             @Override
-            public void onItemClick(View view, int position) {
-                //TODO: show card in detail with ability to change card
+            public void onItemClick(View view, final int position) {
+                CardWithSymbol selectedCard = mViewModel.getCardsWithSymbol().getValue().get(position);
+                String[] cardDetails = new String[]{
+                        String.valueOf(selectedCard.symbol),
+                        selectedCard.cardName,
+                        selectedCard.cardType,
+                        selectedCard.cardSource,
+                        selectedCard.description
+                };
+                Intent intent = new Intent(ShowSingleDeckActivity.this, ShowCardInDeckActivity.class);
+                intent.putExtra(STRING_ARRAY_EXTRA_CARD_DETAILS, cardDetails);
+                startActivity(intent);
             }
         });
         // set recyclerView's adapter
@@ -59,7 +77,7 @@ public class ShowSingleDeckActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
 
         // observe LiveData-content of recyclerView
-        mViewModel.getCardWithSymbolByCardDeckId().observe(this, new Observer<List<CardWithSymbol>>() {
+        mViewModel.getCardsWithSymbol().observe(this, new Observer<List<CardWithSymbol>>() {
             @Override
             public void onChanged(@Nullable List<CardWithSymbol> cardWithSymbols) {
                 adapter.setCardsInDeck(cardWithSymbols);
