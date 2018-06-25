@@ -36,7 +36,7 @@ public interface CardDao {
     long getStandardCardByName(String title);
 
     @Query("SELECT  R.symbol, C.title, C.type, C.source " +
-            "FROM card_table C JOIN cards_to_card_deck R "+
+            "FROM card_table C JOIN cards_to_card_deck R ON C.id = R.card_id "+
             "WHERE R.card_deck_id = :cardDeckId")
     LiveData<List<CardWithSymbol>> getCardsWithSymbolInCardDeckById(long cardDeckId);
 
