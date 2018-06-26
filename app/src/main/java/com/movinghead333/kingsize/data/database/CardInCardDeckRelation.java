@@ -40,9 +40,9 @@ public class CardInCardDeckRelation {
     public final long cardId;
 
     @ColumnInfo(name = "symbol")
-    public String symbol;
+    public int symbol;
 
-    public CardInCardDeckRelation(long cardDeckId, long cardId, String symbol){
+    public CardInCardDeckRelation(long cardDeckId, long cardId, int symbol){
         this.cardDeckId = cardDeckId;
         this.cardId = cardId;
         this.symbol = symbol;

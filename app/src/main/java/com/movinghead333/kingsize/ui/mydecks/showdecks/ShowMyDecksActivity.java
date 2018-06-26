@@ -38,6 +38,7 @@ public class ShowMyDecksActivity extends AppCompatActivity {
     private Spinner dialogSpinner;
 
     public String[] STANDARD_CARDS = new String[9];
+    public static final String EXTRA_CARD_DECK_ID = "EXTRA_CARD_DECK_ID";
 
 
     @Override
@@ -59,6 +60,9 @@ public class ShowMyDecksActivity extends AppCompatActivity {
             public void onItemClick(View view, int position) {
                 Intent intent = new Intent(ShowMyDecksActivity.this,
                         ShowSingleDeckActivity.class);
+                CardDeck selectedCardDeck =
+                        showMyDecksViewModel.getAllCardDecks().getValue().get(position);
+                intent.putExtra(EXTRA_CARD_DECK_ID, selectedCardDeck.id);
                 startActivity(intent);
             }
         });

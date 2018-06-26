@@ -1,15 +1,15 @@
 package com.movinghead333.kingsize.ui.mydecks.showsingledeckactivity;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.movinghead333.kingsize.R;
-import com.movinghead333.kingsize.data.database.Card;
+import com.movinghead333.kingsize.data.datawrappers.CardWithSymbol;
 import com.movinghead333.kingsize.ui.CustomListItemClickListener;
-import com.movinghead333.kingsize.ui.mydecks.showdecks.MyDecksListAdapter;
 
 import java.util.List;
 
@@ -17,7 +17,7 @@ public class ShowSingleDeckListAdapter extends RecyclerView.Adapter<ShowSingleDe
 
     // listener for onClick events on listitems
     private CustomListItemClickListener listener;
-    private List<Card> cardsInDeck;
+    private List<CardWithSymbol> cardsInDeck;
 
     /**
      * constructor which receives a listener for onClick events to be handled in activity class
@@ -63,8 +63,16 @@ public class ShowSingleDeckListAdapter extends RecyclerView.Adapter<ShowSingleDe
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int position){
         if(cardsInDeck != null){
-            Card currentCard = cardsInDeck.get(position);
-            //TODO: setup view with data
+            CardWithSymbol currentCard = cardsInDeck.get(position);
+            //if(currentCard != null)
+                Log.d("ShowSingleDeckAdapter","Message:"+currentCard.symbol+"X");
+            Log.d("ShowSingleDeckAdapter","Message:"+cardsInDeck.size());
+
+            viewHolder.cardSymbol.setText(String.valueOf(currentCard.symbol));
+            viewHolder.cardName.setText(currentCard.cardName);
+            viewHolder.cardType.setText(currentCard.cardType);
+            viewHolder.cardSource.setText(currentCard.cardSource);
+
         }
     }
 
@@ -75,5 +83,10 @@ public class ShowSingleDeckListAdapter extends RecyclerView.Adapter<ShowSingleDe
         }else{
             return cardsInDeck.size();
         }
+    }
+
+    public void setCardsInDeck(List<CardWithSymbol> cardsInDeck) {
+        this.cardsInDeck = cardsInDeck;
+        notifyDataSetChanged();
     }
 }

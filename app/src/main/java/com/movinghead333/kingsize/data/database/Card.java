@@ -14,7 +14,7 @@ public class Card {
     @ColumnInfo(name = "title")
     public String title;
 
-    @ColumnInfo(name = "typ")
+    @ColumnInfo(name = "type")
     public String type;
 
     @ColumnInfo(name = "description")
