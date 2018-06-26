@@ -50,23 +50,23 @@ public class ChangeCardActivity extends AppCompatActivity {
 
         // standard cards fragment
         ShowCardListFragment standardCardsFragment = new ShowCardListFragment();
-        Bundle bundle = new Bundle();
-        bundle.putInt(EXTRA_CARD_SOURCE, R.string.source_standard);
-        standardCardsFragment.setArguments(bundle);
+        Bundle bundle1 = new Bundle();
+        bundle1.putInt(EXTRA_CARD_SOURCE, R.string.source_standard);
+        standardCardsFragment.setArguments(bundle1);
         mSectionsPageAdapter.addFragment(standardCardsFragment, "Standard");
 
         // custom cards fragment
         ShowCardListFragment customCardsFragment = new ShowCardListFragment();
-        bundle = new Bundle();
-        bundle.putInt(EXTRA_CARD_SOURCE, R.string.source_my_cards);
-        customCardsFragment.setArguments(bundle);
+        Bundle bundle2 = new Bundle();
+        bundle2.putInt(EXTRA_CARD_SOURCE, R.string.source_my_cards);
+        customCardsFragment.setArguments(bundle2);
         mSectionsPageAdapter.addFragment(customCardsFragment, "Eigene");
 
         // feed cards fragment
         ShowCardListFragment feedCardsFragment = new ShowCardListFragment();
-        bundle = new Bundle();
-        bundle.putInt(EXTRA_CARD_SOURCE, R.string.source_feed);
-        customCardsFragment.setArguments(bundle);
+        Bundle bundle3 = new Bundle();
+        bundle3.putInt(EXTRA_CARD_SOURCE, R.string.source_feed);
+        feedCardsFragment.setArguments(bundle3);
         mSectionsPageAdapter.addFragment(feedCardsFragment, "Feed");
 
         viewPager.setAdapter(mSectionsPageAdapter);

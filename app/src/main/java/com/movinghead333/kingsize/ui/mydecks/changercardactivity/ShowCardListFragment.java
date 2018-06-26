@@ -117,6 +117,9 @@ public class ShowCardListFragment extends Fragment{
             if(cards != null){
                 Card currentCard = cards.get(position);
                 viewHolder.cardName.setText(currentCard.title);
+                viewHolder.cardType.setText(currentCard.type);
+                viewHolder.cardSource.setText(currentCard.source);
+                viewHolder.cardDescription.setText(currentCard.description);
             }
         }
 
