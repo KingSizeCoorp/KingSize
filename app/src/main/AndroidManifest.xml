@@ -26,7 +26,10 @@
         <activity android:name=".ui.mydecks.showdecks.ShowMyDecksActivity" />
         <activity android:name=".ui.mydecks.showsingledeckactivity.ShowSingleDeckActivity" />
         <activity android:name=".ui.mydecks.showcardindeckactivity.ShowCardInDeckActivity" />
-        <activity android:name=".ui.mydecks.changercardactivity.ChangeCardActivity"></activity>
+        <activity
+            android:name=".ui.mydecks.changercardactivity.ChangeCardActivity"
+            android:label="@string/title_activity_change_card"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

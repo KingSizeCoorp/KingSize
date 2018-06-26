@@ -21,4 +21,10 @@
     <string name="card_title_question_master">Fragekönig</string>
     <string name="card_title_rhymetime">Rhymetime</string>
     <string name="card_description_no_description">Keine Beschreibung vorhanden</string>
+    <string name="title_activity_change_card">ChangeCardActivity</string>
+    <string name="tab_text_1">Tab 1</string>
+    <string name="tab_text_2">Tab 2</string>
+    <string name="tab_text_3">Tab 3</string>
+    <string name="action_settings">Settings</string>
+    <string name="section_format">Hello World from section: %1$d</string>
 </resources>
