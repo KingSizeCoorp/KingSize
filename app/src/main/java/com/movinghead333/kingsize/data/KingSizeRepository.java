@@ -68,6 +68,37 @@ public class KingSizeRepository {
     /*
         CardDao interaction
     */
+    public List<Card> getCardsBySource(String source){
+        try {
+            return new getCardsBySourceAsyncTaskDao(mCardDao).execute(source).get();
+        } catch (InterruptedException e) {
+            Log.d(LOG_TAG, "getCardsBySourceAsyncTaskDao throws InterruptedException");
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            Log.d(LOG_TAG, "getCardsBySourceAsyncTaskDao throws ExecutionException");
+            e.printStackTrace();
+        }
+        Log.d(LOG_TAG, "getCardsBySourceAsyncTaskDao returning null caused by exception");
+        return null;
+    }
+
+
+
+    private static class getCardsBySourceAsyncTaskDao extends AsyncTask<String, Void, List<Card>> {
+
+        private CardDao mAsyncTaskDao;
+
+        getCardsBySourceAsyncTaskDao(CardDao dao){
+            mAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected List<Card> doInBackground(final String... params){
+            return mAsyncTaskDao.getCardsBySource(params[0]);
+
+        }
+    }
+
     public  LiveData<Card> getCardById(long id){
         return  mCardDao.getCardById(id);
     }

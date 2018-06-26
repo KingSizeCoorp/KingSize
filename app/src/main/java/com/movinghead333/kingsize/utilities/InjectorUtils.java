@@ -1,5 +1,6 @@
 package com.movinghead333.kingsize.utilities;
 
+import android.app.Application;
 import android.content.Context;
 
 import com.movinghead333.kingsize.AppExecutors;
@@ -48,8 +49,8 @@ public class InjectorUtils {
         return new ShowCardInDeckViewModelFactory(repository);
     }
 
-    public static ChangeCardViewModelFactory proviChangeCardViewModelFactory(Context context){
+    public static ChangeCardViewModelFactory provideChangeCardViewModelFactory(Context context, Application application){
         KingSizeRepository repository = provideRepository(context);
-        return new ChangeCardViewModelFactory(repository);
+        return new ChangeCardViewModelFactory(repository, application);
     }
 }

@@ -35,6 +35,9 @@ public interface CardDao {
     @Query("SELECT COUNT(id) FROM card_table WHERE source = 'Standard'")
     int getStandardCardAvailable();
 
+    @Query("SELECT * FROM card_table WHERE source = :source")
+    List<Card> getCardsBySource(String source);
+
     @Query("SELECT id FROM card_table WHERE title LIKE :title")
     long getStandardCardByName(String title);
 
