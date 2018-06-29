@@ -32,6 +32,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ShowMyDecksActivity extends AppCompatActivity {
+    private static final String TAG = "SMDA";
 
     private MyDecksListAdapter myDecksListAdapter;
     private ShowMyDecksViewModel showMyDecksViewModel;
@@ -62,6 +63,7 @@ public class ShowMyDecksActivity extends AppCompatActivity {
                         ShowSingleDeckActivity.class);
                 CardDeck selectedCardDeck =
                         showMyDecksViewModel.getAllCardDecks().getValue().get(position);
+                Log.d(TAG, String.valueOf(selectedCardDeck.id));
                 intent.putExtra(EXTRA_CARD_DECK_ID, selectedCardDeck.id);
                 startActivity(intent);
             }

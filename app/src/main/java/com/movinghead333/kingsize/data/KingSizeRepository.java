@@ -70,7 +70,7 @@ public class KingSizeRepository {
     */
 
 
-    public List<Card> getCardsBySource(String source){
+    public LiveData<List<Card>> getCardsBySource(String source){
         try {
             return new getCardsBySourceAsyncTaskDao(mCardDao).execute(source).get();
         } catch (InterruptedException e) {
@@ -86,7 +86,7 @@ public class KingSizeRepository {
 
 
 
-    private static class getCardsBySourceAsyncTaskDao extends AsyncTask<String, Void, List<Card>> {
+    private static class getCardsBySourceAsyncTaskDao extends AsyncTask<String, Void, LiveData<List<Card>>> {
 
         private CardDao mAsyncTaskDao;
 
@@ -95,7 +95,7 @@ public class KingSizeRepository {
         }
 
         @Override
-        protected List<Card> doInBackground(final String... params){
+        protected LiveData<List<Card>> doInBackground(final String... params){
             return mAsyncTaskDao.getCardsBySource(params[0]);
 
         }

@@ -3,10 +3,12 @@ package com.movinghead333.kingsize.ui.mydecks.changercardactivity;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -18,6 +20,7 @@ import android.widget.Toast;
 
 import com.movinghead333.kingsize.R;
 import com.movinghead333.kingsize.data.database.Card;
+import com.movinghead333.kingsize.data.database.CardInCardDeckRelation;
 import com.movinghead333.kingsize.ui.CustomListItemClickListener;
 
 import org.w3c.dom.Text;
@@ -43,22 +46,45 @@ public class ShowCardListFragment extends Fragment{
 
         fragmentListAdapter = new FragmentListAdapter(new CustomListItemClickListener() {
             @Override
-            public void onItemClick(View view, int position) {
+            public void onItemClick(View view, final int position) {
                 Toast.makeText(getContext(), "it worked: ", Toast.LENGTH_SHORT).show();
-                if(fragmentCards == null){
-                    Log.d(TAG, "cards are null");
-                }else{
-                    Log.d(TAG, " cards are not null");
-                }
-                long i = fragmentCards.get(position).id;
-                if(mViewModel.checkIfNewCardSelected(fragmentCards.get(position).id)){
-                    Log.d(TAG, "neue karte!");
-                }
+                mViewModel.cardRelations.observe(getActivity(), new Observer<List<CardInCardDeckRelation>>() {
+                    @Override
+                    public void onChanged(@Nullable List<CardInCardDeckRelation> cardInCardDeckRelations) {
+                        if(mViewModel.checkIfNewCardSelected(fragmentCards.get(position).id, cardInCardDeckRelations)){
+                            Log.d(TAG, "new card selected");
+                            AlertDialog.Builder adb = new AlertDialog.Builder(getActivity());
+
+                            adb.setTitle(R.string.delete_current_card);
+
+                            adb.setIcon(android.R.drawable.ic_dialog_alert);
+
+                            adb.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    //TODO insert
+                                    getActivity().finish();
+                                } });
+                            adb.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    // do nothing
+                                } });
+                            adb.show();
+                        }else{
+                            Log.d(TAG, "card already in deck");
+                        }
+                    }
+                });
             }
         });
 
         int source = getArguments().getInt(ChangeCardActivity.EXTRA_CARD_SOURCE);
-        fragmentListAdapter.setCards(mViewModel.getCardSetBySource(source));
+        mViewModel.getCardSetBySource(source).observe(this, new Observer<List<Card>>() {
+            @Override
+            public void onChanged(@Nullable List<Card> cards) {
+                fragmentCards = cards;
+                fragmentListAdapter.setCards(cards);
+            }
+        });
 
     }
 

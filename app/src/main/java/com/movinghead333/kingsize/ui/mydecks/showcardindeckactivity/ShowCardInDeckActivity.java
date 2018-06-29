@@ -18,6 +18,7 @@ import com.movinghead333.kingsize.utilities.InjectorUtils;
 import org.w3c.dom.Text;
 
 public class ShowCardInDeckActivity extends AppCompatActivity {
+    private static final String TAG = "SCIDA";
 
     public static final String EXTRA_STRING_SYMBOL = "EXTRA_STRING_SYMBOL";
 
@@ -59,6 +60,8 @@ public class ShowCardInDeckActivity extends AppCompatActivity {
         Intent changeCardIntent = new Intent(ShowCardInDeckActivity.this, ChangeCardActivity.class);
 
         // send the id of the currently selected deck
+        Log.d(TAG,  String.valueOf(currentDeck));
+
         changeCardIntent.putExtra(ShowSingleDeckActivity.STRING_EXTRA_CURRENT_DECK, currentDeck);
 
         // send the id of the currently selected card

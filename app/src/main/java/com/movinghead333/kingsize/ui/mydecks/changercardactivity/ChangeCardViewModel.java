@@ -5,6 +5,7 @@ import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.ViewModel;
 import android.content.Context;
+import android.util.Log;
 
 import com.movinghead333.kingsize.R;
 import com.movinghead333.kingsize.data.KingSizeRepository;
@@ -14,15 +15,16 @@ import com.movinghead333.kingsize.data.database.CardInCardDeckRelation;
 import java.util.List;
 
 public class ChangeCardViewModel extends AndroidViewModel {
+    private static final String TAG = "ChangeCardViewModelLog";
 
     KingSizeRepository mRepository;
 
-    private List<Card> standardCards;
-    private List<Card> customCards;
-    private List<Card> feedCards;
+    private LiveData<List<Card>> standardCards;
+    private LiveData<List<Card>> customCards;
+    private LiveData<List<Card>> feedCards;
 
     // holdes
-    private LiveData<List<CardInCardDeckRelation>> cardRelations;
+    LiveData<List<CardInCardDeckRelation>> cardRelations;
     private long currentDeckId;
 
     /**
@@ -37,6 +39,7 @@ public class ChangeCardViewModel extends AndroidViewModel {
         this.currentDeckId = deckId;
 
         // get all cards in the current deck
+        Log.d(TAG, String.valueOf(deckId));
         cardRelations = mRepository.getCardsInDeck(deckId);
 
         // get all standard cards
@@ -52,11 +55,7 @@ public class ChangeCardViewModel extends AndroidViewModel {
                 getApplication().getResources().getString(R.string.source_feed));
     }
 
-    public List<Card> getStandardCards() {
-        return standardCards;
-    }
-
-    public List<Card> getCardSetBySource(int source){
+    public LiveData<List<Card>> getCardSetBySource(int source){
         switch(source){
             case R.string.source_standard:
                 return standardCards;
@@ -68,9 +67,11 @@ public class ChangeCardViewModel extends AndroidViewModel {
         }
     }
 
-    public boolean checkIfNewCardSelected(long id){
-        List<CardInCardDeckRelation> cards = cardRelations.getValue();
+    public boolean checkIfNewCardSelected(long id, List<CardInCardDeckRelation> rel){
+        List<CardInCardDeckRelation> cards = rel;
+        Log.d(TAG, rel.toString());
         for(int i = 0; i < cards.size(); i++){
+            Log.d(TAG, String.valueOf(cards.get(i).cardId));
             if(cards.get(i).cardId == id){
                 return false;
             }

@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ChangeCardActivity extends AppCompatActivity {
+    private static final String TAG = "ChangeCardActvityLog";
 
     static final String EXTRA_CARD_SOURCE = "EXTRA_CARD_SOURCE";
 
@@ -51,6 +52,10 @@ public class ChangeCardActivity extends AppCompatActivity {
         setupViewPager(mViewPager);
         TabLayout tabLayout = (TabLayout)findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
+    }
+
+    public void lol(){
+
     }
 
     private void setupViewPager(ViewPager viewPager){
