@@ -24,6 +24,11 @@ public class ChangeCardViewModel extends AndroidViewModel {
     private LiveData<List<Card>> feedCards;
 
     private int currentSymbol;
+    private long currentId;
+
+    // fields saving temporary data in order to swap two cards in the deck
+    private int exchangeSymbol = -1;
+    private long exchangeId = -1;
 
     // holdes
     LiveData<List<CardInCardDeckRelation>> cardRelations;
@@ -75,6 +80,8 @@ public class ChangeCardViewModel extends AndroidViewModel {
         for(int i = 0; i < cards.size(); i++){
             Log.d(TAG, String.valueOf(cards.get(i).cardId));
             if(cards.get(i).cardId == id){
+                exchangeId = id;
+                exchangeSymbol = cards.get(i).symbol;
                 return false;
             }
         }
@@ -87,7 +94,22 @@ public class ChangeCardViewModel extends AndroidViewModel {
         mRepository.insertCardToCardDeckRelation(newRelation);
     }
 
+    public void swapCardsInDeck(){
+        CardInCardDeckRelation[] array = new CardInCardDeckRelation[2];
+        Log.d(TAG, String.valueOf(currentId)+" "+String.valueOf(currentSymbol)+"/n"+
+                String.valueOf(exchangeId+" "+String.valueOf(exchangeSymbol)));
+        array[0] = new CardInCardDeckRelation(currentDeckId, currentId, exchangeSymbol);
+        Log.d(TAG,"0 worked");
+        array[1] = new CardInCardDeckRelation(currentDeckId, exchangeId, currentSymbol);
+        Log.d(TAG,"1 worked");
+        mRepository.insertCardToCardDeckRelation(array);
+    }
+
     public void setCurrentSymbol(int symbol){
         currentSymbol = symbol;
+    }
+
+    void setCurrentId(long id){
+        this.currentId = id;
     }
 }

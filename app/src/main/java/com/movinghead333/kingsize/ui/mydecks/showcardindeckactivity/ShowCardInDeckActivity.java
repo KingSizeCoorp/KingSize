@@ -36,6 +36,7 @@ public class ShowCardInDeckActivity extends AppCompatActivity {
         Intent intent = getIntent();
         currentDeck = intent.getLongExtra(ShowSingleDeckActivity.STRING_EXTRA_CURRENT_DECK, -1);
         currentCard = intent.getLongExtra(ShowSingleDeckActivity.STRING_EXTRA_CURRENT_CARD, -1);
+        Log.d(TAG, String.valueOf(currentCard));
         cardDetails = intent.getStringArrayExtra(ShowSingleDeckActivity.STRING_ARRAY_EXTRA_CARD_DETAILS);
 
         ShowCardInDeckViewModelFactory factory = InjectorUtils
@@ -60,8 +61,6 @@ public class ShowCardInDeckActivity extends AppCompatActivity {
         Intent changeCardIntent = new Intent(ShowCardInDeckActivity.this, ChangeCardActivity.class);
 
         // send the id of the currently selected deck
-        Log.d(TAG,  String.valueOf(currentDeck));
-
         changeCardIntent.putExtra(ShowSingleDeckActivity.STRING_EXTRA_CURRENT_DECK, currentDeck);
 
         // send the id of the currently selected card

@@ -81,6 +81,24 @@ public class ShowCardListFragment extends Fragment{
                             adb.show();
                         }else{
                             Log.d(TAG, "card already in deck");
+                            // alertdialog for the double-check if the user really intended the action
+                            AlertDialog.Builder adb = new AlertDialog.Builder(getActivity());
+
+                            // todo fix string res
+                            adb.setTitle(R.string.delete_current_card);
+
+                            adb.setIcon(android.R.drawable.ic_dialog_alert);
+
+                            adb.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    mViewModel.swapCardsInDeck();
+                                    getActivity().finish();
+                                } });
+                            adb.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    // do nothing
+                                } });
+                            adb.show();
                         }
                     }
                 });
@@ -124,6 +142,11 @@ public class ShowCardListFragment extends Fragment{
 
         private CustomListItemClickListener listener;
         private List<Card> cards;
+        private long cardToBeExchanged = -1;
+
+        void setCardToBeExchanged(long id){
+            cardToBeExchanged = id;
+        }
 
         FragmentListAdapter(CustomListItemClickListener listener){
             this.listener = listener;
@@ -165,10 +188,12 @@ public class ShowCardListFragment extends Fragment{
         public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {
             if(cards != null){
                 Card currentCard = cards.get(position);
-                viewHolder.cardName.setText(currentCard.title);
-                viewHolder.cardType.setText(currentCard.type);
-                viewHolder.cardSource.setText(currentCard.source);
-                viewHolder.cardDescription.setText(currentCard.description);
+                if(currentCard.id != cardToBeExchanged){
+                    viewHolder.cardName.setText(currentCard.title);
+                    viewHolder.cardType.setText(currentCard.type);
+                    viewHolder.cardSource.setText(currentCard.source);
+                    viewHolder.cardDescription.setText(currentCard.description);
+                }
             }
         }
 

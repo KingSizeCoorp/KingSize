@@ -32,6 +32,7 @@ public class ChangeCardActivity extends AppCompatActivity {
     private ViewPager mViewPager;
 
     private long currentDeckId;
+    private long currentCardId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,12 +41,13 @@ public class ChangeCardActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         currentDeckId = intent.getLongExtra(ShowSingleDeckActivity.STRING_EXTRA_CURRENT_DECK, -1);
-
+        currentCardId = intent.getLongExtra(ShowSingleDeckActivity.STRING_EXTRA_CURRENT_CARD, -1);
 
         ChangeCardViewModelFactory factory = InjectorUtils.provideChangeCardViewModelFactory(
                 this.getApplicationContext(), getApplication(), currentDeckId);
         mViewModel = ViewModelProviders.of(this, factory).get(ChangeCardViewModel.class);
         mViewModel.setCurrentSymbol(intent.getIntExtra(ShowCardInDeckActivity.EXTRA_STRING_SYMBOL, -1));
+        mViewModel.setCurrentId(currentCardId);
 
         mSectionsPageAdapter = new SectionsPageAdapter(getSupportFragmentManager());
 

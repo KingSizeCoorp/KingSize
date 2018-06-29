@@ -67,6 +67,7 @@ public class ShowSingleDeckActivity extends AppCompatActivity {
                 Intent intent = new Intent(ShowSingleDeckActivity.this, ShowCardInDeckActivity.class);
                 intent.putExtra(STRING_ARRAY_EXTRA_CARD_DETAILS, cardDetails);
                 intent.putExtra(STRING_EXTRA_CURRENT_DECK, selectedDeckId);
+                intent.putExtra(STRING_EXTRA_CURRENT_CARD, selectedCard.cardId);
                 startActivity(intent);
             }
         });
