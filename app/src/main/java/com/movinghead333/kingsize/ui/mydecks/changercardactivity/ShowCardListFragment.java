@@ -37,14 +37,15 @@ public class ShowCardListFragment extends Fragment{
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        final ChangeCardViewModel mViewModel = ViewModelProviders.of(getActivity()).get(ChangeCardViewModel.class);
         fragmentListAdapter = new FragmentListAdapter(new CustomListItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
                 Toast.makeText(getContext(), "it worked: ", Toast.LENGTH_SHORT).show();
+
             }
         });
         int source = getArguments().getInt(ChangeCardActivity.EXTRA_CARD_SOURCE);
-        ChangeCardViewModel mViewModel = ViewModelProviders.of(getActivity()).get(ChangeCardViewModel.class);
         fragmentListAdapter.setCards(mViewModel.getCardSetBySource(source));
 
     }

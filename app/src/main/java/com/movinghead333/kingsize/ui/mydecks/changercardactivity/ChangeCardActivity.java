@@ -2,6 +2,7 @@ package com.movinghead333.kingsize.ui.mydecks.changercardactivity;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +13,7 @@ import android.util.Log;
 
 import com.movinghead333.kingsize.R;
 import com.movinghead333.kingsize.data.database.Card;
+import com.movinghead333.kingsize.ui.mydecks.showsingledeckactivity.ShowSingleDeckActivity;
 import com.movinghead333.kingsize.utilities.InjectorUtils;
 
 import java.util.ArrayList;
@@ -27,13 +29,19 @@ public class ChangeCardActivity extends AppCompatActivity {
 
     private ViewPager mViewPager;
 
+    private long currentDeckId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_card);
 
+        Intent intent = getIntent();
+        currentDeckId = intent.getLongExtra(ShowSingleDeckActivity.STRING_EXTRA_CURRENT_DECK, -1);
+
+
         ChangeCardViewModelFactory factory = InjectorUtils.provideChangeCardViewModelFactory(
-                this.getApplicationContext(), getApplication());
+                this.getApplicationContext(), getApplication(), currentDeckId);
         mViewModel = ViewModelProviders.of(this, factory).get(ChangeCardViewModel.class);
 
         mSectionsPageAdapter = new SectionsPageAdapter(getSupportFragmentManager());

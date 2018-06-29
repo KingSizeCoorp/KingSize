@@ -20,9 +20,24 @@ public class ChangeCardViewModel extends AndroidViewModel {
     private List<Card> customCards;
     private List<Card> feedCards;
 
-    public ChangeCardViewModel(KingSizeRepository repository, Application app){
+    // holdes
+    private LiveData<List<Long>> cardIds;
+    private long currentDeckId;
+
+    /**
+     *
+     * @param repository receives the reference to singleton repository class
+     * @param app receives an instance of the app in order to make the use of AndroidViewModel possible
+     * @param deckId receives the currently selected deckId for later queries
+     */
+    public ChangeCardViewModel(KingSizeRepository repository, Application app, long deckId){
         super(app);
         this.mRepository = repository;
+        this.currentDeckId = deckId;
+
+        // get all cards in the current deck
+        cardIds = mRepository.getCardIdsByDeckId(deckId);
+
         // get all standard cards
         standardCards = mRepository.getCardsBySource(
                 getApplication().getResources().getString(R.string.source_standard));
@@ -51,4 +66,15 @@ public class ChangeCardViewModel extends AndroidViewModel {
             default: return null;
         }
     }
+
+    public boolean checkIfNewCardSelected(long id){
+        for (Long cardId: cardIds.getValue()) {
+            if(id == cardId){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public void replaceCardInDeck(long currentDeckId)
 }

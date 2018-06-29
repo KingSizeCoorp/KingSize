@@ -68,6 +68,10 @@ public class KingSizeRepository {
     /*
         CardDao interaction
     */
+    public LiveData<List<Long>> getCardIdsByDeckId(long id){
+        return mCardDao.getCardIdsFromDeckId(id);
+    }
+
     public List<Card> getCardsBySource(String source){
         try {
             return new getCardsBySourceAsyncTaskDao(mCardDao).execute(source).get();

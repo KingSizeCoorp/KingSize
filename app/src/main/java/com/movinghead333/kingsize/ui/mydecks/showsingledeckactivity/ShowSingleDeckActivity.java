@@ -8,12 +8,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
 import com.movinghead333.kingsize.R;
-import com.movinghead333.kingsize.data.database.Card;
 import com.movinghead333.kingsize.data.datawrappers.CardWithSymbol;
 import com.movinghead333.kingsize.ui.CustomListItemClickListener;
 import com.movinghead333.kingsize.ui.mydecks.showcardindeckactivity.ShowCardInDeckActivity;

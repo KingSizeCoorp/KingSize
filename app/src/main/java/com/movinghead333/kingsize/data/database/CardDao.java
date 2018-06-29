@@ -46,4 +46,7 @@ public interface CardDao {
             "WHERE R.card_deck_id = :cardDeckId")
     LiveData<List<CardWithSymbol>> getCardsWithSymbolInCardDeckById(long cardDeckId);
 
+    @Query("SELECT C.id FROM card_table C JOIN cards_to_card_deck R ON c.id = r.card_id "+
+           "WHERE R.card_deck_id = :deckId")
+    LiveData<List<Long>> getCardIdsFromDeckId(long deckId);
 }
