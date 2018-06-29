@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ShowCardListFragment extends Fragment{
+    private static final String TAG = "ChangeCardActivityLog";
 
     private List<Card> fragmentCards;
 
@@ -38,13 +40,23 @@ public class ShowCardListFragment extends Fragment{
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         final ChangeCardViewModel mViewModel = ViewModelProviders.of(getActivity()).get(ChangeCardViewModel.class);
+
         fragmentListAdapter = new FragmentListAdapter(new CustomListItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
                 Toast.makeText(getContext(), "it worked: ", Toast.LENGTH_SHORT).show();
-
+                if(fragmentCards == null){
+                    Log.d(TAG, "cards are null");
+                }else{
+                    Log.d(TAG, " cards are not null");
+                }
+                long i = fragmentCards.get(position).id;
+                if(mViewModel.checkIfNewCardSelected(fragmentCards.get(position).id)){
+                    Log.d(TAG, "neue karte!");
+                }
             }
         });
+
         int source = getArguments().getInt(ChangeCardActivity.EXTRA_CARD_SOURCE);
         fragmentListAdapter.setCards(mViewModel.getCardSetBySource(source));
 

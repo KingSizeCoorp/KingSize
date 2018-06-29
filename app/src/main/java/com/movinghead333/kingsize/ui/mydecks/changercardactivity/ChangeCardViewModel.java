@@ -9,6 +9,7 @@ import android.content.Context;
 import com.movinghead333.kingsize.R;
 import com.movinghead333.kingsize.data.KingSizeRepository;
 import com.movinghead333.kingsize.data.database.Card;
+import com.movinghead333.kingsize.data.database.CardInCardDeckRelation;
 
 import java.util.List;
 
@@ -21,7 +22,7 @@ public class ChangeCardViewModel extends AndroidViewModel {
     private List<Card> feedCards;
 
     // holdes
-    private LiveData<List<Long>> cardIds;
+    private LiveData<List<CardInCardDeckRelation>> cardRelations;
     private long currentDeckId;
 
     /**
@@ -36,7 +37,7 @@ public class ChangeCardViewModel extends AndroidViewModel {
         this.currentDeckId = deckId;
 
         // get all cards in the current deck
-        cardIds = mRepository.getCardIdsByDeckId(deckId);
+        cardRelations = mRepository.getCardsInDeck(deckId);
 
         // get all standard cards
         standardCards = mRepository.getCardsBySource(
@@ -68,13 +69,18 @@ public class ChangeCardViewModel extends AndroidViewModel {
     }
 
     public boolean checkIfNewCardSelected(long id){
-        for (Long cardId: cardIds.getValue()) {
-            if(id == cardId){
+        List<CardInCardDeckRelation> cards = cardRelations.getValue();
+        for(int i = 0; i < cards.size(); i++){
+            if(cards.get(i).cardId == id){
                 return false;
             }
         }
         return true;
     }
 
-    public void replaceCardInDeck(long currentDeckId)
+    public void replaceCardInDeck(long newCardId, int symbol){
+        CardInCardDeckRelation newRelation
+                = new CardInCardDeckRelation(currentDeckId, newCardId, symbol);
+        mRepository.insertCardToCardDeckRelation(newRelation);
+    }
 }
