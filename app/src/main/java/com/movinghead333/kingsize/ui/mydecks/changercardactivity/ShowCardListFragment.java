@@ -44,24 +44,34 @@ public class ShowCardListFragment extends Fragment{
         super.onCreate(savedInstanceState);
         final ChangeCardViewModel mViewModel = ViewModelProviders.of(getActivity()).get(ChangeCardViewModel.class);
 
+        // an item in one of three recyclerviews is clicked
         fragmentListAdapter = new FragmentListAdapter(new CustomListItemClickListener() {
             @Override
             public void onItemClick(View view, final int position) {
                 Toast.makeText(getContext(), "it worked: ", Toast.LENGTH_SHORT).show();
+
+                // the cardrelations of the currentdeck are being observed so they are loaded in when checked
                 mViewModel.cardRelations.observe(getActivity(), new Observer<List<CardInCardDeckRelation>>() {
                     @Override
                     public void onChanged(@Nullable List<CardInCardDeckRelation> cardInCardDeckRelations) {
-                        if(mViewModel.checkIfNewCardSelected(fragmentCards.get(position).id, cardInCardDeckRelations)){
+                        // get card id from the picked card
+                        final long pickedCardId = fragmentCards.get(position).id;
+
+                        // check if the picked card is a new card (not in the deck already)
+                        if(mViewModel.checkIfNewCardSelected(pickedCardId, cardInCardDeckRelations)){
                             Log.d(TAG, "new card selected");
+
+                            // alertdialog for the double-check if the user really intended the action
                             AlertDialog.Builder adb = new AlertDialog.Builder(getActivity());
 
+                            // todo fix string res
                             adb.setTitle(R.string.delete_current_card);
 
                             adb.setIcon(android.R.drawable.ic_dialog_alert);
 
                             adb.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
-                                    //TODO insert
+                                    mViewModel.replaceCardInDeck(pickedCardId);
                                     getActivity().finish();
                                 } });
                             adb.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {

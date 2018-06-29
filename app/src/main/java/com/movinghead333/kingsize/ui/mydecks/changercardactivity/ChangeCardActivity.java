@@ -13,6 +13,7 @@ import android.util.Log;
 
 import com.movinghead333.kingsize.R;
 import com.movinghead333.kingsize.data.database.Card;
+import com.movinghead333.kingsize.ui.mydecks.showcardindeckactivity.ShowCardInDeckActivity;
 import com.movinghead333.kingsize.ui.mydecks.showsingledeckactivity.ShowSingleDeckActivity;
 import com.movinghead333.kingsize.utilities.InjectorUtils;
 
@@ -44,6 +45,7 @@ public class ChangeCardActivity extends AppCompatActivity {
         ChangeCardViewModelFactory factory = InjectorUtils.provideChangeCardViewModelFactory(
                 this.getApplicationContext(), getApplication(), currentDeckId);
         mViewModel = ViewModelProviders.of(this, factory).get(ChangeCardViewModel.class);
+        mViewModel.setCurrentSymbol(intent.getIntExtra(ShowCardInDeckActivity.EXTRA_STRING_SYMBOL, -1));
 
         mSectionsPageAdapter = new SectionsPageAdapter(getSupportFragmentManager());
 
@@ -52,10 +54,6 @@ public class ChangeCardActivity extends AppCompatActivity {
         setupViewPager(mViewPager);
         TabLayout tabLayout = (TabLayout)findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
-    }
-
-    public void lol(){
-
     }
 
     private void setupViewPager(ViewPager viewPager){

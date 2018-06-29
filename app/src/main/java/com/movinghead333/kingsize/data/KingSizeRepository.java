@@ -271,16 +271,20 @@ public class KingSizeRepository {
             executors.diskIO().execute(new Runnable() {
                 @Override
                 public void run() {
+                    CardInCardDeckRelation[] relations = new CardInCardDeckRelation[STANDARD_CARDS.length];
                     for(int i = 0; i < STANDARD_CARDS.length; i++){
+
                         Log.d(LOG_TAG, "Relinsert:"+insertionId+"_"+
                                 mAsyncCardDao.getStandardCardByName(STANDARD_CARDS[i])+
                                 "_"+i+"_end");
-                        CardInCardDeckRelation currentRel = new CardInCardDeckRelation(insertionId,
+
+                        relations[i] = new CardInCardDeckRelation(insertionId,
                                 mAsyncCardDao.getStandardCardByName(STANDARD_CARDS[i]),
                                 i);
-                        mRelationDao.insertSingleRelation(currentRel);
-                        Log.d(LOG_TAG, "Relation inserted");
+
                     }
+                    mRelationDao.insertMultiple(relations);
+                    Log.d(LOG_TAG, "Relation inserted");
                 }
             });
         }

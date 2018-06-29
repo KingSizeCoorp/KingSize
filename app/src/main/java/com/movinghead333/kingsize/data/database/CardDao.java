@@ -3,6 +3,7 @@ package com.movinghead333.kingsize.data.database;
 import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;
+import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
 
@@ -16,6 +17,9 @@ public interface CardDao {
 
     @Insert(/*onConflict = OnConflictStrategy.ABORT*/)
     void insertCard(Card card);
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insertCardsWithOverride(Card... cards);
 
     @Query("DELETE FROM card_table WHERE id == :id")
     void deleteCardById(long id);
@@ -43,7 +47,7 @@ public interface CardDao {
 
     @Query("SELECT C.id, R.symbol, C.title, C.type, C.source, C.description " +
             "FROM card_table C JOIN cards_to_card_deck R ON C.id = R.card_id "+
-            "WHERE R.card_deck_id = :cardDeckId")
+            "WHERE R.card_deck_id = :cardDeckId ORDER BY R.symbol ASC")
     LiveData<List<CardWithSymbol>> getCardsWithSymbolInCardDeckById(long cardDeckId);
 
 }

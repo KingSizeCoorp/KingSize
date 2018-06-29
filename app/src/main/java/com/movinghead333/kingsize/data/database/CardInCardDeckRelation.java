@@ -12,7 +12,7 @@ import com.movinghead333.kingsize.data.database.CardDeck;
 import static android.arch.persistence.room.ForeignKey.CASCADE;
 
 @Entity(tableName = "cards_to_card_deck",
-        primaryKeys = {"card_deck_id", "card_id"},
+        primaryKeys = {"card_deck_id", "symbol"},
         foreignKeys = {
             @ForeignKey(
                     entity = CardDeck.class,
@@ -27,7 +27,7 @@ import static android.arch.persistence.room.ForeignKey.CASCADE;
         },
         indices = {
             @Index(value = "card_deck_id"),
-            @Index(value = "card_id")
+            @Index(value = "symbol")
         })
 public class CardInCardDeckRelation {
 

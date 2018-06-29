@@ -42,7 +42,7 @@ public class ShowCardInDeckActivity extends AppCompatActivity {
                 .providShowCardInDeckViewModelFactory(this.getApplicationContext());
         mViewModel = ViewModelProviders.of(this, factory).get(ShowCardInDeckViewModel.class);
 
-
+        // todo  needs to be live data so it updated after card change
         ((TextView)findViewById(R.id.scid_card_title)).setText(cardDetails[1]);
         ((TextView)findViewById(R.id.scid_card_type)).setText(cardDetails[2]);
         ((TextView)findViewById(R.id.scid_card_source)).setText(cardDetails[3]);

@@ -23,6 +23,8 @@ public class ChangeCardViewModel extends AndroidViewModel {
     private LiveData<List<Card>> customCards;
     private LiveData<List<Card>> feedCards;
 
+    private int currentSymbol;
+
     // holdes
     LiveData<List<CardInCardDeckRelation>> cardRelations;
     private long currentDeckId;
@@ -79,9 +81,13 @@ public class ChangeCardViewModel extends AndroidViewModel {
         return true;
     }
 
-    public void replaceCardInDeck(long newCardId, int symbol){
+    public void replaceCardInDeck(long newCardId){
         CardInCardDeckRelation newRelation
-                = new CardInCardDeckRelation(currentDeckId, newCardId, symbol);
+                = new CardInCardDeckRelation(currentDeckId, newCardId, currentSymbol);
         mRepository.insertCardToCardDeckRelation(newRelation);
+    }
+
+    public void setCurrentSymbol(int symbol){
+        currentSymbol = symbol;
     }
 }
