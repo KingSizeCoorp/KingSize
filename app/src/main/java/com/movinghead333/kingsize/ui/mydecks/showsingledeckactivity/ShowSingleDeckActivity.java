@@ -27,6 +27,7 @@ public class ShowSingleDeckActivity extends AppCompatActivity {
     public static final String STRING_EXTRA_CURRENT_DECK = "STRING_EXTRA_CURRENT_DECK";
     public static final String STRING_EXTRA_CURRENT_CARD = "STRING_EXTRA_CURRENT_CARD";
     public static final String STRING_ARRAY_EXTRA_CARD_DETAILS = "STRING_ARRAY_EXTRA_CARD_DETAILS";
+    public static final String STRING_EXTRA_SYMBOL = "STRING_EXTRA_SYMBOL";
 
     private ShowSingleDeckViewModel mViewModel;
     private long selectedDeckId = -1;
@@ -57,17 +58,13 @@ public class ShowSingleDeckActivity extends AppCompatActivity {
             @Override
             public void onItemClick(View view, final int position) {
                 CardWithSymbol selectedCard = mViewModel.getCardsWithSymbol().getValue().get(position);
-                String[] cardDetails = new String[]{
-                        String.valueOf(selectedCard.symbol),
-                        selectedCard.cardName,
-                        selectedCard.cardType,
-                        selectedCard.cardSource,
-                        selectedCard.description
-                };
                 Intent intent = new Intent(ShowSingleDeckActivity.this, ShowCardInDeckActivity.class);
-                intent.putExtra(STRING_ARRAY_EXTRA_CARD_DETAILS, cardDetails);
+                // send necessary extras for the following activities
                 intent.putExtra(STRING_EXTRA_CURRENT_DECK, selectedDeckId);
                 intent.putExtra(STRING_EXTRA_CURRENT_CARD, selectedCard.cardId);
+                intent.putExtra(STRING_EXTRA_SYMBOL, selectedCard.symbol);
+
+                // start new activity
                 startActivity(intent);
             }
         });

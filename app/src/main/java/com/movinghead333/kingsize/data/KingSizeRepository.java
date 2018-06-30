@@ -159,6 +159,10 @@ public class KingSizeRepository {
     /*
         CardDeck interaction
      */
+    public LiveData<Card> getCardFromDeckBySymbolAndDeckId(long deckId, int symbol){
+        return mCardDao.getCardFromDeckBySymbolAndDeckId(deckId, symbol);
+    }
+
     public LiveData<List<CardDeck>> getAllDecks(){
         return mCardDeckDao.getAllCardDecks();
     }

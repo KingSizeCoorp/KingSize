@@ -1,8 +1,10 @@
 package com.movinghead333.kingsize.ui.mydecks.showcardindeckactivity;
 
+import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -25,8 +27,7 @@ public class ShowCardInDeckActivity extends AppCompatActivity {
     private ShowCardInDeckViewModel mViewModel;
     private long currentDeck;
     private long currentCard;
-    private Card cardToDisplay;
-    private String[] cardDetails;
+    private int currentCardSymbol;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,19 +37,25 @@ public class ShowCardInDeckActivity extends AppCompatActivity {
         Intent intent = getIntent();
         currentDeck = intent.getLongExtra(ShowSingleDeckActivity.STRING_EXTRA_CURRENT_DECK, -1);
         currentCard = intent.getLongExtra(ShowSingleDeckActivity.STRING_EXTRA_CURRENT_CARD, -1);
-        Log.d(TAG, String.valueOf(currentCard));
-        cardDetails = intent.getStringArrayExtra(ShowSingleDeckActivity.STRING_ARRAY_EXTRA_CARD_DETAILS);
+        currentCardSymbol = intent.getIntExtra(ShowSingleDeckActivity.STRING_EXTRA_SYMBOL, -1);
 
         ShowCardInDeckViewModelFactory factory = InjectorUtils
                 .providShowCardInDeckViewModelFactory(this.getApplicationContext());
         mViewModel = ViewModelProviders.of(this, factory).get(ShowCardInDeckViewModel.class);
+        mViewModel.getCardFromDeckBySymbolAndDeckId(currentDeck, currentCardSymbol).observe(this,
+                new Observer<Card>() {
+                    @Override
+                    public void onChanged(@Nullable Card card) {
+                        if(card != null){
+                            ((TextView)findViewById(R.id.scid_card_title)).setText(card.title);
+                            ((TextView)findViewById(R.id.scid_card_type)).setText(card.type);
+                            ((TextView)findViewById(R.id.scid_card_source)).setText(card.source);
+                            ((TextView)findViewById(R.id.scid_card_description)).setText(card.description);
+                        }
+                    }
+                });
 
         // todo  needs to be live data so it updated after card change
-        ((TextView)findViewById(R.id.scid_card_title)).setText(cardDetails[1]);
-        ((TextView)findViewById(R.id.scid_card_type)).setText(cardDetails[2]);
-        ((TextView)findViewById(R.id.scid_card_source)).setText(cardDetails[3]);
-        ((TextView)findViewById(R.id.scid_card_description)).setText(cardDetails[4]);
-
     }
 
     /**
@@ -67,7 +74,7 @@ public class ShowCardInDeckActivity extends AppCompatActivity {
         changeCardIntent.putExtra(ShowSingleDeckActivity.STRING_EXTRA_CURRENT_CARD, currentCard);
 
         // send the symbol of the currently selected card
-        changeCardIntent.putExtra(EXTRA_STRING_SYMBOL, Integer.parseInt(cardDetails[0]));
+        changeCardIntent.putExtra(EXTRA_STRING_SYMBOL, currentCardSymbol);
         startActivity(changeCardIntent);
     }
 }

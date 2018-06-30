@@ -85,7 +85,7 @@ public class ShowCardListFragment extends Fragment{
                             AlertDialog.Builder adb = new AlertDialog.Builder(getActivity());
 
                             // todo fix string res
-                            adb.setTitle(R.string.delete_current_card);
+                            adb.setTitle("Karte "+fragmentCards.get(position).title);
 
                             adb.setIcon(android.R.drawable.ic_dialog_alert);
 

@@ -16,5 +16,9 @@ public class ShowCardInDeckViewModel extends ViewModel{
     public LiveData<Card> getCardById(long id){
         return mRepository.getCardById(id);
     }
+
+    LiveData<Card> getCardFromDeckBySymbolAndDeckId(long deckId, int symbol){
+        return mRepository.getCardFromDeckBySymbolAndDeckId(deckId, symbol);
+    }
 }
 
