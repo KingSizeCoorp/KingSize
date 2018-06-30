@@ -3,11 +3,9 @@ package com.movinghead333.kingsize.ui.mydecks.showcardindeckactivity;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -17,7 +15,6 @@ import com.movinghead333.kingsize.ui.mydecks.changercardactivity.ChangeCardActiv
 import com.movinghead333.kingsize.ui.mydecks.showsingledeckactivity.ShowSingleDeckActivity;
 import com.movinghead333.kingsize.utilities.InjectorUtils;
 
-import org.w3c.dom.Text;
 
 public class ShowCardInDeckActivity extends AppCompatActivity {
     private static final String TAG = "SCIDA";

@@ -26,7 +26,6 @@ public class ShowSingleDeckActivity extends AppCompatActivity {
 
     public static final String STRING_EXTRA_CURRENT_DECK = "STRING_EXTRA_CURRENT_DECK";
     public static final String STRING_EXTRA_CURRENT_CARD = "STRING_EXTRA_CURRENT_CARD";
-    public static final String STRING_ARRAY_EXTRA_CARD_DETAILS = "STRING_ARRAY_EXTRA_CARD_DETAILS";
     public static final String STRING_EXTRA_SYMBOL = "STRING_EXTRA_SYMBOL";
 
     private ShowSingleDeckViewModel mViewModel;
