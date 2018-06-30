@@ -6,8 +6,8 @@ android {
         applicationId "com.movinghead333.kingsize"
         minSdkVersion 15
         targetSdkVersion 27
-        versionCode 31
-        versionName "1.0.31"
+        versionCode 32
+        versionName "1.1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {

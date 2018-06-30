@@ -30,6 +30,8 @@
             android:name=".ui.mydecks.changercardactivity.ChangeCardActivity"
             android:label="@string/title_activity_change_card"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".ui.game.choosedeckactivity.ChooseDeckActivity" />
+        <activity android:name=".ui.game.setupplayersactivity.SetupPlayersActivity"></activity>
     </application>
 
 </manifest>
