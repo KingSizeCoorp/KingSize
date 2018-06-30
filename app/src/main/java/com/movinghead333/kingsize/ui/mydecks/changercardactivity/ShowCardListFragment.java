@@ -1,6 +1,5 @@
 package com.movinghead333.kingsize.ui.mydecks.changercardactivity;
 
-import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.DialogInterface;
@@ -16,16 +15,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.movinghead333.kingsize.R;
 import com.movinghead333.kingsize.data.database.Card;
 import com.movinghead333.kingsize.data.database.CardInCardDeckRelation;
 import com.movinghead333.kingsize.ui.CustomListItemClickListener;
 
-import org.w3c.dom.Text;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class ShowCardListFragment extends Fragment{
@@ -48,7 +43,6 @@ public class ShowCardListFragment extends Fragment{
         fragmentListAdapter = new FragmentListAdapter(new CustomListItemClickListener() {
             @Override
             public void onItemClick(View view, final int position) {
-                Toast.makeText(getContext(), "it worked: ", Toast.LENGTH_SHORT).show();
 
                 // the cardrelations of the currentdeck are being observed so they are loaded in when checked
                 mViewModel.cardRelations.observe(getActivity(), new Observer<List<CardInCardDeckRelation>>() {
@@ -65,7 +59,11 @@ public class ShowCardListFragment extends Fragment{
                             AlertDialog.Builder adb = new AlertDialog.Builder(getActivity());
 
                             // todo fix string res
-                            adb.setTitle(R.string.delete_current_card);
+                            adb.setTitle("Aktion bestätigen:");
+
+                            adb.setMessage("Karte \""+mViewModel.getCurrentTitle()+"\" durch Karte \""+
+                                    fragmentCards.get(position).title+"\" ersetzen?");
+
 
                             adb.setIcon(android.R.drawable.ic_dialog_alert);
 
@@ -85,7 +83,10 @@ public class ShowCardListFragment extends Fragment{
                             AlertDialog.Builder adb = new AlertDialog.Builder(getActivity());
 
                             // todo fix string res
-                            adb.setTitle("Karte "+fragmentCards.get(position).title);
+                            adb.setTitle("Aktion bestätigen:");
+
+                            adb.setMessage("Karte \""+mViewModel.getCurrentTitle()+"\" mit Karte \""+
+                                    fragmentCards.get(position).title+"\" welche bereits im Deck ist tauschen?");
 
                             adb.setIcon(android.R.drawable.ic_dialog_alert);
 
@@ -109,6 +110,11 @@ public class ShowCardListFragment extends Fragment{
         mViewModel.getCardSetBySource(source).observe(this, new Observer<List<Card>>() {
             @Override
             public void onChanged(@Nullable List<Card> cards) {
+                for(int i = 0; i < cards.size(); i++){
+                    if(cards.get(i).id == mViewModel.getCurrentCardId()){
+                        cards.remove(i);
+                    }
+                }
                 fragmentCards = cards;
                 fragmentListAdapter.setCards(cards);
             }
@@ -142,11 +148,6 @@ public class ShowCardListFragment extends Fragment{
 
         private CustomListItemClickListener listener;
         private List<Card> cards;
-        private long cardToBeExchanged = -1;
-
-        void setCardToBeExchanged(long id){
-            cardToBeExchanged = id;
-        }
 
         FragmentListAdapter(CustomListItemClickListener listener){
             this.listener = listener;
@@ -188,12 +189,10 @@ public class ShowCardListFragment extends Fragment{
         public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {
             if(cards != null){
                 Card currentCard = cards.get(position);
-                if(currentCard.id != cardToBeExchanged){
                     viewHolder.cardName.setText(currentCard.title);
                     viewHolder.cardType.setText(currentCard.type);
                     viewHolder.cardSource.setText(currentCard.source);
                     viewHolder.cardDescription.setText(currentCard.description);
-                }
             }
         }
 

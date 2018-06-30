@@ -41,8 +41,11 @@ public class ShowSingleDeckActivity extends AppCompatActivity {
         Intent intent = getIntent();
         selectedDeckId = intent.getLongExtra(ShowMyDecksActivity.EXTRA_CARD_DECK_ID, -1);
         Log.d(TAG, String.valueOf(selectedDeckId));
+
+        // setup the dackname that is displayed at the top of the activity
+        String deckName = intent.getStringExtra(ShowMyDecksActivity.EXTRA_STRING_DECK_NAME);
         TextView tv = (TextView)findViewById(R.id.show_single_deck_deck_title);
-        tv.setText(String.valueOf(selectedDeckId));
+        tv.setText(deckName);
 
         // ViewModel initialisation
         ShowSingleDeckViewModelFactory factory =

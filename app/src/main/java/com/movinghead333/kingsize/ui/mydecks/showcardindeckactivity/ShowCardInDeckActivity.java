@@ -20,11 +20,13 @@ public class ShowCardInDeckActivity extends AppCompatActivity {
     private static final String TAG = "SCIDA";
 
     public static final String EXTRA_STRING_SYMBOL = "EXTRA_STRING_SYMBOL";
+    public static final String EXTRA_STRING_CARD_TITLE = "EXTRA_STRING_CARD_TITLE";
 
     private ShowCardInDeckViewModel mViewModel;
     private long currentDeck;
     private long currentCard;
     private int currentCardSymbol;
+    private String currentCardTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +46,7 @@ public class ShowCardInDeckActivity extends AppCompatActivity {
                     @Override
                     public void onChanged(@Nullable Card card) {
                         if(card != null){
+                            currentCardTitle = card.title;
                             ((TextView)findViewById(R.id.scid_card_title)).setText(card.title);
                             ((TextView)findViewById(R.id.scid_card_type)).setText(card.type);
                             ((TextView)findViewById(R.id.scid_card_source)).setText(card.source);
@@ -72,6 +75,10 @@ public class ShowCardInDeckActivity extends AppCompatActivity {
 
         // send the symbol of the currently selected card
         changeCardIntent.putExtra(EXTRA_STRING_SYMBOL, currentCardSymbol);
+
+        // send the card title of the currently selected card
+        changeCardIntent.putExtra(EXTRA_STRING_CARD_TITLE, currentCardTitle);
+
         startActivity(changeCardIntent);
     }
 }

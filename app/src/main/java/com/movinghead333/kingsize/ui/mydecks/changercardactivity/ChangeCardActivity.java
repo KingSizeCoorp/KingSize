@@ -47,6 +47,7 @@ public class ChangeCardActivity extends AppCompatActivity {
                 this.getApplicationContext(), getApplication(), currentDeckId);
         mViewModel = ViewModelProviders.of(this, factory).get(ChangeCardViewModel.class);
         mViewModel.setCurrentSymbol(intent.getIntExtra(ShowCardInDeckActivity.EXTRA_STRING_SYMBOL, -1));
+        mViewModel.setCurrentTitle(intent.getStringExtra(ShowCardInDeckActivity.EXTRA_STRING_CARD_TITLE));
         mViewModel.setCurrentId(currentCardId);
 
         mSectionsPageAdapter = new SectionsPageAdapter(getSupportFragmentManager());

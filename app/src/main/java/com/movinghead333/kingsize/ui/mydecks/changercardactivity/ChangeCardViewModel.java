@@ -23,8 +23,10 @@ public class ChangeCardViewModel extends AndroidViewModel {
     private LiveData<List<Card>> customCards;
     private LiveData<List<Card>> feedCards;
 
+    // attributes from the card displayed in ShowCardInDeckActivity
     private int currentSymbol;
     private long currentId;
+    private String currentTitle;
 
     // fields saving temporary data in order to swap two cards in the deck
     private int exchangeSymbol = -1;
@@ -60,6 +62,18 @@ public class ChangeCardViewModel extends AndroidViewModel {
         // get all feed cards
         feedCards = mRepository.getCardsBySource(
                 getApplication().getResources().getString(R.string.source_feed));
+    }
+
+    long getCurrentCardId(){
+        return currentId;
+    }
+
+    public void setCurrentTitle(String currentTitle){
+        this.currentTitle = currentTitle;
+    }
+
+    public String getCurrentTitle(){
+        return currentTitle;
     }
 
     public LiveData<List<Card>> getCardSetBySource(int source){
