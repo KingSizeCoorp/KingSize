@@ -68,7 +68,9 @@ public class KingSizeRepository {
     /*
         CardDao interaction
     */
-    public List<Card> getCardsBySource(String source){
+
+
+    public LiveData<List<Card>> getCardsBySource(String source){
         try {
             return new getCardsBySourceAsyncTaskDao(mCardDao).execute(source).get();
         } catch (InterruptedException e) {
@@ -84,7 +86,7 @@ public class KingSizeRepository {
 
 
 
-    private static class getCardsBySourceAsyncTaskDao extends AsyncTask<String, Void, List<Card>> {
+    private static class getCardsBySourceAsyncTaskDao extends AsyncTask<String, Void, LiveData<List<Card>>> {
 
         private CardDao mAsyncTaskDao;
 
@@ -93,7 +95,7 @@ public class KingSizeRepository {
         }
 
         @Override
-        protected List<Card> doInBackground(final String... params){
+        protected LiveData<List<Card>> doInBackground(final String... params){
             return mAsyncTaskDao.getCardsBySource(params[0]);
 
         }
@@ -157,6 +159,10 @@ public class KingSizeRepository {
     /*
         CardDeck interaction
      */
+    public LiveData<Card> getCardFromDeckBySymbolAndDeckId(long deckId, int symbol){
+        return mCardDao.getCardFromDeckBySymbolAndDeckId(deckId, symbol);
+    }
+
     public LiveData<List<CardDeck>> getAllDecks(){
         return mCardDeckDao.getAllCardDecks();
     }
@@ -269,16 +275,20 @@ public class KingSizeRepository {
             executors.diskIO().execute(new Runnable() {
                 @Override
                 public void run() {
+                    CardInCardDeckRelation[] relations = new CardInCardDeckRelation[STANDARD_CARDS.length];
                     for(int i = 0; i < STANDARD_CARDS.length; i++){
+
                         Log.d(LOG_TAG, "Relinsert:"+insertionId+"_"+
                                 mAsyncCardDao.getStandardCardByName(STANDARD_CARDS[i])+
                                 "_"+i+"_end");
-                        CardInCardDeckRelation currentRel = new CardInCardDeckRelation(insertionId,
+
+                        relations[i] = new CardInCardDeckRelation(insertionId,
                                 mAsyncCardDao.getStandardCardByName(STANDARD_CARDS[i]),
                                 i);
-                        mRelationDao.insertSingleRelation(currentRel);
-                        Log.d(LOG_TAG, "Relation inserted");
+
                     }
+                    mRelationDao.insertMultiple(relations);
+                    Log.d(LOG_TAG, "Relation inserted");
                 }
             });
         }

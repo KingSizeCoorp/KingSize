@@ -13,7 +13,6 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.movinghead333.kingsize.R;
-import com.movinghead333.kingsize.data.database.Card;
 import com.movinghead333.kingsize.data.datawrappers.CardWithSymbol;
 import com.movinghead333.kingsize.ui.CustomListItemClickListener;
 import com.movinghead333.kingsize.ui.mydecks.showcardindeckactivity.ShowCardInDeckActivity;
@@ -23,10 +22,11 @@ import com.movinghead333.kingsize.utilities.InjectorUtils;
 import java.util.List;
 
 public class ShowSingleDeckActivity extends AppCompatActivity {
+    private static final String TAG = "SSDA";
 
     public static final String STRING_EXTRA_CURRENT_DECK = "STRING_EXTRA_CURRENT_DECK";
     public static final String STRING_EXTRA_CURRENT_CARD = "STRING_EXTRA_CURRENT_CARD";
-    public static final String STRING_ARRAY_EXTRA_CARD_DETAILS = "STRING_ARRAY_EXTRA_CARD_DETAILS";
+    public static final String STRING_EXTRA_SYMBOL = "STRING_EXTRA_SYMBOL";
 
     private ShowSingleDeckViewModel mViewModel;
     private long selectedDeckId = -1;
@@ -40,7 +40,7 @@ public class ShowSingleDeckActivity extends AppCompatActivity {
         // get id from selected deck
         Intent intent = getIntent();
         selectedDeckId = intent.getLongExtra(ShowMyDecksActivity.EXTRA_CARD_DECK_ID, -1);
-
+        Log.d(TAG, String.valueOf(selectedDeckId));
         TextView tv = (TextView)findViewById(R.id.show_single_deck_deck_title);
         tv.setText(String.valueOf(selectedDeckId));
 
@@ -57,15 +57,13 @@ public class ShowSingleDeckActivity extends AppCompatActivity {
             @Override
             public void onItemClick(View view, final int position) {
                 CardWithSymbol selectedCard = mViewModel.getCardsWithSymbol().getValue().get(position);
-                String[] cardDetails = new String[]{
-                        String.valueOf(selectedCard.symbol),
-                        selectedCard.cardName,
-                        selectedCard.cardType,
-                        selectedCard.cardSource,
-                        selectedCard.description
-                };
                 Intent intent = new Intent(ShowSingleDeckActivity.this, ShowCardInDeckActivity.class);
-                intent.putExtra(STRING_ARRAY_EXTRA_CARD_DETAILS, cardDetails);
+                // send necessary extras for the following activities
+                intent.putExtra(STRING_EXTRA_CURRENT_DECK, selectedDeckId);
+                intent.putExtra(STRING_EXTRA_CURRENT_CARD, selectedCard.cardId);
+                intent.putExtra(STRING_EXTRA_SYMBOL, selectedCard.symbol);
+
+                // start new activity
                 startActivity(intent);
             }
         });

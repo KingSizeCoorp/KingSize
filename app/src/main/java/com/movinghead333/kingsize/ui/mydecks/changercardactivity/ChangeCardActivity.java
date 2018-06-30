@@ -2,6 +2,7 @@ package com.movinghead333.kingsize.ui.mydecks.changercardactivity;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -12,12 +13,15 @@ import android.util.Log;
 
 import com.movinghead333.kingsize.R;
 import com.movinghead333.kingsize.data.database.Card;
+import com.movinghead333.kingsize.ui.mydecks.showcardindeckactivity.ShowCardInDeckActivity;
+import com.movinghead333.kingsize.ui.mydecks.showsingledeckactivity.ShowSingleDeckActivity;
 import com.movinghead333.kingsize.utilities.InjectorUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ChangeCardActivity extends AppCompatActivity {
+    private static final String TAG = "ChangeCardActvityLog";
 
     static final String EXTRA_CARD_SOURCE = "EXTRA_CARD_SOURCE";
 
@@ -27,14 +31,23 @@ public class ChangeCardActivity extends AppCompatActivity {
 
     private ViewPager mViewPager;
 
+    private long currentDeckId;
+    private long currentCardId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_card);
 
+        Intent intent = getIntent();
+        currentDeckId = intent.getLongExtra(ShowSingleDeckActivity.STRING_EXTRA_CURRENT_DECK, -1);
+        currentCardId = intent.getLongExtra(ShowSingleDeckActivity.STRING_EXTRA_CURRENT_CARD, -1);
+
         ChangeCardViewModelFactory factory = InjectorUtils.provideChangeCardViewModelFactory(
-                this.getApplicationContext(), getApplication());
+                this.getApplicationContext(), getApplication(), currentDeckId);
         mViewModel = ViewModelProviders.of(this, factory).get(ChangeCardViewModel.class);
+        mViewModel.setCurrentSymbol(intent.getIntExtra(ShowCardInDeckActivity.EXTRA_STRING_SYMBOL, -1));
+        mViewModel.setCurrentId(currentCardId);
 
         mSectionsPageAdapter = new SectionsPageAdapter(getSupportFragmentManager());
 

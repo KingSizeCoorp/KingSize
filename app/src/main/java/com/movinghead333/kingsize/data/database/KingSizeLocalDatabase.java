@@ -11,7 +11,7 @@ import android.support.annotation.NonNull;
 
 import com.movinghead333.kingsize.R;
 
-@Database(entities = {Card.class, CardDeck.class, CardInCardDeckRelation.class}, version = 10)
+@Database(entities = {Card.class, CardDeck.class, CardInCardDeckRelation.class}, version = 15)
 public abstract class KingSizeLocalDatabase extends RoomDatabase{
 
     private static final String DATABASE_NAME = "kingsize_database";
@@ -66,19 +66,9 @@ public abstract class KingSizeLocalDatabase extends RoomDatabase{
         protected Void doInBackground(final Card... params){
             //cardDao.clearCards();
             cardDeckDao.clearCardDecks();
+            if(cardDao.getStandardCardAvailable() == 0)
+                cardDao.insertCardsWithOverride(params);
 
-            if(cardDao.getStandardCardAvailable() == 0){
-                for(int i = 0; i < params.length; i++){
-                    cardDao.insertCard(params[i]);
-                }
-            }
-            /*
-            CardDeck cardDeck = new CardDeck("Kingseis", 36);
-            long idd = cardDeckDao.insertCardDeck(cardDeck);
-
-            cardDeck = new CardDeck("Poker lol", 52);
-            cardDeckDao.insertCardDeck(cardDeck);
-            */
             return null;
         }
     }

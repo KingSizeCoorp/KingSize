@@ -49,8 +49,10 @@ public class InjectorUtils {
         return new ShowCardInDeckViewModelFactory(repository);
     }
 
-    public static ChangeCardViewModelFactory provideChangeCardViewModelFactory(Context context, Application application){
+    public static ChangeCardViewModelFactory provideChangeCardViewModelFactory(Context context,
+                                                                               Application application,
+                                                                               long deckId){
         KingSizeRepository repository = provideRepository(context);
-        return new ChangeCardViewModelFactory(repository, application);
+        return new ChangeCardViewModelFactory(repository, application, deckId);
     }
 }

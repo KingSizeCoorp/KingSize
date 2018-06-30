@@ -3,12 +3,15 @@ package com.movinghead333.kingsize.ui.mydecks.changercardactivity;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +20,7 @@ import android.widget.Toast;
 
 import com.movinghead333.kingsize.R;
 import com.movinghead333.kingsize.data.database.Card;
+import com.movinghead333.kingsize.data.database.CardInCardDeckRelation;
 import com.movinghead333.kingsize.ui.CustomListItemClickListener;
 
 import org.w3c.dom.Text;
@@ -25,6 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ShowCardListFragment extends Fragment{
+    private static final String TAG = "ChangeCardActivityLog";
 
     private List<Card> fragmentCards;
 
@@ -37,15 +42,77 @@ public class ShowCardListFragment extends Fragment{
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        final ChangeCardViewModel mViewModel = ViewModelProviders.of(getActivity()).get(ChangeCardViewModel.class);
+
+        // an item in one of three recyclerviews is clicked
         fragmentListAdapter = new FragmentListAdapter(new CustomListItemClickListener() {
             @Override
-            public void onItemClick(View view, int position) {
+            public void onItemClick(View view, final int position) {
                 Toast.makeText(getContext(), "it worked: ", Toast.LENGTH_SHORT).show();
+
+                // the cardrelations of the currentdeck are being observed so they are loaded in when checked
+                mViewModel.cardRelations.observe(getActivity(), new Observer<List<CardInCardDeckRelation>>() {
+                    @Override
+                    public void onChanged(@Nullable List<CardInCardDeckRelation> cardInCardDeckRelations) {
+                        // get card id from the picked card
+                        final long pickedCardId = fragmentCards.get(position).id;
+
+                        // check if the picked card is a new card (not in the deck already)
+                        if(mViewModel.checkIfNewCardSelected(pickedCardId, cardInCardDeckRelations)){
+                            Log.d(TAG, "new card selected");
+
+                            // alertdialog for the double-check if the user really intended the action
+                            AlertDialog.Builder adb = new AlertDialog.Builder(getActivity());
+
+                            // todo fix string res
+                            adb.setTitle(R.string.delete_current_card);
+
+                            adb.setIcon(android.R.drawable.ic_dialog_alert);
+
+                            adb.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    mViewModel.replaceCardInDeck(pickedCardId);
+                                    getActivity().finish();
+                                } });
+                            adb.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    // do nothing
+                                } });
+                            adb.show();
+                        }else{
+                            Log.d(TAG, "card already in deck");
+                            // alertdialog for the double-check if the user really intended the action
+                            AlertDialog.Builder adb = new AlertDialog.Builder(getActivity());
+
+                            // todo fix string res
+                            adb.setTitle("Karte "+fragmentCards.get(position).title);
+
+                            adb.setIcon(android.R.drawable.ic_dialog_alert);
+
+                            adb.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    mViewModel.swapCardsInDeck();
+                                    getActivity().finish();
+                                } });
+                            adb.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    // do nothing
+                                } });
+                            adb.show();
+                        }
+                    }
+                });
             }
         });
+
         int source = getArguments().getInt(ChangeCardActivity.EXTRA_CARD_SOURCE);
-        ChangeCardViewModel mViewModel = ViewModelProviders.of(getActivity()).get(ChangeCardViewModel.class);
-        fragmentListAdapter.setCards(mViewModel.getCardSetBySource(source));
+        mViewModel.getCardSetBySource(source).observe(this, new Observer<List<Card>>() {
+            @Override
+            public void onChanged(@Nullable List<Card> cards) {
+                fragmentCards = cards;
+                fragmentListAdapter.setCards(cards);
+            }
+        });
 
     }
 
@@ -75,6 +142,11 @@ public class ShowCardListFragment extends Fragment{
 
         private CustomListItemClickListener listener;
         private List<Card> cards;
+        private long cardToBeExchanged = -1;
+
+        void setCardToBeExchanged(long id){
+            cardToBeExchanged = id;
+        }
 
         FragmentListAdapter(CustomListItemClickListener listener){
             this.listener = listener;
@@ -116,10 +188,12 @@ public class ShowCardListFragment extends Fragment{
         public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {
             if(cards != null){
                 Card currentCard = cards.get(position);
-                viewHolder.cardName.setText(currentCard.title);
-                viewHolder.cardType.setText(currentCard.type);
-                viewHolder.cardSource.setText(currentCard.source);
-                viewHolder.cardDescription.setText(currentCard.description);
+                if(currentCard.id != cardToBeExchanged){
+                    viewHolder.cardName.setText(currentCard.title);
+                    viewHolder.cardType.setText(currentCard.type);
+                    viewHolder.cardSource.setText(currentCard.source);
+                    viewHolder.cardDescription.setText(currentCard.description);
+                }
             }
         }
 
