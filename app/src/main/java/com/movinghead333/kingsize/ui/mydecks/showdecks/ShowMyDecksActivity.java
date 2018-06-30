@@ -32,6 +32,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ShowMyDecksActivity extends AppCompatActivity {
+    private static final String TAG = "SMDA";
 
     private MyDecksListAdapter myDecksListAdapter;
     private ShowMyDecksViewModel showMyDecksViewModel;
@@ -39,6 +40,7 @@ public class ShowMyDecksActivity extends AppCompatActivity {
 
     public String[] STANDARD_CARDS = new String[9];
     public static final String EXTRA_CARD_DECK_ID = "EXTRA_CARD_DECK_ID";
+    public static final String EXTRA_STRING_DECK_NAME = "EXTRA_STRING_DECK_NAME";
 
 
     @Override
@@ -62,7 +64,9 @@ public class ShowMyDecksActivity extends AppCompatActivity {
                         ShowSingleDeckActivity.class);
                 CardDeck selectedCardDeck =
                         showMyDecksViewModel.getAllCardDecks().getValue().get(position);
+                Log.d(TAG, String.valueOf(selectedCardDeck.id));
                 intent.putExtra(EXTRA_CARD_DECK_ID, selectedCardDeck.id);
+                intent.putExtra(EXTRA_STRING_DECK_NAME, selectedCardDeck.deckName);
                 startActivity(intent);
             }
         });
@@ -139,9 +143,13 @@ public class ShowMyDecksActivity extends AppCompatActivity {
                 // send data from the AlertDialog to the Activity
                 EditText editText = customLayout.findViewById(R.id.dcnd_et_deck_name);
                 String deckName = editText.getText().toString();
-                int cardCount = Integer.parseInt(dialogSpinner.getSelectedItem().toString());
-                CardDeck newDeck = new CardDeck(deckName, cardCount);
-                showMyDecksViewModel.createDeck(newDeck, STANDARD_CARDS);
+                if(deckName.length() == 0){
+                    Toast.makeText(ShowMyDecksActivity.this, "Ungültiger Name: das Namensfeld ist leer!", Toast.LENGTH_LONG).show();
+                }else{
+                    int cardCount = Integer.parseInt(dialogSpinner.getSelectedItem().toString());
+                    CardDeck newDeck = new CardDeck(deckName, cardCount);
+                    showMyDecksViewModel.createDeck(newDeck, STANDARD_CARDS);
+                }
             }
         });
 

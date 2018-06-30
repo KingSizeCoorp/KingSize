@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.movinghead333.kingsize.ArrayResource;
 import com.movinghead333.kingsize.R;
 import com.movinghead333.kingsize.data.datawrappers.CardWithSymbol;
 import com.movinghead333.kingsize.ui.CustomListItemClickListener;
@@ -68,9 +69,9 @@ public class ShowSingleDeckListAdapter extends RecyclerView.Adapter<ShowSingleDe
                 Log.d("ShowSingleDeckAdapter","Message:"+currentCard.symbol+"X");
             Log.d("ShowSingleDeckAdapter","Message:"+cardsInDeck.size());
 
-            viewHolder.cardSymbol.setText(String.valueOf(currentCard.symbol));
-            viewHolder.cardName.setText(currentCard.cardName);
-            viewHolder.cardType.setText(currentCard.cardType);
+            viewHolder.cardSymbol.setText("Karte im Spiel: \""+ArrayResource.CARDS_IN_36_CARDSDECK[currentCard.symbol]+"\"");
+            viewHolder.cardName.setText("Aktion: "+currentCard.cardName);
+            viewHolder.cardType.setText("Aktionstyp: "+currentCard.cardType);
             viewHolder.cardSource.setText(currentCard.cardSource);
 
         }

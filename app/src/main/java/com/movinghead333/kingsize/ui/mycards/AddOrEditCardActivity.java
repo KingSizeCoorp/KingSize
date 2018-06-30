@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.movinghead333.kingsize.R;
 import com.movinghead333.kingsize.ui.mycards.showmycards.ShowMyCardsActivity;
@@ -63,6 +64,10 @@ public class AddOrEditCardActivity extends AppCompatActivity {
 
     public void saveEntry(View view){
         String title = titleEditText.getText().toString();
+        if(title.length() == 0){
+            Toast.makeText(this, "Ungültiger Kartenname: Kartenname ist leer!", Toast.LENGTH_LONG).show();
+            return;
+        }
         String description = descriptionEditText.getText().toString();
         String type = typeSpinner.getSelectedItem().toString();
 
