@@ -5,9 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/green"
-    android:layout_marginBottom="8dp"
-    android:layout_marginLeft="8dp"
-    android:layout_marginRight="8dp">
+    android:layout_marginBottom="8dp">
 
     <TextView
         android:id="@+id/list_item_player_name_text_view"
@@ -29,7 +27,7 @@
 
     <Button
         android:id="@+id/list_item_player_name_remove_button"
-        android:layout_width="40dp"
+        android:layout_width="0dp"
         android:layout_height="40dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
@@ -37,6 +35,7 @@
         android:layout_marginTop="8dp"
         android:text="-"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 </android.support.constraint.ConstraintLayout>

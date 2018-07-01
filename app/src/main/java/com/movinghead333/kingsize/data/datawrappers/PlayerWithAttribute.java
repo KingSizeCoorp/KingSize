@@ -20,4 +20,8 @@ public class PlayerWithAttribute {
     public String getStatusEffekt() {
         return this.statusEffekt;
     }
+
+    public void setPlayerName(String playerName){
+        this.playerName  = playerName;
+    }
 }

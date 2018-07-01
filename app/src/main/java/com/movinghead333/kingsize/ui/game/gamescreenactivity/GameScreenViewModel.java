@@ -102,7 +102,7 @@ class GameScreenViewModel extends AndroidViewModel{
         if(drawnCardWithSymbol.cardType == getApplication().getResources().getString(R.string.card_type_status)){
             for(int i = 0; i < playerStatusEffects.size(); i++){
                 if(playerStatusEffects.get(i).getStatusEffekt() == drawnCardWithSymbol.cardType){
-                    
+
                 }
             }
         }
