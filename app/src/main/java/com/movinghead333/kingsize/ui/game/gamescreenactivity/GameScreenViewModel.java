@@ -3,7 +3,6 @@ package com.movinghead333.kingsize.ui.game.gamescreenactivity;
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.ViewModel;
 
 import com.movinghead333.kingsize.ArrayResource;
 import com.movinghead333.kingsize.R;
@@ -11,7 +10,6 @@ import com.movinghead333.kingsize.data.KingSizeRepository;
 import com.movinghead333.kingsize.data.datawrappers.CardWithSymbol;
 import com.movinghead333.kingsize.data.datawrappers.PlayerWithAttribute;
 
-import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -41,10 +39,10 @@ class GameScreenViewModel extends AndroidViewModel{
     private String currentlyDrawnCardName;
 
     // ShowStatusEffectsActivity
-    List<PlayerWithAttribute> playerStatusEffects = new ArrayList<PlayerWithAttribute>();
+    private List<PlayerWithAttribute> playerStatusEffects = new ArrayList<PlayerWithAttribute>();
 
     // ShowTokensActivity
-    List<PlayerWithAttribute> playerTokens = new ArrayList<PlayerWithAttribute>();
+    private List<PlayerWithAttribute> playerTokens = new ArrayList<PlayerWithAttribute>();
 
     // constructor
     GameScreenViewModel(KingSizeRepository repository, Application application){
@@ -101,7 +99,7 @@ class GameScreenViewModel extends AndroidViewModel{
         // check if cardType is Status
         if(drawnCardWithSymbol.cardType == getApplication().getResources().getString(R.string.card_type_status)){
             for(int i = 0; i < playerStatusEffects.size(); i++){
-                if(playerStatusEffects.get(i).getStatusEffekt() == drawnCardWithSymbol.cardType){
+                if(playerStatusEffects.get(i).getAttribute() == drawnCardWithSymbol.cardType){
 
                 }
             }
@@ -122,6 +120,14 @@ class GameScreenViewModel extends AndroidViewModel{
 
 
     // getters and setter
+    List<PlayerWithAttribute> getPlayerStatusEffects(){
+        return this.playerStatusEffects;
+    }
+
+    List<PlayerWithAttribute> getPlayerTokens(){
+        return this.playerTokens;
+    }
+
     String getCurrentCardSymbol(){
         return currentCardSymbol;
     }

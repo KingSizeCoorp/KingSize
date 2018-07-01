@@ -11,15 +11,18 @@ import android.widget.TextView;
 
 import com.movinghead333.kingsize.R;
 import com.movinghead333.kingsize.data.datawrappers.CardWithSymbol;
+import com.movinghead333.kingsize.data.datawrappers.PlayerWithAttribute;
 import com.movinghead333.kingsize.ui.game.choosedeckactivity.ChooseDeckActivity;
 import com.movinghead333.kingsize.ui.game.setupplayersactivity.SetupPlayersActivity;
+import com.movinghead333.kingsize.ui.game.showstatuseffects.ShowStatusEffectsActivity;
+import com.movinghead333.kingsize.ui.game.showstatuseffects.ShowStatusEffectsListAdapter;
 import com.movinghead333.kingsize.utilities.InjectorUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class GameScreenActivity extends AppCompatActivity {
-
+    public static final String EXTRA_STATUS_EFFECTS = "EXTRA_STATUS_EFFECTS";
     private GameScreenViewModel mViewModel;
     TextView currentPlayerTextView;
     TextView nextPlayerTextView;
@@ -83,6 +86,15 @@ public class GameScreenActivity extends AppCompatActivity {
     }
 
     public void showStatusEffects(View view){
+        Intent intent = new Intent(GameScreenActivity.this, ShowStatusEffectsActivity.class);
 
+        // put content into intent
+        Bundle bundle = new Bundle();
+        List<PlayerWithAttribute> list = mViewModel.getPlayerStatusEffects();
+        PlayerWithAttribute[] array = list.toArray(new PlayerWithAttribute[list.size()]);
+        bundle.putParcelableArray(EXTRA_STATUS_EFFECTS, array);
+        intent.putExtras(bundle);
+
+        startActivity(intent);
     }
 }
