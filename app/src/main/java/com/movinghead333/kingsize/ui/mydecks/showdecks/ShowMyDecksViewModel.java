@@ -45,10 +45,6 @@ public class ShowMyDecksViewModel extends ViewModel {
         mRepository.insertCardToCardDeckRelation(cardInCardDeckRelation);
     }
 
-    public long getStandardCardByName(){
-        return mRepository.getStandardCardByName();
-    }
-
     public void createDeck(CardDeck cardDeck, String[] standardCards){
         mRepository.insertFullDeck(cardDeck, standardCards);
     }

@@ -34,7 +34,6 @@ public class KingSizeRepository {
 
     // access variables
     private static long insertionId;
-    private static long standardCardId;
 
 
     private KingSizeRepository(CardDao cardDao, CardDeckDao cardDeckDao, CardInCardDeckRelationDao
@@ -145,15 +144,6 @@ public class KingSizeRepository {
         });
     }
 
-    public long getStandardCardByName(){
-        mExecutors.diskIO().execute(new Runnable() {
-            @Override
-            public void run() {
-                //standardCardId = mCardDao.getStandardCardByName();
-            }
-        });
-        return standardCardId;
-    }
 
 
     /*

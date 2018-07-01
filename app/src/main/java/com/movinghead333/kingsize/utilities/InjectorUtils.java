@@ -7,6 +7,7 @@ import com.movinghead333.kingsize.AppExecutors;
 import com.movinghead333.kingsize.data.KingSizeRepository;
 import com.movinghead333.kingsize.data.database.KingSizeLocalDatabase;
 import com.movinghead333.kingsize.data.network.KingSizeNetworkDataSource;
+import com.movinghead333.kingsize.ui.game.choosedeckactivity.ChooseDeckViewModelFactory;
 import com.movinghead333.kingsize.ui.mycards.showmycards.ShowMyCardsViewModelFactory;
 import com.movinghead333.kingsize.ui.mydecks.changercardactivity.ChangeCardViewModelFactory;
 import com.movinghead333.kingsize.ui.mydecks.showcardindeckactivity.ShowCardInDeckViewModelFactory;
@@ -44,7 +45,7 @@ public class InjectorUtils {
         return new ShowSingleDeckViewModelFactory(repository, id);
     }
 
-    public static ShowCardInDeckViewModelFactory providShowCardInDeckViewModelFactory(Context context){
+    public static ShowCardInDeckViewModelFactory provideShowCardInDeckViewModelFactory(Context context){
         KingSizeRepository repository = provideRepository(context);
         return new ShowCardInDeckViewModelFactory(repository);
     }
@@ -54,5 +55,10 @@ public class InjectorUtils {
                                                                                long deckId){
         KingSizeRepository repository = provideRepository(context);
         return new ChangeCardViewModelFactory(repository, application, deckId);
+    }
+
+    public static ChooseDeckViewModelFactory provideChooseDeckViewModelFactory(Context context){
+        KingSizeRepository repository = provideRepository(context);
+        return new ChooseDeckViewModelFactory(repository);
     }
 }

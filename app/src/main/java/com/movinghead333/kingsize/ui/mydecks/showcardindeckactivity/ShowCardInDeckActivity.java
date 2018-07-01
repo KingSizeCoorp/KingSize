@@ -39,7 +39,7 @@ public class ShowCardInDeckActivity extends AppCompatActivity {
         currentCardSymbol = intent.getIntExtra(ShowSingleDeckActivity.STRING_EXTRA_SYMBOL, -1);
 
         ShowCardInDeckViewModelFactory factory = InjectorUtils
-                .providShowCardInDeckViewModelFactory(this.getApplicationContext());
+                .provideShowCardInDeckViewModelFactory(this.getApplicationContext());
         mViewModel = ViewModelProviders.of(this, factory).get(ShowCardInDeckViewModel.class);
         mViewModel.getCardFromDeckBySymbolAndDeckId(currentDeck, currentCardSymbol).observe(this,
                 new Observer<Card>() {
