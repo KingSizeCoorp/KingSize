@@ -63,8 +63,9 @@ public class InjectorUtils {
         return new ChooseDeckViewModelFactory(repository);
     }
 
-    public  static GameScreenViewModelFactory provideGameScreenViewModelFactory(Context context){
+    public  static GameScreenViewModelFactory provideGameScreenViewModelFactory(Context context,
+        Application application){
         KingSizeRepository repository = provideRepository(context);
-        return new GameScreenViewModelFactory(repository);
+        return new GameScreenViewModelFactory(repository, application);
     }
 }

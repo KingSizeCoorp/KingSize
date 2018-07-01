@@ -47,7 +47,8 @@ public class GameScreenActivity extends AppCompatActivity {
 
         // create ViewModel
         GameScreenViewModelFactory factory =
-                InjectorUtils.provideGameScreenViewModelFactory(this.getApplicationContext());
+                InjectorUtils.provideGameScreenViewModelFactory(this.getApplicationContext(),
+                        getApplication());
         mViewModel = ViewModelProviders.of(this, factory).get(GameScreenViewModel.class);
         mViewModel.setDeckId(selectedDeckId);
         mViewModel.setPlayers(players);

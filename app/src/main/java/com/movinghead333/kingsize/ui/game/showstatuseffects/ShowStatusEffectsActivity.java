@@ -5,11 +5,11 @@ import android.os.Bundle;
 
 import com.movinghead333.kingsize.R;
 
-public class ShowStatusEffectsAcitvity extends AppCompatActivity {
+public class ShowStatusEffectsActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_show_status_effects_acitvity);
+        setContentView(R.layout.activity_show_status_effects);
     }
 }

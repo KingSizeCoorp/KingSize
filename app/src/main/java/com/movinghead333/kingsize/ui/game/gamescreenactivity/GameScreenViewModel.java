@@ -1,17 +1,22 @@
 package com.movinghead333.kingsize.ui.game.gamescreenactivity;
 
+import android.app.Application;
+import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.ViewModel;
 
 import com.movinghead333.kingsize.ArrayResource;
+import com.movinghead333.kingsize.R;
 import com.movinghead333.kingsize.data.KingSizeRepository;
 import com.movinghead333.kingsize.data.datawrappers.CardWithSymbol;
+import com.movinghead333.kingsize.data.datawrappers.PlayerWithAttribute;
 
+import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-class GameScreenViewModel extends ViewModel{
+class GameScreenViewModel extends AndroidViewModel{
 
     // data source
     private KingSizeRepository mRepository;
@@ -27,15 +32,23 @@ class GameScreenViewModel extends ViewModel{
     private ArrayList<Integer> cardIndexList = new ArrayList<>();
     Random random;
 
-    // ui-data-holders
+    // ui-data-holders for:
+    // GameScreenActivity
     private String currentPlayerName;
     private String nextPlayerName;
     private String currentCardSymbol;
     private String currentCardType;
     private String currentlyDrawnCardName;
 
+    // ShowStatusEffectsActivity
+    List<PlayerWithAttribute> playerStatusEffects = new ArrayList<PlayerWithAttribute>();
+
+    // ShowTokensActivity
+    List<PlayerWithAttribute> playerTokens = new ArrayList<PlayerWithAttribute>();
+
     // constructor
-    GameScreenViewModel(KingSizeRepository repository){
+    GameScreenViewModel(KingSizeRepository repository, Application application){
+        super(application);
         this.mRepository = repository;
     }
 
@@ -71,10 +84,28 @@ class GameScreenViewModel extends ViewModel{
         currentPlayerName = players[currentPlayer];
         nextPlayer = (nextPlayer + 1) % amountOfPlayers;
         nextPlayerName = players[nextPlayer];
+
+        // get Card which is currently drawn
         CardWithSymbol drawnCardWithSymbol = cards.get(drawCard());
+
+        // set data-holders for GameScreenActivity
         currentCardSymbol = ArrayResource.CARDS_IN_36_CARDSDECK[drawnCardWithSymbol.symbol];
         currentCardType = drawnCardWithSymbol.cardType;
         currentlyDrawnCardName = drawnCardWithSymbol.cardName;
+
+        // check if cardType is Token
+        if(drawnCardWithSymbol.cardType == getApplication().getResources().getString(R.string.card_type_token)){
+            playerTokens.add(new PlayerWithAttribute(players[currentPlayer], drawnCardWithSymbol.cardName));
+        }
+
+        // check if cardType is Status
+        if(drawnCardWithSymbol.cardType == getApplication().getResources().getString(R.string.card_type_status)){
+            for(int i = 0; i < playerStatusEffects.size(); i++){
+                if(playerStatusEffects.get(i).getStatusEffekt() == drawnCardWithSymbol.cardType){
+                    
+                }
+            }
+        }
     }
 
     /**

@@ -33,7 +33,7 @@
         <activity android:name=".ui.game.choosedeckactivity.ChooseDeckActivity" />
         <activity android:name=".ui.game.setupplayersactivity.SetupPlayersActivity" />
         <activity android:name=".ui.game.gamescreenactivity.GameScreenActivity" />
-        <activity android:name=".ui.game.showstatuseffects.ShowStatusEffectsAcitvity" />
+        <activity android:name=".ui.game.showstatuseffects.ShowStatusEffectsActivity" />
         <activity android:name=".ui.game.showtokensactivity.ShowTokensActivity"></activity>
     </application>
 
