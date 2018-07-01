@@ -3,13 +3,20 @@ package com.movinghead333.kingsize.ui.game.gamescreenactivity;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.ViewModel;
 
+import com.movinghead333.kingsize.ArrayResource;
 import com.movinghead333.kingsize.data.KingSizeRepository;
 import com.movinghead333.kingsize.data.datawrappers.CardWithSymbol;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 class GameScreenViewModel extends ViewModel{
 
+    // data source
+    private KingSizeRepository mRepository;
+
+    // game-data
     private String[] players;
     private long deckId;
     private List<CardWithSymbol> cards;
@@ -17,12 +24,15 @@ class GameScreenViewModel extends ViewModel{
     private boolean isStarted = false;
     private int currentPlayer;
     private int nextPlayer;
+    private ArrayList<Integer> cardIndexList = new ArrayList<>();
+    Random random;
 
     // ui-data-holders
     private String currentPlayerName;
     private String nextPlayerName;
-
-    private KingSizeRepository mRepository;
+    private String currentCardSymbol;
+    private String currentCardType;
+    private String currentlyDrawnCardName;
 
     // constructor
     GameScreenViewModel(KingSizeRepository repository){
@@ -32,11 +42,27 @@ class GameScreenViewModel extends ViewModel{
     // game-logic
     void startGame(){
         if(!isStarted){
+            // setup players
             currentPlayer = 0;
             currentPlayerName = players[currentPlayer];
             nextPlayer = 1;
             nextPlayerName = players[nextPlayer];
-            //Todo set first card
+
+            // setup cards
+            for(int x = 0; x < cards.size(); x++){
+                for(int y = 0; y < 4; y++){
+                    cardIndexList.add(x);
+                }
+            }
+
+            // setup random object
+            random = new Random();
+
+            // draw first card
+            CardWithSymbol drawnCardWithSymbol = cards.get(drawCard());
+            currentCardSymbol = ArrayResource.CARDS_IN_36_CARDSDECK[drawnCardWithSymbol.symbol];
+            currentCardType = drawnCardWithSymbol.cardType;
+            currentlyDrawnCardName = drawnCardWithSymbol.cardName;
         }
     }
 
@@ -45,10 +71,38 @@ class GameScreenViewModel extends ViewModel{
         currentPlayerName = players[currentPlayer];
         nextPlayer = (nextPlayer + 1) % amountOfPlayers;
         nextPlayerName = players[nextPlayer];
+        CardWithSymbol drawnCardWithSymbol = cards.get(drawCard());
+        currentCardSymbol = ArrayResource.CARDS_IN_36_CARDSDECK[drawnCardWithSymbol.symbol];
+        currentCardType = drawnCardWithSymbol.cardType;
+        currentlyDrawnCardName = drawnCardWithSymbol.cardName;
+    }
+
+    /**
+     * Randomly draws a card from the cardIndexList and returns the index and removes the element
+     * after finding it
+     * @return the index of the drawn card (e.g. with 9 cards in deck a int between 0-8
+     */
+    private int drawCard(){
+        int randomDraw = random.nextInt(cardIndexList.size());
+        int drawnCardIndex = cardIndexList.get(randomDraw);
+        cardIndexList.remove(randomDraw);
+        return drawnCardIndex;
     }
 
 
     // getters and setter
+    String getCurrentCardSymbol(){
+        return currentCardSymbol;
+    }
+
+    String getCurrentCardType(){
+        return currentCardType;
+    }
+
+    String getCurrentlyDrawnCardName(){
+        return currentlyDrawnCardName;
+    }
+
     String getCurrentPlayerName(){
         return this.currentPlayerName;
     }

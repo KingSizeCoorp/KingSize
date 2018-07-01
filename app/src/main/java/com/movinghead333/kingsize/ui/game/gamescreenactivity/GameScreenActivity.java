@@ -3,7 +3,6 @@ package com.movinghead333.kingsize.ui.game.gamescreenactivity;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
-import android.preference.TwoStatePreference;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -24,6 +23,9 @@ public class GameScreenActivity extends AppCompatActivity {
     private GameScreenViewModel mViewModel;
     TextView currentPlayerTextView;
     TextView nextPlayerTextView;
+    TextView cardSymbolTextView;
+    TextView cardTypeTextViewe;
+    TextView cardNameTextView;
     //Todo currentCardTextView
 
     @Override
@@ -33,6 +35,9 @@ public class GameScreenActivity extends AppCompatActivity {
 
         currentPlayerTextView = (TextView)findViewById(R.id.gsa_current_player);
         nextPlayerTextView = (TextView)findViewById(R.id.gsa_next_player);
+        cardSymbolTextView = (TextView)findViewById(R.id.gsa_card_symbol);
+        cardTypeTextViewe = (TextView)findViewById(R.id.gsa_card_type);
+        cardNameTextView = (TextView)findViewById(R.id.gsa_card_name);
 
         // get caller-intent
         Intent intent = getIntent();
@@ -61,7 +66,9 @@ public class GameScreenActivity extends AppCompatActivity {
     private void updateUI(){
         currentPlayerTextView.setText(mViewModel.getCurrentPlayerName());
         nextPlayerTextView.setText((mViewModel.getNextPlayerName()));
-        //todo  update currentCardTextView
+        cardSymbolTextView.setText(mViewModel.getCurrentCardSymbol());
+        cardTypeTextViewe.setText(mViewModel.getCurrentCardType());
+        cardNameTextView.setText(mViewModel.getCurrentlyDrawnCardName());
     }
 
     // invoked when when button "next_card" is pressed

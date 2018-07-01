@@ -119,7 +119,7 @@
         app:layout_constraintTop_toBottomOf="@+id/gsa_next_player" />
 
     <TextView
-        android:id="@+id/textView6"
+        android:id="@+id/gsa_card_symbol"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -144,7 +144,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
     <TextView
-        android:id="@+id/textView8"
+        android:id="@+id/gsa_card_type"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -172,7 +172,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
     <TextView
-        android:id="@+id/textView10"
+        android:id="@+id/gsa_card_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
