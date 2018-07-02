@@ -15,19 +15,22 @@ import com.movinghead333.kingsize.data.datawrappers.PlayerWithAttribute;
 import com.movinghead333.kingsize.ui.game.choosedeckactivity.ChooseDeckActivity;
 import com.movinghead333.kingsize.ui.game.setupplayersactivity.SetupPlayersActivity;
 import com.movinghead333.kingsize.ui.game.showstatuseffects.ShowStatusEffectsActivity;
-import com.movinghead333.kingsize.ui.game.showstatuseffects.ShowStatusEffectsListAdapter;
+import com.movinghead333.kingsize.ui.game.showtokensactivity.ShowTokensActivity;
 import com.movinghead333.kingsize.utilities.InjectorUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class GameScreenActivity extends AppCompatActivity {
+    // extra constants
     public static final String EXTRA_STATUS_EFFECTS = "EXTRA_STATUS_EFFECTS";
+    public static final String EXTRA_TOKENS = "EXTRA_TOKENS";
+
     private GameScreenViewModel mViewModel;
     TextView currentPlayerTextView;
     TextView nextPlayerTextView;
     TextView cardSymbolTextView;
-    TextView cardTypeTextViewe;
+    TextView cardTypeTextView;
     TextView cardNameTextView;
     //Todo currentCardTextView
 
@@ -39,7 +42,7 @@ public class GameScreenActivity extends AppCompatActivity {
         currentPlayerTextView = (TextView)findViewById(R.id.gsa_current_player);
         nextPlayerTextView = (TextView)findViewById(R.id.gsa_next_player);
         cardSymbolTextView = (TextView)findViewById(R.id.gsa_card_symbol);
-        cardTypeTextViewe = (TextView)findViewById(R.id.gsa_card_type);
+        cardTypeTextView = (TextView)findViewById(R.id.gsa_card_type);
         cardNameTextView = (TextView)findViewById(R.id.gsa_card_name);
 
         // get caller-intent
@@ -71,7 +74,7 @@ public class GameScreenActivity extends AppCompatActivity {
         currentPlayerTextView.setText(mViewModel.getCurrentPlayerName());
         nextPlayerTextView.setText((mViewModel.getNextPlayerName()));
         cardSymbolTextView.setText(mViewModel.getCurrentCardSymbol());
-        cardTypeTextViewe.setText(mViewModel.getCurrentCardType());
+        cardTypeTextView.setText(mViewModel.getCurrentCardType());
         cardNameTextView.setText(mViewModel.getCurrentlyDrawnCardName());
     }
 
@@ -82,7 +85,15 @@ public class GameScreenActivity extends AppCompatActivity {
     }
 
     public void showTokens(View view){
+        Intent intent = new Intent(GameScreenActivity.this, ShowTokensActivity.class);
 
+        // put ui-data as extra
+        Bundle bundle = new Bundle();
+        ArrayList<PlayerWithAttribute> arrayList = mViewModel.getPlayerTokens();
+        bundle.putParcelableArrayList(EXTRA_TOKENS, arrayList);
+        intent.putExtras(bundle);
+
+        startActivity(intent);
     }
 
     public void showStatusEffects(View view){
@@ -90,9 +101,8 @@ public class GameScreenActivity extends AppCompatActivity {
 
         // put content into intent
         Bundle bundle = new Bundle();
-        List<PlayerWithAttribute> list = mViewModel.getPlayerStatusEffects();
-        PlayerWithAttribute[] array = list.toArray(new PlayerWithAttribute[list.size()]);
-        bundle.putParcelableArray(EXTRA_STATUS_EFFECTS, array);
+        ArrayList<PlayerWithAttribute> arrayList = mViewModel.getPlayerStatusEffects();
+        bundle.putParcelableArrayList(EXTRA_STATUS_EFFECTS, arrayList);
         intent.putExtras(bundle);
 
         startActivity(intent);

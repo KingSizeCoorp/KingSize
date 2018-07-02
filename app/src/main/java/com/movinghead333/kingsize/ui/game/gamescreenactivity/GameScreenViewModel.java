@@ -39,10 +39,10 @@ class GameScreenViewModel extends AndroidViewModel{
     private String currentlyDrawnCardName;
 
     // ShowStatusEffectsActivity
-    private List<PlayerWithAttribute> playerStatusEffects = new ArrayList<PlayerWithAttribute>();
+    private ArrayList<PlayerWithAttribute> playerStatusEffects = new ArrayList<PlayerWithAttribute>();
 
     // ShowTokensActivity
-    private List<PlayerWithAttribute> playerTokens = new ArrayList<PlayerWithAttribute>();
+    private ArrayList<PlayerWithAttribute> playerTokens = new ArrayList<PlayerWithAttribute>();
 
     // constructor
     GameScreenViewModel(KingSizeRepository repository, Application application){
@@ -92,18 +92,24 @@ class GameScreenViewModel extends AndroidViewModel{
         currentlyDrawnCardName = drawnCardWithSymbol.cardName;
 
         // check if cardType is Token
-        if(drawnCardWithSymbol.cardType == getApplication().getResources().getString(R.string.card_type_token)){
+        if(drawnCardWithSymbol.cardType.equals(getApplication().getResources().getString(R.string.card_type_token))){
             playerTokens.add(new PlayerWithAttribute(players[currentPlayer], drawnCardWithSymbol.cardName));
+            return;
         }
 
         // check if cardType is Status
-        if(drawnCardWithSymbol.cardType == getApplication().getResources().getString(R.string.card_type_status)){
+        if(drawnCardWithSymbol.cardType.equals(getApplication().getResources().getString(R.string.card_type_status))){
             for(int i = 0; i < playerStatusEffects.size(); i++){
-                if(playerStatusEffects.get(i).getAttribute() == drawnCardWithSymbol.cardType){
-
+                if(playerStatusEffects.get(i).getAttribute().equals(drawnCardWithSymbol.cardName)){
+                    playerStatusEffects.get(i).setPlayerName(players[currentPlayer]);
+                    return;
                 }
             }
+            playerStatusEffects.add(new PlayerWithAttribute(players[currentPlayer], drawnCardWithSymbol.cardName));
+            return;
         }
+
+        // todo: check for rule
     }
 
     /**
@@ -120,11 +126,11 @@ class GameScreenViewModel extends AndroidViewModel{
 
 
     // getters and setter
-    List<PlayerWithAttribute> getPlayerStatusEffects(){
+    ArrayList<PlayerWithAttribute> getPlayerStatusEffects(){
         return this.playerStatusEffects;
     }
 
-    List<PlayerWithAttribute> getPlayerTokens(){
+    ArrayList<PlayerWithAttribute> getPlayerTokens(){
         return this.playerTokens;
     }
 

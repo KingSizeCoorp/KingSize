@@ -10,13 +10,15 @@ import android.widget.TextView;
 import com.movinghead333.kingsize.R;
 import com.movinghead333.kingsize.data.datawrappers.PlayerWithAttribute;
 
+import java.util.ArrayList;
+
 
 public class ShowStatusEffectsListAdapter
         extends RecyclerView.Adapter<ShowStatusEffectsListAdapter.ViewHolder>{
 
-    private PlayerWithAttribute[] statusEffects;
+    private ArrayList<PlayerWithAttribute> statusEffects;
 
-    ShowStatusEffectsListAdapter(PlayerWithAttribute[] statusEffects){
+    ShowStatusEffectsListAdapter(ArrayList<PlayerWithAttribute> statusEffects){
         this.statusEffects  = statusEffects;
     }
 
@@ -32,7 +34,7 @@ public class ShowStatusEffectsListAdapter
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {
         if(statusEffects != null){
-            PlayerWithAttribute current = statusEffects[position];
+            PlayerWithAttribute current = statusEffects.get(position);
             viewHolder.textViewStatusEffect.setText(current.getAttribute());
             viewHolder.textViewPlayerName.setText(current.getPlayerName());
         }
@@ -43,7 +45,7 @@ public class ShowStatusEffectsListAdapter
         if(statusEffects == null){
             return 0;
         }else{
-            return statusEffects.length;
+            return statusEffects.size();
         }
     }
 

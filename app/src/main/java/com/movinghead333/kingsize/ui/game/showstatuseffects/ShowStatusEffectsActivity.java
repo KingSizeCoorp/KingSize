@@ -10,6 +10,8 @@ import com.movinghead333.kingsize.R;
 import com.movinghead333.kingsize.data.datawrappers.PlayerWithAttribute;
 import com.movinghead333.kingsize.ui.game.gamescreenactivity.GameScreenActivity;
 
+import java.util.ArrayList;
+
 public class ShowStatusEffectsActivity extends AppCompatActivity {
 
     @Override
@@ -20,8 +22,8 @@ public class ShowStatusEffectsActivity extends AppCompatActivity {
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         //todo fix object passing
-        PlayerWithAttribute[] playerWithAttributes =
-                (PlayerWithAttribute[])bundle.getParcelableArray(GameScreenActivity.EXTRA_STATUS_EFFECTS);
+        ArrayList<PlayerWithAttribute> playerWithAttributes =
+                bundle.getParcelableArrayList(GameScreenActivity.EXTRA_STATUS_EFFECTS);
 
         ShowStatusEffectsListAdapter adapter = new ShowStatusEffectsListAdapter(playerWithAttributes);
 
