@@ -25,6 +25,7 @@ public class GameScreenActivity extends AppCompatActivity {
     // extra constants
     public static final String EXTRA_STATUS_EFFECTS = "EXTRA_STATUS_EFFECTS";
     public static final String EXTRA_TOKENS = "EXTRA_TOKENS";
+    public static final int RC_USE_TOKEN = 0;
 
     private GameScreenViewModel mViewModel;
     TextView currentPlayerTextView;
@@ -78,6 +79,17 @@ public class GameScreenActivity extends AppCompatActivity {
         cardNameTextView.setText(mViewModel.getCurrentlyDrawnCardName());
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == RC_USE_TOKEN){
+            if(resultCode == ShowTokensActivity.RESULT_CODE_USE_TOKEN){
+                int removeIndex = data.getIntExtra(ShowTokensActivity.EXTRA_INT_REMOVE_INDEX, -1);
+                mViewModel.removeTokenByIndex(removeIndex);
+            }
+        }
+    }
+
     // invoked when when button "next_card" is pressed
     public void nextCard(View view){
         mViewModel.moveToNextPlayer();
@@ -93,7 +105,7 @@ public class GameScreenActivity extends AppCompatActivity {
         bundle.putParcelableArrayList(EXTRA_TOKENS, arrayList);
         intent.putExtras(bundle);
 
-        startActivity(intent);
+        startActivityForResult(intent, RC_USE_TOKEN);
     }
 
     public void showStatusEffects(View view){

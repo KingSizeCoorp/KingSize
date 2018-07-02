@@ -124,6 +124,10 @@ class GameScreenViewModel extends AndroidViewModel{
         return drawnCardIndex;
     }
 
+    void removeTokenByIndex(int index){
+        playerTokens.remove(index);
+    }
+
 
     // getters and setter
     ArrayList<PlayerWithAttribute> getPlayerStatusEffects(){

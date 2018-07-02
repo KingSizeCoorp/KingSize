@@ -9,15 +9,19 @@ import android.widget.TextView;
 
 import com.movinghead333.kingsize.R;
 import com.movinghead333.kingsize.data.datawrappers.PlayerWithAttribute;
+import com.movinghead333.kingsize.ui.CustomListItemClickListener;
 
 import java.util.ArrayList;
 
 public class ShowTokensListAdapter extends RecyclerView.Adapter<ShowTokensListAdapter.ViewHolder>{
 
     private ArrayList<PlayerWithAttribute> playersWithTokens;
+    private CustomListItemClickListener listener;
 
-    ShowTokensListAdapter(ArrayList<PlayerWithAttribute> playersWithTokens){
+    ShowTokensListAdapter(ArrayList<PlayerWithAttribute> playersWithTokens,
+                          CustomListItemClickListener listener){
         this.playersWithTokens  = playersWithTokens;
+        this.listener = listener;
     }
 
     @NonNull
@@ -26,7 +30,17 @@ public class ShowTokensListAdapter extends RecyclerView.Adapter<ShowTokensListAd
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.list_item_token_item, parent, false);
 
-        return new ShowTokensListAdapter.ViewHolder(view);
+        final ViewHolder viewHolder = new ShowTokensListAdapter.ViewHolder(view);
+
+        view.findViewById(R.id.list_item_token_item_button_remove)
+                .setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        listener.onItemClick(v, viewHolder.getLayoutPosition());
+                    }
+                });
+
+        return viewHolder;
     }
 
     @Override
