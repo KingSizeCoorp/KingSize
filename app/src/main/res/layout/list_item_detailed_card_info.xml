@@ -4,22 +4,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="4dp"
-    android:background="@color/blue">
+    android:background="@color/blue"
+    android:layout_marginBottom="8dp"
+    tools:layout_editor_absoluteX="4dp"
+    tools:layout_editor_absoluteY="81dp">
 
     <TextView
         android:id="@+id/detailed_card_item_title"
         style="@style/detailed_card_item_style"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="27dp"
         android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="-"
+        android:text="kartenname"
         android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/detailed_card_item_source"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -29,28 +30,22 @@
         style="@style/detailed_card_item_style"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="32dp"
-        android:text="-"
+        android:layout_marginTop="8dp"
+        android:text="kartentyp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/detailed_card_item_source"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintHorizontal_chainStyle="spread_inside"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/detailed_card_item_title" />
 
     <TextView
         android:id="@+id/detailed_card_item_source"
+        style="@style/detailed_card_item_style"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="8dp"
-        android:text="-"
-        style="@style/detailed_card_item_style"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/detailed_card_item_type"
-        app:layout_constraintTop_toBottomOf="@+id/detailed_card_item_title" />
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/detailed_card_item_type"
+        app:layout_constraintStart_toEndOf="@+id/detailed_card_item_type" />
 </android.support.constraint.ConstraintLayout>

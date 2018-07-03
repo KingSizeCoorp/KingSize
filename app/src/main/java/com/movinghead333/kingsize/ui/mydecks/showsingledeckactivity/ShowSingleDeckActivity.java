@@ -2,13 +2,18 @@ package com.movinghead333.kingsize.ui.mydecks.showsingledeckactivity;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
@@ -84,5 +89,41 @@ public class ShowSingleDeckActivity extends AppCompatActivity {
                 adapter.setCardsInDeck(cardWithSymbols);
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_show_decks, menu);
+        return super.onCreateOptionsMenu(menu);
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        switch(item.getItemId()){
+            case R.id.item_delete_deck:
+                AlertDialog.Builder adb = new AlertDialog.Builder(this);
+
+                adb.setTitle("Aktion bestätigen:");
+
+                adb.setMessage("Das aktuelle Kartendeck wirklich löschen?");
+
+                adb.setIcon(android.R.drawable.ic_dialog_alert);
+
+                adb.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        mViewModel.deleteDeckById(selectedDeckId);
+                        finish();
+                    } });
+                adb.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                    } });
+                adb.show();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

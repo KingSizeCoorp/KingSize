@@ -26,4 +26,8 @@ public class ShowSingleDeckViewModel extends ViewModel{
     public LiveData<Card> getCardById(long id){
         return mRepository.getCardById(id);
     }
+
+    void deleteDeckById(long deckId){
+        mRepository.deleteCardDeckById(deckId);
+    }
 }

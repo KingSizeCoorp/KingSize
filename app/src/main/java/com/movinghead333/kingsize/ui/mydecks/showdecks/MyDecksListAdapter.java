@@ -34,7 +34,7 @@ public class MyDecksListAdapter extends RecyclerView.Adapter<MyDecksListAdapter.
 
     @Override
     public MyDecksListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, final int viewType){
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_deck_list_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_card_deck, parent, false);
 
         final ViewHolder viewHolder = new ViewHolder(view);
 
@@ -53,7 +53,7 @@ public class MyDecksListAdapter extends RecyclerView.Adapter<MyDecksListAdapter.
         if(cardDecks != null) {
             CardDeck currentDeck = cardDecks.get(position);
             viewHolder.deckName.setText(currentDeck.deckName);
-            viewHolder.cardCount.setText(currentDeck.id+" "+String.valueOf(currentDeck.cardCount));
+            viewHolder.cardCount.setText(String.valueOf(currentDeck.cardCount));
         }
 
     }

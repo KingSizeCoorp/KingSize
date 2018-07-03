@@ -10,6 +10,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.movinghead333.kingsize.ui.mycards.AddOrEditCardActivity;
@@ -25,6 +29,7 @@ public class ShowMyCardsActivity extends AppCompatActivity {
 
     public static final String EXTRA_TITLE = "EXTRA_TITLE";
     public static final String EXTRA_TYPE = "EXTRA_TYPE";
+    public static final String EXTRA_SOURCE = "EXTRA_SOURCE";
     public static final String EXTRA_DESCRIPTION = "EXTRA_DESCRIPTION";
     public static final String EXTRA_IS_EDIT = "EXTRA_IS_EDIT";
     public static final int REQUEST_CODE_SHOW_SINGLE_CARD_ACTIVITY = 1;
@@ -44,13 +49,19 @@ public class ShowMyCardsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_show_my_cards);
+        setContentView(R.layout.coordlayout);
 
         //showMyCardsActivityViewModel = ViewModelProviders.of(this).get(ShowMyCardsActivityViewModel.class);
         ShowMyCardsViewModelFactory factory = InjectorUtils.provideShowMyCardsViewModelFactory(this.getApplicationContext());
         showMyCardsActivityViewModel = ViewModelProviders.of(this, factory).get(ShowMyCardsActivityViewModel.class);
 
         RecyclerView recyclerView = (RecyclerView)findViewById(R.id.smc_recycler_view);
+
+        String[] sourceStrings = new String[]{
+              getResources().getString(R.string.source_standard),
+              getResources().getString(R.string.source_my_cards),
+              getResources().getString(R.string.source_feed)
+        };
 
         myCardsListAdapter = new MyCardsListAdapter(new CustomListItemClickListener() {
             @Override
@@ -62,13 +73,14 @@ public class ShowMyCardsActivity extends AppCompatActivity {
                 Intent intent = new Intent(ShowMyCardsActivity.this, ShowSingleCardActivity.class);
                 intent.putExtra(EXTRA_TITLE, currentCard.title);
                 intent.putExtra(EXTRA_TYPE, currentCard.type);
+                intent.putExtra(EXTRA_SOURCE, currentCard.source);
                 intent.putExtra(EXTRA_DESCRIPTION, currentCard.description);
                 startActivityForResult(intent, REQUEST_CODE_SHOW_SINGLE_CARD_ACTIVITY);
 
 
                 //Toast.makeText(getApplicationContext(), "Card with index "+position, Toast.LENGTH_SHORT).show();
             }
-        });
+        }, sourceStrings, getApplication());
 
         recyclerView.setAdapter(myCardsListAdapter);
 
@@ -92,6 +104,29 @@ public class ShowMyCardsActivity extends AppCompatActivity {
                 startActivityForResult(intent, REQUEST_CODE_ADD_NEW_CARD);
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_card_search, menu);
+
+        MenuItem searchItem = menu.findItem(R.id.action_search_cards);
+        SearchView searchView = (SearchView)searchItem.getActionView();
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                myCardsListAdapter.getFilter().filter(newText);
+                return false;
+            }
+        });
+        return true;
     }
 
     @Override

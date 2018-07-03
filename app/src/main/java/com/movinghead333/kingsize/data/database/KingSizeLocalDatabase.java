@@ -65,7 +65,7 @@ public abstract class KingSizeLocalDatabase extends RoomDatabase{
         @Override
         protected Void doInBackground(final Card... params){
             //cardDao.clearCards();
-            cardDeckDao.clearCardDecks();
+            //cardDeckDao.clearCardDecks();
             if(cardDao.getStandardCardAvailable() == 0)
                 cardDao.insertCardsWithOverride(params);
 

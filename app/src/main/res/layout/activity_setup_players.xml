@@ -4,27 +4,37 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.mydecks.showsingledeckactivity.ShowSingleDeckActivity">
+    tools:context=".ui.game.setupplayersactivity.SetupPlayersActivity">
 
     <TextView
-        android:id="@+id/show_single_deck_deck_title"
-        android:layout_width="0dp"
+        android:id="@+id/spa_static_players"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:background="@color/red"
-        android:gravity="center"
-        android:text="-deckname-"
-        android:textColor="@color/white"
+        android:text="Spieler:"
         android:textSize="24sp"
-        android:paddingBottom="4dp"
-        android:paddingTop="4dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/spa_button_select_deck"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:text="Deck auswählen"
+        android:textAllCaps="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="0dp"
@@ -35,20 +45,30 @@
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/spa_button_select_deck"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/show_single_deck_deck_title">
+        app:layout_constraintTop_toBottomOf="@+id/spa_static_players">
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/show_single_Deck_recycler_view"
+            android:id="@+id/spa_recyclerview"
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0" />
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab_add_player"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:src="@drawable/ic_add_black_24dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
     </android.support.constraint.ConstraintLayout>
 </android.support.constraint.ConstraintLayout>
