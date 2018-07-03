@@ -1,5 +1,6 @@
 package com.movinghead333.kingsize.ui.game.gamescreenactivity;
 
+import android.app.Activity;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
@@ -7,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.movinghead333.kingsize.R;
@@ -33,6 +35,7 @@ public class GameScreenActivity extends AppCompatActivity {
     TextView cardSymbolTextView;
     TextView cardTypeTextView;
     TextView cardNameTextView;
+    Button nextCardButton;
     //Todo currentCardTextView
 
     @Override
@@ -45,6 +48,7 @@ public class GameScreenActivity extends AppCompatActivity {
         cardSymbolTextView = (TextView)findViewById(R.id.gsa_card_symbol);
         cardTypeTextView = (TextView)findViewById(R.id.gsa_card_type);
         cardNameTextView = (TextView)findViewById(R.id.gsa_card_name);
+        nextCardButton = (Button)findViewById(R.id.gsa_button_next_card);
 
         // get caller-intent
         Intent intent = getIntent();
@@ -72,11 +76,20 @@ public class GameScreenActivity extends AppCompatActivity {
     }
 
     private void updateUI(){
-        currentPlayerTextView.setText(mViewModel.getCurrentPlayerName());
+        currentPlayerTextView.setText(mViewModel.getCurrentPlayerName()+" "+mViewModel.getRemainingCards());
         nextPlayerTextView.setText((mViewModel.getNextPlayerName()));
         cardSymbolTextView.setText(mViewModel.getCurrentCardSymbol());
         cardTypeTextView.setText(mViewModel.getCurrentCardType());
         cardNameTextView.setText(mViewModel.getCurrentlyDrawnCardName());
+        if(mViewModel.getRemainingCards() == 0){
+            nextCardButton.setText("Zurück zur Spielerauswahl");
+        }
+    }
+
+    private void onGameFinished(){
+        // todo add dialog between callback to SetupPLayersActivity and GameScreenActivity finish()-call
+        setResult(Activity.RESULT_OK);
+        finish();
     }
 
     @Override
@@ -92,8 +105,12 @@ public class GameScreenActivity extends AppCompatActivity {
 
     // invoked when when button "next_card" is pressed
     public void nextCard(View view){
-        mViewModel.moveToNextPlayer();
-        updateUI();
+        if(mViewModel.getRemainingCards() > 0){
+            mViewModel.moveToNextPlayer();
+            updateUI();
+        }else{
+            onGameFinished();
+        }
     }
 
     public void showTokens(View view){

@@ -1,5 +1,6 @@
 package com.movinghead333.kingsize.ui.game.choosedeckactivity;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
@@ -26,6 +27,7 @@ import java.util.List;
 
 public class ChooseDeckActivity extends AppCompatActivity {
 
+    public static final int REQUEST_CODE_START_GAME = 1;
     public static final String EXTRA_LONG_DECK_ID = "EXTRA_LONG_DECK_ID";
 
     private ArrayList<String> players;
@@ -88,7 +90,7 @@ public class ChooseDeckActivity extends AppCompatActivity {
                 Intent startGameIntent = new Intent(ChooseDeckActivity.this, GameScreenActivity.class);
                 startGameIntent.putExtra(SetupPlayersActivity.EXTRA_PLAYERS, players);
                 startGameIntent.putExtra(EXTRA_LONG_DECK_ID, deck.id);
-                startActivity(startGameIntent);
+                startActivityForResult(startGameIntent, REQUEST_CODE_START_GAME);
             }
         });
 
@@ -102,5 +104,22 @@ public class ChooseDeckActivity extends AppCompatActivity {
         AlertDialog dialog = builder.create();
 
         dialog.show();
+    }
+
+
+    /**
+     * get call from GameScreenActivity to jump back to SetupPlayerActivity
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == REQUEST_CODE_START_GAME){
+            if(resultCode == Activity.RESULT_OK){
+                finish();
+            }
+        }
     }
 }

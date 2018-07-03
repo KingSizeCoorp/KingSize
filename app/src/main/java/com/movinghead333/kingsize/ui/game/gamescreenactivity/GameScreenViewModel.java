@@ -130,6 +130,10 @@ class GameScreenViewModel extends AndroidViewModel{
 
 
     // getters and setter
+    int getRemainingCards(){
+        return cardIndexList.size();
+    }
+
     ArrayList<PlayerWithAttribute> getPlayerStatusEffects(){
         return this.playerStatusEffects;
     }
