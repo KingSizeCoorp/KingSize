@@ -10,6 +10,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.movinghead333.kingsize.ui.mycards.AddOrEditCardActivity;
@@ -44,7 +48,7 @@ public class ShowMyCardsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_show_my_cards);
+        setContentView(R.layout.coordlayout);
 
         //showMyCardsActivityViewModel = ViewModelProviders.of(this).get(ShowMyCardsActivityViewModel.class);
         ShowMyCardsViewModelFactory factory = InjectorUtils.provideShowMyCardsViewModelFactory(this.getApplicationContext());
@@ -98,6 +102,29 @@ public class ShowMyCardsActivity extends AppCompatActivity {
                 startActivityForResult(intent, REQUEST_CODE_ADD_NEW_CARD);
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_card_search, menu);
+
+        MenuItem searchItem = menu.findItem(R.id.action_search_cards);
+        SearchView searchView = (SearchView)searchItem.getActionView();
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                myCardsListAdapter.getFilter().filter(newText);
+                return false;
+            }
+        });
+        return true;
     }
 
     @Override

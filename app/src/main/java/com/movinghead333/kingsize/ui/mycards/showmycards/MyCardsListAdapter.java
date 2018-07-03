@@ -6,22 +6,28 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
 import com.movinghead333.kingsize.R;
 import com.movinghead333.kingsize.data.database.Card;
 import com.movinghead333.kingsize.ui.CustomListItemClickListener;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class MyCardsListAdapter extends RecyclerView.Adapter<MyCardsListAdapter.ViewHolder>{
+public class MyCardsListAdapter extends RecyclerView.Adapter<MyCardsListAdapter.ViewHolder>
+implements Filterable{
 
     private CustomListItemClickListener listener;
     private List<Card> cards;
+    private List<Card> cardsFull;
     private Application application;
     private Resources resources;
     private final String[] sourceStrings;
 
+    //todo remove app from constructor
     MyCardsListAdapter(CustomListItemClickListener listener, String[]sourceStrings,
                        Application application){
         this.listener = listener;
@@ -37,6 +43,41 @@ public class MyCardsListAdapter extends RecyclerView.Adapter<MyCardsListAdapter.
         */
     }
 
+    @Override
+    public Filter getFilter() {
+        return mFilter;
+    }
+
+    private Filter mFilter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            List<Card> filteredList = new ArrayList<>();
+
+            if(constraint == null || constraint.length() == 0){
+                filteredList.addAll(cardsFull);
+            }else{
+                String filterPattern = constraint.toString().toLowerCase().trim();
+
+                for(Card card : cardsFull){
+                    if(card.title.toLowerCase().contains(filterPattern)){ // maybe startswith
+                        filteredList.add(card);
+                    }
+                }
+            }
+
+            FilterResults results = new FilterResults();
+            results.values = filteredList;
+
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            cards.clear();
+            cards.addAll((List)results.values);
+            notifyDataSetChanged();
+        }
+    };
 
     static class ViewHolder extends RecyclerView.ViewHolder{
         TextView cardTitle;
@@ -100,8 +141,10 @@ public class MyCardsListAdapter extends RecyclerView.Adapter<MyCardsListAdapter.
         }
     }
 
+
     public void setCards(List<Card> cards) {
         this.cards = cards;
+        this.cardsFull = new ArrayList<>(this.cards);
         notifyDataSetChanged();
     }
 }
