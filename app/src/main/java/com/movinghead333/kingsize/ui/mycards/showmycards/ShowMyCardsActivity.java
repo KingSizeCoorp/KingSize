@@ -29,6 +29,7 @@ public class ShowMyCardsActivity extends AppCompatActivity {
 
     public static final String EXTRA_TITLE = "EXTRA_TITLE";
     public static final String EXTRA_TYPE = "EXTRA_TYPE";
+    public static final String EXTRA_SOURCE = "EXTRA_SOURCE";
     public static final String EXTRA_DESCRIPTION = "EXTRA_DESCRIPTION";
     public static final String EXTRA_IS_EDIT = "EXTRA_IS_EDIT";
     public static final int REQUEST_CODE_SHOW_SINGLE_CARD_ACTIVITY = 1;
@@ -72,6 +73,7 @@ public class ShowMyCardsActivity extends AppCompatActivity {
                 Intent intent = new Intent(ShowMyCardsActivity.this, ShowSingleCardActivity.class);
                 intent.putExtra(EXTRA_TITLE, currentCard.title);
                 intent.putExtra(EXTRA_TYPE, currentCard.type);
+                intent.putExtra(EXTRA_SOURCE, currentCard.source);
                 intent.putExtra(EXTRA_DESCRIPTION, currentCard.description);
                 startActivityForResult(intent, REQUEST_CODE_SHOW_SINGLE_CARD_ACTIVITY);
 

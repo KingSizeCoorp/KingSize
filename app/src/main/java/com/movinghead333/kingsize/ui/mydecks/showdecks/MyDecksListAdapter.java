@@ -53,7 +53,7 @@ public class MyDecksListAdapter extends RecyclerView.Adapter<MyDecksListAdapter.
         if(cardDecks != null) {
             CardDeck currentDeck = cardDecks.get(position);
             viewHolder.deckName.setText(currentDeck.deckName);
-            viewHolder.cardCount.setText(currentDeck.id+" "+String.valueOf(currentDeck.cardCount));
+            viewHolder.cardCount.setText(String.valueOf(currentDeck.cardCount));
         }
 
     }
