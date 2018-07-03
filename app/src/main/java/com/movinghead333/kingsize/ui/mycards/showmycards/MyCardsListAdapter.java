@@ -1,5 +1,7 @@
 package com.movinghead333.kingsize.ui.mycards.showmycards;
 
+import android.app.Application;
+import android.content.res.Resources;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,9 +18,16 @@ public class MyCardsListAdapter extends RecyclerView.Adapter<MyCardsListAdapter.
 
     private CustomListItemClickListener listener;
     private List<Card> cards;
+    private Application application;
+    private Resources resources;
+    private final String[] sourceStrings;
 
-    MyCardsListAdapter(CustomListItemClickListener listener){
+    MyCardsListAdapter(CustomListItemClickListener listener, String[]sourceStrings,
+                       Application application){
         this.listener = listener;
+        this.sourceStrings = sourceStrings;
+        this.application = application;
+        this.resources = application.getResources();
         /*
         Card[] exampleCards = new Card[20];
         for(int i = 0; i < exampleCards.length; i++){
@@ -33,6 +42,7 @@ public class MyCardsListAdapter extends RecyclerView.Adapter<MyCardsListAdapter.
         TextView cardTitle;
         TextView cardType;
         TextView cardSource;
+
 
         ViewHolder(View itemView){
             super(itemView);
@@ -62,9 +72,18 @@ public class MyCardsListAdapter extends RecyclerView.Adapter<MyCardsListAdapter.
     public void onBindViewHolder(ViewHolder viewHolder, int position){
         if(cards != null){
             Card currentCard = cards.get(position);
+
+            if(currentCard.source.equals(sourceStrings[0])){
+                viewHolder.itemView.setBackgroundColor(resources.getColor(R.color.cayn));
+            }else if(currentCard.source.equals(sourceStrings[1])){
+                viewHolder.itemView.setBackgroundColor(resources.getColor(R.color.blue));
+            }else if(currentCard.source.equals(sourceStrings[2])){
+                viewHolder.itemView.setBackgroundColor(resources.getColor(R.color.purple));
+            }
+
+            // todo clean up listitem and adapter
             viewHolder.cardTitle.setText(currentCard.title);
-            viewHolder.cardType.setText(currentCard.type);
-            viewHolder.cardSource.setText(currentCard.id+" "+currentCard.source);
+            viewHolder.cardType.setText(currentCard.type+" aus "+currentCard.source+"-Karten");
         }else{
             viewHolder.cardTitle.setText("No cards");
             viewHolder.cardType.setText("...");

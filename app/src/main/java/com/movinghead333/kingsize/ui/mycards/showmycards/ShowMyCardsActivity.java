@@ -52,6 +52,12 @@ public class ShowMyCardsActivity extends AppCompatActivity {
 
         RecyclerView recyclerView = (RecyclerView)findViewById(R.id.smc_recycler_view);
 
+        String[] sourceStrings = new String[]{
+              getResources().getString(R.string.source_standard),
+              getResources().getString(R.string.source_my_cards),
+              getResources().getString(R.string.source_feed)
+        };
+
         myCardsListAdapter = new MyCardsListAdapter(new CustomListItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
@@ -68,7 +74,7 @@ public class ShowMyCardsActivity extends AppCompatActivity {
 
                 //Toast.makeText(getApplicationContext(), "Card with index "+position, Toast.LENGTH_SHORT).show();
             }
-        });
+        }, sourceStrings, getApplication());
 
         recyclerView.setAdapter(myCardsListAdapter);
 
