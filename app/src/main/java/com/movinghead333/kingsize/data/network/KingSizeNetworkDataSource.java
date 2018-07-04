@@ -7,15 +7,10 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.ListView;
-import android.widget.Toast;
 
 import com.movinghead333.kingsize.AppExecutors;
-import com.movinghead333.kingsize.R;
-import com.movinghead333.kingsize.data.database.Card;
 import com.movinghead333.kingsize.data.database.FeedEntry;
 import com.movinghead333.kingsize.ui.myfeed.CardAdapter;
-import com.movinghead333.kingsize.ui.myfeed.ShowFeed2Activity;
 
 import org.json.JSONArray;
 import org.json.JSONException;

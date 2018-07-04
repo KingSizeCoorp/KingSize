@@ -4,9 +4,6 @@ import android.app.ProgressDialog;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Observer;
-import android.content.Context;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -23,12 +20,6 @@ import com.movinghead333.kingsize.data.database.FeedEntryDao;
 import com.movinghead333.kingsize.data.datawrappers.CardWithSymbol;
 import com.movinghead333.kingsize.data.network.HttpJsonParser;
 import com.movinghead333.kingsize.data.network.KingSizeNetworkDataSource;
-import com.movinghead333.kingsize.ui.myfeed.ShowFeed2Activity;
-import com.movinghead333.kingsize.ui.myfeed.ShowFeedActivity;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -105,6 +96,24 @@ public class KingSizeRepository {
         });
     }
 
+    public void upVote(final String key){
+        mExecutors.networkIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                HttpJsonParser.setVote(key, "up");
+            }
+        });
+    }
+
+    public void downVote(final String key){
+        mExecutors.networkIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                HttpJsonParser.setVote(key, "down");
+            }
+        });
+    }
+
 
     /*
         Dao-methods
@@ -115,6 +124,24 @@ public class KingSizeRepository {
      */
     public LiveData<List<FeedEntry>> getFeedEntries(){
         return mFeedEntryDao.getAllFeedEntries();
+    }
+
+    public void voteUpLocally(final int id){
+        mExecutors.diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                mFeedEntryDao.voteUpLocally(id);
+            }
+        });
+    }
+
+    public void voteDownLocally(final int id){
+        mExecutors.diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                mFeedEntryDao.voteDownLocally(id);
+            }
+        });
     }
 
 

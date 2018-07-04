@@ -58,4 +58,12 @@ public class FeedEntry {
     public int getDownvotes() {
         return downvotes;
     }
+
+    public void incrementUpvotes(){
+        this.upvotes++;
+    }
+
+    public void incrementDownvotes(){
+        this.downvotes++;
+    }
 }

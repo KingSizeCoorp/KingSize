@@ -44,6 +44,7 @@ public class ShowFeedListAdapter extends RecyclerView.Adapter<ShowFeedListAdapte
     void updateList(List<FeedEntry> newEntries){
         feedEntriesList = newEntries;
         notifyDataSetChanged();
+
     }
 
     @NonNull
@@ -67,14 +68,14 @@ public class ShowFeedListAdapter extends RecyclerView.Adapter<ShowFeedListAdapte
         viewHolder.cardUpvotes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                votesListener.onUpVote();
+                votesListener.onUpVote(viewHolder.getLayoutPosition());
             }
         });
 
         viewHolder.cardDownvotes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                votesListener.onDownVote();
+                votesListener.onDownVote(viewHolder.getLayoutPosition());
             }
         });
 

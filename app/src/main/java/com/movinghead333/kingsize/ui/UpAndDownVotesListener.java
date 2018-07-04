@@ -2,7 +2,7 @@ package com.movinghead333.kingsize.ui;
 
 public interface UpAndDownVotesListener {
 
-    void onDownVote();
+    void onDownVote(int itemIndex);
 
-    void onUpVote();
+    void onUpVote(int itemIndex);
 }

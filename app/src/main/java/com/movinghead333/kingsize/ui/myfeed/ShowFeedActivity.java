@@ -1,171 +1,112 @@
 package com.movinghead333.kingsize.ui.myfeed;
 
-import android.content.Context;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
+import android.content.DialogInterface;
+import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.app.ProgressDialog;
-import android.os.AsyncTask;
-
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.ListView;
 import android.widget.Toast;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.movinghead333.kingsize.R;
+import com.movinghead333.kingsize.data.database.FeedEntry;
+import com.movinghead333.kingsize.ui.CustomListItemClickListener;
+import com.movinghead333.kingsize.ui.UpAndDownVotesListener;
+import com.movinghead333.kingsize.utilities.InjectorUtils;
 
-import java.util.ArrayList;
 import java.util.List;
 
-
-import com.movinghead333.kingsize.AppExecutors;
-import com.movinghead333.kingsize.data.ArrayResource;
-import com.movinghead333.kingsize.R;
-import com.movinghead333.kingsize.data.database.Card;
-import com.movinghead333.kingsize.data.network.HttpJsonParser;
-
 public class ShowFeedActivity extends AppCompatActivity {
-    // search parameters for json-array
-    private static final String KEY_SUCCESS = "success";
-    private static final String KEY_TYPE = "type";
-    private static final String KEY_TITLE= "title";
-    private static final String KEY_DESCRIPTION = "description";
-    private static final String KEY_POSITIVE_VOTES = "positive_votes";
-    private static final String KEY_NEGATIVE_VOTES = "negative_votes";
-    private static final String KEY_ID = "id";
-    private String url = "http://pureanarchy.eu:82/data.php";
-    private ConnectivityManager connectivityManager;
-    private NetworkInfo networkInfo;
-    private ProgressDialog pDialog;
-    //Display progress bar
 
-    private int success;
-    private CardAdapter adapter;
-    private JSONObject jsonObject;
-
+    private ShowFeedViewModel mViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_feed);
 
+        ShowFeedViewModelFactory factory =
+                InjectorUtils.provideShowFeedViewModelFactory(this.getApplicationContext());
+        mViewModel = ViewModelProviders.of(this, factory).get(ShowFeedViewModel.class);
 
-        FetchCardDetails fetchCardDetails = (FetchCardDetails) new FetchCardDetails().execute();
+        RecyclerView mRecyclerView = (RecyclerView)findViewById(R.id.sfa_recyclerview);
 
+        final ShowFeedListAdapter adapter = new ShowFeedListAdapter(
+                new CustomListItemClickListener() {
+                    @Override
+                    public void onItemClick(View view, final int position) {
+                        Toast.makeText(ShowFeedActivity.this, "Karten zur eigenen Kollketion hinzugefügt",
+                                Toast.LENGTH_SHORT).show();
+                        AlertDialog.Builder adb = new AlertDialog.Builder(ShowFeedActivity.this);
 
-    }
+                        adb.setTitle("Aktion bestätigen");
+                        adb.setMessage("Soll die ausgewählte Karte deiner Sammlung hinzugefügt werden?");
 
+                        adb.setIcon(android.R.drawable.ic_dialog_alert);
 
-    public void lul(View view) {
-        AppExecutors.getInstance().networkIO().execute(new Runnable() {
+                        adb.setPositiveButton("Hinzufügen", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                mViewModel.insertCard(position);
+                            } });
+                        adb.setNegativeButton("Abbrechen", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // cancel
+                            } });
+                        adb.show();
+
+                    }
+                },
+                new UpAndDownVotesListener() {
+                    @Override
+                    public void onUpVote(int itemIndex) {
+                        Toast.makeText(ShowFeedActivity.this, "1 upvote",
+                                Toast.LENGTH_SHORT).show();
+                        mViewModel.upvote(itemIndex);
+                    }
+
+                    @Override
+                    public void onDownVote(int itemIndex) {
+                        Toast.makeText(ShowFeedActivity.this, "1 downvote",
+                                Toast.LENGTH_SHORT).show();
+                                mViewModel.downvote(itemIndex);
+                    }
+                }
+        );
+
+        mRecyclerView.setAdapter(adapter);
+
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+        mRecyclerView.setLayoutManager(layoutManager);
+
+        mViewModel.getFeedEntries().observe(this, new Observer<List<FeedEntry>>() {
             @Override
-            public void run() {
-                Card Sven = new Card("Sven", "simple_activity",
-                        "Alle müssen exen", 0,0, ArrayResource.CARD_SOURCES[2]);
-                String state = "";
-                connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-
-                if(connectivityManager != null) {
-                    networkInfo = connectivityManager.getActiveNetworkInfo();
-
-                    if (networkInfo != null) {
-                        HttpJsonParser jsonParser = new HttpJsonParser();
-
-
-                        state = jsonParser.setVote("1", "down");
-
-                        //state = jsonParser.setCard(Sven);
-
-                    }
-                }
+            public void onChanged(@Nullable List<FeedEntry> feedEntries) {
+                adapter.updateList(feedEntries);
             }
-
         });
+
+        // observe data changes
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_feed, menu);
+        return true;
+    }
 
-
-    private class FetchCardDetails extends AsyncTask<String, String, String> {
-        JSONArray response;
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            pDialog = new ProgressDialog(ShowFeedActivity.this);
-            pDialog.setMessage("Daten werden geladen...");
-            pDialog.setIndeterminate(false);
-            pDialog.setCancelable(false);
-            pDialog.show();
-        }
-
-        @Override
-        protected String doInBackground(String... params) {
-            connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-
-            if(connectivityManager != null) {
-                networkInfo = connectivityManager.getActiveNetworkInfo();
-
-                if (networkInfo != null) {
-                    HttpJsonParser jsonParser = new HttpJsonParser();
-                    try {
-
-                        response = jsonParser.makeHttpRequest(url, "GET", null);
-                        jsonObject = (JSONObject) response.get(0);
-                        success = jsonObject.getInt(KEY_SUCCESS);
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                } else {
-                    success = 0;
-                }
-            }
-            return null;
-        }
-
-
-        protected void onPostExecute(String result) {
-            pDialog.dismiss();
-            runOnUiThread(new Runnable() {
-                public void run() {
-
-                    ListView listView =(ListView)findViewById(R.id.employeeList);
-                    //TODO: check if data was transmitted when WLAN is connected, but NO INTERNET CONNECTION AVAILABLE
-                    if (success == 1) {
-                        try {
-                            List<Card> employeeList = new ArrayList<>();
-                            //Populate the EmployeeDetails list from response
-                            for (int i = 1; i < response.length(); i++) {
-                                jsonObject = (JSONObject) response.get(i);
-
-                                Card tempCard = new Card(
-                                        jsonObject.getString(KEY_TITLE),
-                                        jsonObject.getString(KEY_TYPE),
-                                        jsonObject.getString(KEY_DESCRIPTION),
-                                        jsonObject.getInt(KEY_POSITIVE_VOTES),
-                                        jsonObject.getInt((KEY_NEGATIVE_VOTES)),
-                                        getResources().getString(R.string.source_feed)
-                                );
-                                employeeList.add(tempCard);
-                            }
-                            //Create an adapter with the EmployeeDetails List and set it to the LstView
-                            adapter = new CardAdapter(employeeList, getApplicationContext());
-                            listView.setAdapter(adapter);
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-                    } else {
-                        Toast.makeText(ShowFeedActivity.this,
-                                "Netzwerkfehler",
-                                Toast.LENGTH_LONG).show();
-
-                    }
-
-                }
-            });
-        }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Log.d("ShowFeedActivity","feed is being updated");
+        mViewModel.syncFeedEntries();
+        return true;
     }
 }

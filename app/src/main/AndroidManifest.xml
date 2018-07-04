@@ -20,7 +20,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.mycards.showmycards.ShowMyCardsActivity" />
-        <activity android:name=".ui.myfeed.ShowFeedActivity" />
         <activity android:name=".ui.mycards.AddOrEditCardActivity" />
         <activity android:name=".ui.mycards.showsinglecardactivity.ShowSingleCardActivity" />
         <activity android:name=".ui.mydecks.showdecks.ShowMyDecksActivity" />
@@ -35,7 +34,7 @@
         <activity android:name=".ui.game.gamescreenactivity.GameScreenActivity" />
         <activity android:name=".ui.game.showstatuseffects.ShowStatusEffectsActivity" />
         <activity android:name=".ui.game.showtokensactivity.ShowTokensActivity" />
-        <activity android:name=".ui.myfeed.ShowFeed2Activity"></activity>
+        <activity android:name=".ui.myfeed.ShowFeedActivity"></activity>
     </application>
 
 </manifest>
