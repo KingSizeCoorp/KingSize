@@ -154,12 +154,14 @@ public class ShowMyCardsActivity extends AppCompatActivity {
                 }
                 break;
             case REQUEST_CODE_EDIT_CARD:
-                String etitle = data.getStringExtra(EXTRA_TITLE);
-                String etype = data.getStringExtra(EXTRA_TYPE);
-                String edescription = data.getStringExtra(EXTRA_DESCRIPTION);
-                Card enewCard = new Card(etitle, etype, edescription, 0, 0, getResources().getString(R.string.source_my_cards));
-                enewCard.id = currentCardId;
-                showMyCardsActivityViewModel.updateCard(enewCard);
+                if(resultCode == Activity.RESULT_OK){
+                    String etitle = data.getStringExtra(EXTRA_TITLE);
+                    String etype = data.getStringExtra(EXTRA_TYPE);
+                    String edescription = data.getStringExtra(EXTRA_DESCRIPTION);
+                    Card enewCard = new Card(etitle, etype, edescription, 0, 0, getResources().getString(R.string.source_my_cards));
+                    enewCard.id = currentCardId;
+                    showMyCardsActivityViewModel.updateCard(enewCard);
+                }
                 break;
         }
     }
