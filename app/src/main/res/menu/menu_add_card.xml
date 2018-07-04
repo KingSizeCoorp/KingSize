@@ -13,5 +13,10 @@
         android:icon="@drawable/delete_icon"
         app:showAsAction="ifRoom"/>
 
+    <item android:id="@+id/item_upload"
+        android:title="Hochladen"
+        android:icon="@drawable/ic_card_upload_24dp"
+        app:showAsAction="ifRoom" />
+
 
 </menu>

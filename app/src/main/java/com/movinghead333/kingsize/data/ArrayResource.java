@@ -1,4 +1,4 @@
-package com.movinghead333.kingsize;
+package com.movinghead333.kingsize.data;
 
 public class ArrayResource {
 

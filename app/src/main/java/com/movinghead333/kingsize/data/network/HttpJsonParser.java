@@ -1,4 +1,4 @@
-package com.movinghead333.kingsize.ui.myfeed;
+package com.movinghead333.kingsize.data.network;
 
 import android.net.Uri;
 import android.util.Log;
@@ -31,10 +31,9 @@ public class HttpJsonParser {
 
 
 
-    public String setVote(String key, String method){
+    public static String setVote(String key, String method){
         String result = "";
 
-        //maaaaaaaaaaaaaaaaaaaaaaaaaaaaaaan luuuuuuuuuuuuuuuuuuuuuulb adshflkasdflkjadlsökfjlöakjdf
         try {
 
 
@@ -76,7 +75,7 @@ public class HttpJsonParser {
 
 
 
-    public String setCard(Card card){
+    public static String setCard(Card card){
         String result = "";
 
         try {

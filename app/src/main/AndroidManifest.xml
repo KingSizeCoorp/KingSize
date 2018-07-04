@@ -22,7 +22,7 @@
         <activity android:name=".ui.mycards.showmycards.ShowMyCardsActivity" />
         <activity android:name=".ui.myfeed.ShowFeedActivity" />
         <activity android:name=".ui.mycards.AddOrEditCardActivity" />
-        <activity android:name=".ui.mycards.ShowSingleCardActivity" />
+        <activity android:name=".ui.mycards.showsinglecardactivity.ShowSingleCardActivity" />
         <activity android:name=".ui.mydecks.showdecks.ShowMyDecksActivity" />
         <activity android:name=".ui.mydecks.showsingledeckactivity.ShowSingleDeckActivity" />
         <activity android:name=".ui.mydecks.showcardindeckactivity.ShowCardInDeckActivity" />

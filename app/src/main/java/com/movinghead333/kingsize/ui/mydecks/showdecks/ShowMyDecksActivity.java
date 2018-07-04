@@ -3,7 +3,6 @@ package com.movinghead333.kingsize.ui.mydecks.showdecks;
 import android.app.AlertDialog;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.Nullable;
@@ -19,12 +18,9 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.movinghead333.kingsize.ArrayResource;
 import com.movinghead333.kingsize.R;
 import com.movinghead333.kingsize.data.database.CardDeck;
-import com.movinghead333.kingsize.data.database.CardInCardDeckRelation;
 import com.movinghead333.kingsize.ui.CustomListItemClickListener;
-import com.movinghead333.kingsize.ui.mycards.showmycards.MyCardsListAdapter;
 import com.movinghead333.kingsize.ui.mydecks.showsingledeckactivity.ShowSingleDeckActivity;
 import com.movinghead333.kingsize.utilities.InjectorUtils;
 

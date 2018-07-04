@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.movinghead333.kingsize.ArrayResource;
+import com.movinghead333.kingsize.data.ArrayResource;
 import com.movinghead333.kingsize.R;
 import com.movinghead333.kingsize.data.datawrappers.CardWithSymbol;
 import com.movinghead333.kingsize.ui.CustomListItemClickListener;

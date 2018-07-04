@@ -3,14 +3,13 @@ package com.movinghead333.kingsize.ui.mydecks.showcardindeckactivity;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
-import android.graphics.Color;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-import com.movinghead333.kingsize.ArrayResource;
+import com.movinghead333.kingsize.data.ArrayResource;
 import com.movinghead333.kingsize.R;
 import com.movinghead333.kingsize.data.database.Card;
 import com.movinghead333.kingsize.ui.mydecks.changercardactivity.ChangeCardActivity;

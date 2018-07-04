@@ -1,11 +1,11 @@
 package com.movinghead333.kingsize.data;
 
 import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.MutableLiveData;
 import android.os.AsyncTask;
 import android.util.Log;
 
 import com.movinghead333.kingsize.AppExecutors;
-import com.movinghead333.kingsize.ArrayResource;
 import com.movinghead333.kingsize.data.database.Card;
 import com.movinghead333.kingsize.data.database.CardDao;
 import com.movinghead333.kingsize.data.database.CardDeck;
@@ -13,6 +13,7 @@ import com.movinghead333.kingsize.data.database.CardDeckDao;
 import com.movinghead333.kingsize.data.database.CardInCardDeckRelation;
 import com.movinghead333.kingsize.data.database.CardInCardDeckRelationDao;
 import com.movinghead333.kingsize.data.datawrappers.CardWithSymbol;
+import com.movinghead333.kingsize.data.network.HttpJsonParser;
 import com.movinghead333.kingsize.data.network.KingSizeNetworkDataSource;
 
 import java.util.List;
@@ -67,8 +68,44 @@ public class KingSizeRepository {
     /*
         CardDao interaction
     */
+    public MutableLiveData<String> uploadCard(Card card){
+        try {
+            return new uploadCardAsyncTaskDao(mCardDao).execute(card).get();
+        } catch (InterruptedException e) {
+            Log.d(LOG_TAG, "uploadCard throws InterruptedException");
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            Log.d(LOG_TAG, "uploadCard throws ExecutionException");
+            e.printStackTrace();
+        }
+        Log.d(LOG_TAG, "uploadCard returning null caused by exception");
+        return null;
+    }
 
 
+
+    private static class uploadCardAsyncTaskDao extends AsyncTask<Card, Void, MutableLiveData<String>> {
+
+        private CardDao mAsyncTaskDao;
+
+        uploadCardAsyncTaskDao(CardDao dao){
+            mAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected MutableLiveData<String> doInBackground(final Card... params){
+            String result = HttpJsonParser.setCard(params[0]);
+            MutableLiveData<String> returnResult = new MutableLiveData<>();
+            returnResult.postValue(result);
+            return returnResult;
+        }
+    }
+
+    /**
+     * get card list of cards by source attribute
+     * @param source
+     * @return
+     */
     public LiveData<List<Card>> getCardsBySource(String source){
         try {
             return new getCardsBySourceAsyncTaskDao(mCardDao).execute(source).get();

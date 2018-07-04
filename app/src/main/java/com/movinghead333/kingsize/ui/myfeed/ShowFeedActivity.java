@@ -16,17 +16,15 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.jar.JarEntry;
 
 
 import com.movinghead333.kingsize.AppExecutors;
-import com.movinghead333.kingsize.ArrayResource;
+import com.movinghead333.kingsize.data.ArrayResource;
 import com.movinghead333.kingsize.R;
 import com.movinghead333.kingsize.data.database.Card;
+import com.movinghead333.kingsize.data.network.HttpJsonParser;
 
 public class ShowFeedActivity extends AppCompatActivity {
     // search parameters for json-array
@@ -78,15 +76,11 @@ public class ShowFeedActivity extends AppCompatActivity {
 
                         //state = jsonParser.setCard(Sven);
 
-
                     }
-
                 }
             }
 
         });
-
-
     }
 
 
@@ -129,7 +123,7 @@ public class ShowFeedActivity extends AppCompatActivity {
         }
 
 
-            protected void onPostExecute(String result) {
+        protected void onPostExecute(String result) {
             pDialog.dismiss();
             runOnUiThread(new Runnable() {
                 public void run() {

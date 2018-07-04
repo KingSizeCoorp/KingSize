@@ -4,7 +4,7 @@ import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
 
-import com.movinghead333.kingsize.ArrayResource;
+import com.movinghead333.kingsize.data.ArrayResource;
 import com.movinghead333.kingsize.R;
 import com.movinghead333.kingsize.data.KingSizeRepository;
 import com.movinghead333.kingsize.data.datawrappers.CardWithSymbol;
