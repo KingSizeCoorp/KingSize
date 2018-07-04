@@ -34,6 +34,7 @@ public class ShowFeedActivity extends AppCompatActivity {
     private static final String KEY_DESCRIPTION = "description";
     private static final String KEY_POSITIVE_VOTES = "positive_votes";
     private static final String KEY_NEGATIVE_VOTES = "negative_votes";
+    private static final String KEY_ID = "id";
     private String url = "http://pureanarchy.eu:82/data.php";
     private ConnectivityManager connectivityManager;
     private NetworkInfo networkInfo;
@@ -61,7 +62,8 @@ public class ShowFeedActivity extends AppCompatActivity {
         AppExecutors.getInstance().networkIO().execute(new Runnable() {
             @Override
             public void run() {
-                Card Sven = new Card("Sven", "simple_activity", "Alle müssen exen", 0,0, ArrayResource.CARD_SOURCES[2]);
+                Card Sven = new Card("Sven", "simple_activity",
+                        "Alle müssen exen", 0,0, ArrayResource.CARD_SOURCES[2]);
                 String state = "";
                 connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 
@@ -85,7 +87,7 @@ public class ShowFeedActivity extends AppCompatActivity {
 
 
 
-    public class FetchCardDetails extends AsyncTask<String, String, String> {
+    private class FetchCardDetails extends AsyncTask<String, String, String> {
         JSONArray response;
         @Override
         protected void onPreExecute() {

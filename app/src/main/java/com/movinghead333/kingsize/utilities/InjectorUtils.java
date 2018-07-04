@@ -15,6 +15,7 @@ import com.movinghead333.kingsize.ui.mydecks.changercardactivity.ChangeCardViewM
 import com.movinghead333.kingsize.ui.mydecks.showcardindeckactivity.ShowCardInDeckViewModelFactory;
 import com.movinghead333.kingsize.ui.mydecks.showdecks.ShowMyDecksViewModelFactory;
 import com.movinghead333.kingsize.ui.mydecks.showsingledeckactivity.ShowSingleDeckViewModelFactory;
+import com.movinghead333.kingsize.ui.myfeed.ShowFeedViewModelFactory;
 
 public class InjectorUtils {
 
@@ -29,7 +30,8 @@ public class InjectorUtils {
         KingSizeNetworkDataSource networkDataSource = KingSizeNetworkDataSource.getsInstance(context, executors);
 
         return KingSizeRepository.getsInstance(database.cardDao(), database.cardDeckDao(),
-                database.cardInCardDeckRelationDao(), networkDataSource, executors);
+                database.cardInCardDeckRelationDao(), database.feedEntryDao(),
+                networkDataSource, executors);
     }
 
     public static ShowMyCardsViewModelFactory provideShowMyCardsViewModelFactory(Context context){
@@ -73,5 +75,10 @@ public class InjectorUtils {
     public static ShowSingleCardViewModelFactory provideShowSingleCardViewModelFactory(Context context){
         KingSizeRepository repository = provideRepository(context);
         return new ShowSingleCardViewModelFactory(repository);
+    }
+
+    public static ShowFeedViewModelFactory provideShowFeedViewModelFactory(Context context){
+        KingSizeRepository repository = provideRepository(context);
+        return new ShowFeedViewModelFactory(repository);
     }
 }

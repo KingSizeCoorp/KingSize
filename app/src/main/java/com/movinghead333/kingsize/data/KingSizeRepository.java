@@ -1,8 +1,14 @@
 package com.movinghead333.kingsize.data;
 
+import android.app.ProgressDialog;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
+import android.arch.lifecycle.Observer;
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.movinghead333.kingsize.AppExecutors;
@@ -12,9 +18,17 @@ import com.movinghead333.kingsize.data.database.CardDeck;
 import com.movinghead333.kingsize.data.database.CardDeckDao;
 import com.movinghead333.kingsize.data.database.CardInCardDeckRelation;
 import com.movinghead333.kingsize.data.database.CardInCardDeckRelationDao;
+import com.movinghead333.kingsize.data.database.FeedEntry;
+import com.movinghead333.kingsize.data.database.FeedEntryDao;
 import com.movinghead333.kingsize.data.datawrappers.CardWithSymbol;
 import com.movinghead333.kingsize.data.network.HttpJsonParser;
 import com.movinghead333.kingsize.data.network.KingSizeNetworkDataSource;
+import com.movinghead333.kingsize.ui.myfeed.ShowFeed2Activity;
+import com.movinghead333.kingsize.ui.myfeed.ShowFeedActivity;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -29,20 +43,26 @@ public class KingSizeRepository {
     private final CardDao mCardDao;
     private final CardDeckDao mCardDeckDao;
     private final CardInCardDeckRelationDao mCardInCardDeckRelationDao;
+    private final FeedEntryDao mFeedEntryDao;
     private final KingSizeNetworkDataSource mKingSizeNetworkDataSource;
     private final AppExecutors mExecutors;
     private boolean mInitialized;
+
+
+    private ProgressDialog pDialog;
 
     // access variables
     private static long insertionId;
 
 
     private KingSizeRepository(CardDao cardDao, CardDeckDao cardDeckDao, CardInCardDeckRelationDao
-            cardInCardDeckRelationDao, KingSizeNetworkDataSource kingSizeNetworkDataSource,
+            cardInCardDeckRelationDao, FeedEntryDao feedEntryDao,
+                               KingSizeNetworkDataSource kingSizeNetworkDataSource,
                                AppExecutors executors){
         mCardDao = cardDao;
         mCardDeckDao = cardDeckDao;
         mCardInCardDeckRelationDao = cardInCardDeckRelationDao;
+        mFeedEntryDao = feedEntryDao;
         mKingSizeNetworkDataSource = kingSizeNetworkDataSource;
         mExecutors = executors;
 
@@ -51,17 +71,50 @@ public class KingSizeRepository {
 
     public synchronized static KingSizeRepository getsInstance(
             CardDao cardDao, CardDeckDao cardDeckDao, CardInCardDeckRelationDao
-            cardInCardDeckRelationDao, KingSizeNetworkDataSource kingSizeNetworkDataSource,
+            cardInCardDeckRelationDao, FeedEntryDao feedEntryDao,
+            KingSizeNetworkDataSource kingSizeNetworkDataSource,
             AppExecutors executors){
         Log.d(LOG_TAG, "Getting the repository");
         if (sInstance == null){
             synchronized (LOCK){
                 sInstance = new KingSizeRepository(cardDao, cardDeckDao, cardInCardDeckRelationDao,
-                        kingSizeNetworkDataSource, executors);
+                        feedEntryDao, kingSizeNetworkDataSource, executors);
                 Log.d(LOG_TAG, "Made new repository");
             }
         }
         return sInstance;
+    }
+
+
+
+    /*
+        Network interaction
+     */
+    public void updateDatabase(){
+        mKingSizeNetworkDataSource.downloadFeed().observeForever(new Observer<List<FeedEntry>>() {
+            @Override
+            public void onChanged(@Nullable final List<FeedEntry> feedEntries) {
+                mExecutors.diskIO().execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        mFeedEntryDao.clearEntries();
+                        mFeedEntryDao.insertFeedEntries(feedEntries);
+                    }
+                });
+            }
+        });
+    }
+
+
+    /*
+        Dao-methods
+     */
+
+    /*
+        FeedEntry interaction
+     */
+    public LiveData<List<FeedEntry>> getFeedEntries(){
+        return mFeedEntryDao.getAllFeedEntries();
     }
 
 

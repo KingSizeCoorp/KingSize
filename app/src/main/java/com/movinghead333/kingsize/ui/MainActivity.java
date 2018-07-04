@@ -10,6 +10,7 @@ import com.movinghead333.kingsize.data.database.KingSizeLocalDatabase;
 import com.movinghead333.kingsize.ui.game.setupplayersactivity.SetupPlayersActivity;
 import com.movinghead333.kingsize.ui.mycards.showmycards.ShowMyCardsActivity;
 import com.movinghead333.kingsize.ui.mydecks.showdecks.ShowMyDecksActivity;
+import com.movinghead333.kingsize.ui.myfeed.ShowFeed2Activity;
 import com.movinghead333.kingsize.ui.myfeed.ShowFeedActivity;
 
 public class MainActivity extends AppCompatActivity {
@@ -28,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
 
     // show the user's feed
     public void showFeed(View view){
-        Intent intent = new Intent(MainActivity.this, ShowFeedActivity.class);
+        Intent intent = new Intent(MainActivity.this, ShowFeed2Activity.class);
         startActivity(intent);
     }
 

@@ -4,5 +4,5 @@ public interface UpAndDownVotesListener {
 
     void onDownVote();
 
-    void onUpvote();
+    void onUpVote();
 }
