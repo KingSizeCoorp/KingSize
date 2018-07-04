@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 
+import android.view.View;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -15,11 +16,15 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.jar.JarEntry;
 
 
+import com.movinghead333.kingsize.AppExecutors;
+import com.movinghead333.kingsize.ArrayResource;
 import com.movinghead333.kingsize.R;
 import com.movinghead333.kingsize.data.database.Card;
 
@@ -47,10 +52,44 @@ public class ShowFeedActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_feed);
 
-        new FetchCardDetails().execute();
+
+        FetchCardDetails fetchCardDetails = (FetchCardDetails) new FetchCardDetails().execute();
 
 
     }
+
+
+    public void lul(View view) {
+        AppExecutors.getInstance().networkIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                Card Sven = new Card("Sven", "simple_activity", "Alle müssen exen", 0,0, ArrayResource.CARD_SOURCES[2]);
+                String state = "";
+                connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+
+                if(connectivityManager != null) {
+                    networkInfo = connectivityManager.getActiveNetworkInfo();
+
+                    if (networkInfo != null) {
+                        HttpJsonParser jsonParser = new HttpJsonParser();
+
+
+                        state = jsonParser.setVote("1", "down");
+
+                        //state = jsonParser.setCard(Sven);
+
+
+                    }
+
+                }
+            }
+
+        });
+
+
+    }
+
+
 
     public class FetchCardDetails extends AsyncTask<String, String, String> {
         JSONArray response;
@@ -58,7 +97,7 @@ public class ShowFeedActivity extends AppCompatActivity {
         protected void onPreExecute() {
             super.onPreExecute();
             pDialog = new ProgressDialog(ShowFeedActivity.this);
-            pDialog.setMessage("Loading Data.. Please wait...");
+            pDialog.setMessage("Daten werden geladen...");
             pDialog.setIndeterminate(false);
             pDialog.setCancelable(false);
             pDialog.show();
@@ -88,6 +127,7 @@ public class ShowFeedActivity extends AppCompatActivity {
             }
             return null;
         }
+
 
             protected void onPostExecute(String result) {
             pDialog.dismiss();
@@ -123,7 +163,7 @@ public class ShowFeedActivity extends AppCompatActivity {
 
                     } else {
                         Toast.makeText(ShowFeedActivity.this,
-                                "Some error occurred while loading data",
+                                "Netzwerkfehler",
                                 Toast.LENGTH_LONG).show();
 
                     }
