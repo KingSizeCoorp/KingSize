@@ -3,18 +3,24 @@ package com.movinghead333.kingsize.ui.myfeed;
 import android.net.Uri;
 import android.util.Log;
 
+import com.movinghead333.kingsize.data.database.Card;
+
 import org.json.JSONArray;
-import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.ProtocolException;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.Map;
+
 
 public class HttpJsonParser {
 
@@ -24,14 +30,100 @@ public class HttpJsonParser {
     String data="";
 
 
-    /**
-     * This method helps in retrieving data from HTTP server using HttpURLConnection.
-     *
-     * @param url    The HTTP URL where JSON data inputStream exposed
-     * @param method HTTP method: GET or POST
-     * @param params Query parameters for the request
-     * @return This method returns the JSON object fetched from the server
-     */
+
+    public String setVote(String key, String method){
+        String result = "";
+
+        //maaaaaaaaaaaaaaaaaaaaaaaaaaaaaaan luuuuuuuuuuuuuuuuuuuuuulb adshflkasdflkjadlsökfjlöakjdf
+        try {
+
+
+            URL url = new URL("http://www.pureanarchy.eu:82/vote.php");
+
+            HttpURLConnection httpURLConnection = (HttpURLConnection)url.openConnection();
+            httpURLConnection.setRequestMethod("POST");
+            httpURLConnection.setDoOutput(true);
+            httpURLConnection.setDoInput(true);
+            OutputStream outputStream = httpURLConnection.getOutputStream();
+            BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
+            String post_data = URLEncoder.encode("key", "UTF-8") + "=" +URLEncoder.encode(key, "UTF-8")+"&"+
+                    URLEncoder.encode("method", "UTF-8") + "=" +URLEncoder.encode(method, "UTF-8");
+
+
+            bufferedWriter.write(post_data);
+            bufferedWriter.flush();
+            bufferedWriter.close();
+
+            InputStream inputStream = httpURLConnection.getInputStream();
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "iso-8859-1"));
+            String line = "";
+
+            while ((line = bufferedReader.readLine()) != null){
+                result += line;
+            }
+            bufferedReader.close();
+            inputStream.close();
+
+            httpURLConnection.disconnect();
+
+
+
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+
+
+    public String setCard(Card card){
+        String result = "";
+
+        try {
+
+            String type, title, description;
+            type = card.type;
+            title = card.title;
+            description = card.description;
+
+            URL url = new URL("http://www.pureanarchy.eu:82/insertcard.php");
+
+            HttpURLConnection httpURLConnection = (HttpURLConnection)url.openConnection();
+            httpURLConnection.setRequestMethod("POST");
+            httpURLConnection.setDoOutput(true);
+            httpURLConnection.setDoInput(true);
+            OutputStream outputStream = httpURLConnection.getOutputStream();
+            BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "iso-8859-1"));
+            String post_data = URLEncoder.encode("type", "UTF-8") + "=" +URLEncoder.encode(type, "iso-8859-1")+"&"+
+                               URLEncoder.encode("title", "UTF-8") + "=" +URLEncoder.encode(title, "iso-8859-1")+"&"+
+                               URLEncoder.encode("description", "UTF-8") + "=" +URLEncoder.encode(description, "iso-8859-1");
+
+
+            bufferedWriter.write(post_data);
+            bufferedWriter.flush();
+            bufferedWriter.close();
+            InputStream inputStream = httpURLConnection.getInputStream();
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "iso-8859-1"));
+            String line = "";
+
+            while ((line = bufferedReader.readLine()) != null){
+                result += line;
+            }
+            bufferedReader.close();
+            inputStream.close();
+            httpURLConnection.disconnect();
+
+
+
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+
+
+
     public JSONArray makeHttpRequest(String url, String method,
                                       Map<String, String> params) {
 
@@ -83,7 +175,6 @@ public class HttpJsonParser {
             jsonArray = new JSONArray(data);
 
             inputStream.close();
-
 
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
