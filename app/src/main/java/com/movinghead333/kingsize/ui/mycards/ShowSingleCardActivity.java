@@ -2,6 +2,7 @@ package com.movinghead333.kingsize.ui.mycards;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.annotation.ArrayRes;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.movinghead333.kingsize.ArrayResource;
 import com.movinghead333.kingsize.R;
@@ -19,6 +21,8 @@ public class ShowSingleCardActivity extends AppCompatActivity {
     public static final int RESULT_CODE_EDIT_CARD = 1;
     public static final int RESULT_CODE_DELETE_CARD = 2;
 
+    private String sourceString;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,7 +30,7 @@ public class ShowSingleCardActivity extends AppCompatActivity {
 
         Intent startIntent = getIntent();
 
-        String sourceString = startIntent.getStringExtra(ShowMyCardsActivity.EXTRA_SOURCE);
+        sourceString = startIntent.getStringExtra(ShowMyCardsActivity.EXTRA_SOURCE);
         int color = getColor(sourceString);
 
         TextView title = (TextView)findViewById(R.id.ssc_dynamic_card_title);
@@ -59,6 +63,14 @@ public class ShowSingleCardActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
+        // check if selected card is standard card
+        if(sourceString.equals(ArrayResource.CARD_SOURCES[1])){
+            Toast.makeText(this, "Standardkarte kannn nicht berarbeitet werden.",
+                    Toast.LENGTH_LONG).show();
+            return true;
+        }
+
+        // check which menu item was pressed
         switch(item.getItemId()){
             case R.id.item_edit:
                 setResult(RESULT_CODE_EDIT_CARD);
@@ -78,6 +90,7 @@ public class ShowSingleCardActivity extends AppCompatActivity {
                     } });
                 adb.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
+                        // cancel
                     } });
                 adb.show();
                 return true;
