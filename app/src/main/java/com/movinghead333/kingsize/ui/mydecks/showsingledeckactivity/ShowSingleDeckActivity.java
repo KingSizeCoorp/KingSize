@@ -61,7 +61,8 @@ public class ShowSingleDeckActivity extends AppCompatActivity {
         RecyclerView recyclerView = (RecyclerView)findViewById(R.id.show_single_Deck_recycler_view);
 
         // create adapter for recyclerView
-        final ShowSingleDeckListAdapter adapter = new ShowSingleDeckListAdapter(new CustomListItemClickListener() {
+        final ShowSingleDeckListAdapter adapter = new ShowSingleDeckListAdapter(getApplication(),
+                new CustomListItemClickListener() {
             @Override
             public void onItemClick(View view, final int position) {
                 CardWithSymbol selectedCard = mViewModel.getCardsWithSymbol().getValue().get(position);

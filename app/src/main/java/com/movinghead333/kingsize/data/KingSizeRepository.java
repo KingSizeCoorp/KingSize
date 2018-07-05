@@ -345,7 +345,7 @@ public class KingSizeRepository {
     }
 
     public void insertFullDeck(CardDeck cardDeck, String[] standardCards){
-        new insertAsyncTaskDao(mCardDao, mCardDeckDao, mExecutors, mCardInCardDeckRelationDao,
+        new insertAsyncTaskDao(mCardDao, mCardDeckDao, mCardInCardDeckRelationDao,
                 standardCards)
                 .execute(cardDeck);
     }
@@ -356,48 +356,36 @@ public class KingSizeRepository {
         private CardDeckDao mAsyncTaskDao;
         private CardInCardDeckRelationDao mRelationDao;
         private static long insertionId;
-        private AppExecutors executors;
         private static String[] STANDARD_CARDS;
 
-        insertAsyncTaskDao(CardDao cardDao, CardDeckDao cardDeckDao, AppExecutors executors,
+        insertAsyncTaskDao(CardDao cardDao, CardDeckDao cardDeckDao,
                            CardInCardDeckRelationDao relationDao, String[] standardCards){
             mAsyncTaskDao = cardDeckDao;
             mRelationDao = relationDao;
             mAsyncCardDao = cardDao;
-            this.executors = executors;
             STANDARD_CARDS = standardCards;
             //mRelation = relation;
         }
 
         @Override
         protected Void doInBackground(final CardDeck... params){
+            // insert new deck object into database
             insertionId = mAsyncTaskDao.insertCardDeck(params[0]);
 
+            // create relations-array
+            CardInCardDeckRelation[] relations = new CardInCardDeckRelation[STANDARD_CARDS.length];
+
+            // insert standard-card objects into array
+            for(int i = 0; i < STANDARD_CARDS.length; i++){
+                relations[i] = new CardInCardDeckRelation(insertionId,
+                        mAsyncCardDao.getStandardCardByName(STANDARD_CARDS[i]),
+                        i);
+            }
+
+            // insert created array into database
+            mRelationDao.insertMultiple(relations);
+            Log.d(LOG_TAG, "Deck inserted");
             return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void v){
-            //insert relation-objects after new CardDeck has been inserted (async. on diskIO-thread)
-            executors.diskIO().execute(new Runnable() {
-                @Override
-                public void run() {
-                    CardInCardDeckRelation[] relations = new CardInCardDeckRelation[STANDARD_CARDS.length];
-                    for(int i = 0; i < STANDARD_CARDS.length; i++){
-
-                        Log.d(LOG_TAG, "Relinsert:"+insertionId+"_"+
-                                mAsyncCardDao.getStandardCardByName(STANDARD_CARDS[i])+
-                                "_"+i+"_end");
-
-                        relations[i] = new CardInCardDeckRelation(insertionId,
-                                mAsyncCardDao.getStandardCardByName(STANDARD_CARDS[i]),
-                                i);
-
-                    }
-                    mRelationDao.insertMultiple(relations);
-                    Log.d(LOG_TAG, "Relation inserted");
-                }
-            });
         }
     }
 

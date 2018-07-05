@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.movinghead333.kingsize.R;
+import com.movinghead333.kingsize.data.ArrayResource;
 import com.movinghead333.kingsize.data.database.Card;
 import com.movinghead333.kingsize.data.database.CardInCardDeckRelation;
 import com.movinghead333.kingsize.ui.CustomListItemClickListener;
@@ -189,6 +190,7 @@ public class ShowCardListFragment extends Fragment{
         public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {
             if(cards != null){
                 Card currentCard = cards.get(position);
+                viewHolder.itemView.setBackgroundColor(getColor(currentCard.source));
                     viewHolder.cardName.setText(currentCard.title);
                     viewHolder.cardType.setText(currentCard.type);
                     viewHolder.cardSource.setText(currentCard.source);
@@ -208,6 +210,18 @@ public class ShowCardListFragment extends Fragment{
         public void setCards(List<Card> cards){
             this.cards = cards;
             notifyDataSetChanged();
+        }
+
+        int getColor(String source){
+            int color = -1;
+            if(source.equals(ArrayResource.CARD_SOURCES[0])){
+                color = getResources().getColor(R.color.blue);
+            }else if(source.equals(ArrayResource.CARD_SOURCES[1])){
+                color = getResources().getColor(R.color.cayn);
+            }else if(source.equals(ArrayResource.CARD_SOURCES[2])){
+                color = getResources().getColor(R.color.purple);
+            }
+            return color;
         }
     }
 

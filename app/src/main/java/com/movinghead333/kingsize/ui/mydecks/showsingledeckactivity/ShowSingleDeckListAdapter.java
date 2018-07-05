@@ -1,5 +1,6 @@
 package com.movinghead333.kingsize.ui.mydecks.showsingledeckactivity;
 
+import android.app.Application;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,13 +20,15 @@ public class ShowSingleDeckListAdapter extends RecyclerView.Adapter<ShowSingleDe
     // listener for onClick events on listitems
     private CustomListItemClickListener listener;
     private List<CardWithSymbol> cardsInDeck;
+    private Application application;
 
     /**
      * constructor which receives a listener for onClick events to be handled in activity class
      * @param listener
      */
-    ShowSingleDeckListAdapter(CustomListItemClickListener listener){
+    ShowSingleDeckListAdapter(Application application, CustomListItemClickListener listener){
         this.listener = listener;
+        this.application = application;
     }
 
     // ViewHolder class for list-elements of recyclerView
@@ -69,6 +72,8 @@ public class ShowSingleDeckListAdapter extends RecyclerView.Adapter<ShowSingleDe
                 Log.d("ShowSingleDeckAdapter","Message:"+currentCard.symbol+"X");
             Log.d("ShowSingleDeckAdapter","Message:"+cardsInDeck.size());
 
+            viewHolder.itemView.setBackgroundColor(getColor(currentCard.cardSource));
+
             viewHolder.cardSymbol.setText("Karte im Spiel: \""+ArrayResource.CARDS_IN_36_CARDSDECK[currentCard.symbol]+"\"");
             viewHolder.cardName.setText("Aktion: "+currentCard.cardName);
             viewHolder.cardType.setText("Aktionstyp: "+currentCard.cardType);
@@ -89,5 +94,17 @@ public class ShowSingleDeckListAdapter extends RecyclerView.Adapter<ShowSingleDe
     public void setCardsInDeck(List<CardWithSymbol> cardsInDeck) {
         this.cardsInDeck = cardsInDeck;
         notifyDataSetChanged();
+    }
+
+    private int getColor(String source){
+        int color = -1;
+        if(source.equals(ArrayResource.CARD_SOURCES[0])){
+            color = application.getResources().getColor(R.color.blue);
+        }else if(source.equals(ArrayResource.CARD_SOURCES[1])){
+            color = application.getResources().getColor(R.color.cayn);
+        }else if(source.equals(ArrayResource.CARD_SOURCES[2])){
+            color = application.getResources().getColor(R.color.purple);
+        }
+        return color;
     }
 }
