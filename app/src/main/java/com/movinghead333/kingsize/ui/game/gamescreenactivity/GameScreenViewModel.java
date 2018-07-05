@@ -3,6 +3,9 @@ package com.movinghead333.kingsize.ui.game.gamescreenactivity;
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
+import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
+import android.util.Log;
 
 import com.movinghead333.kingsize.data.ArrayResource;
 import com.movinghead333.kingsize.R;
@@ -28,6 +31,7 @@ class GameScreenViewModel extends AndroidViewModel{
     private int currentPlayer;
     private int nextPlayer;
     private ArrayList<Integer> cardIndexList = new ArrayList<>();
+    private CardWithSymbol drawnCardWithSymbol;
     Random random;
 
     // ui-data-holders for:
@@ -37,6 +41,10 @@ class GameScreenViewModel extends AndroidViewModel{
     private String currentCardSymbol;
     private String currentCardType;
     private String currentlyDrawnCardName;
+
+    private Drawable currentImage;
+
+    List<List<Drawable>> graphicsList;
 
     // ShowStatusEffectsActivity
     private ArrayList<PlayerWithAttribute> playerStatusEffects = new ArrayList<PlayerWithAttribute>();
@@ -66,14 +74,20 @@ class GameScreenViewModel extends AndroidViewModel{
                 }
             }
 
+            // setup card images
+            setupGraphics();
+
             // setup random object
             random = new Random();
 
             // draw first card
-            CardWithSymbol drawnCardWithSymbol = cards.get(drawCard());
+            drawnCardWithSymbol = cards.get(drawCard());
             currentCardSymbol = ArrayResource.CARDS_IN_36_CARDSDECK[drawnCardWithSymbol.symbol];
             currentCardType = drawnCardWithSymbol.cardType;
             currentlyDrawnCardName = drawnCardWithSymbol.cardName;
+
+            // get first image
+            selectCurrentImage();
         }
     }
 
@@ -84,7 +98,10 @@ class GameScreenViewModel extends AndroidViewModel{
         nextPlayerName = players[nextPlayer];
 
         // get Card which is currently drawn
-        CardWithSymbol drawnCardWithSymbol = cards.get(drawCard());
+        drawnCardWithSymbol = cards.get(drawCard());
+
+        // get image
+        selectCurrentImage();
 
         // set data-holders for GameScreenActivity
         currentCardSymbol = ArrayResource.CARDS_IN_36_CARDSDECK[drawnCardWithSymbol.symbol];
@@ -181,5 +198,94 @@ class GameScreenViewModel extends AndroidViewModel{
 
     void setCards(List<CardWithSymbol> cards){
         this.cards = cards;
+    }
+
+    private void setupGraphics(){
+        Resources res = getApplication().getResources();
+        graphicsList = new ArrayList<>();
+
+        // 6
+        ArrayList<Drawable> temp1 = new ArrayList<>();
+        temp1.add(res.getDrawable(R.drawable.leim6));
+        temp1.add(res.getDrawable(R.drawable.huppi6));
+        temp1.add(res.getDrawable(R.drawable.guender6));
+        temp1.add(res.getDrawable(R.drawable.gamp6));
+        graphicsList.add(temp1);
+
+        // 7
+        ArrayList<Drawable> temp2 = new ArrayList<>();
+        temp2.add(res.getDrawable(R.drawable.leim7));
+        temp2.add(res.getDrawable(R.drawable.huppi7));
+        temp2.add(res.getDrawable(R.drawable.guender7));
+        temp2.add(res.getDrawable(R.drawable.gamp7));
+        graphicsList.add(temp2);
+
+        // 8
+        ArrayList<Drawable> temp3 = new ArrayList<>();
+        temp3.add(res.getDrawable(R.drawable.leim8));
+        temp3.add(res.getDrawable(R.drawable.huppi8));
+        temp3.add(res.getDrawable(R.drawable.guender8));
+        temp3.add(res.getDrawable(R.drawable.gamp8));
+        graphicsList.add(temp3);
+
+        // 9
+        ArrayList<Drawable> temp4 = new ArrayList<>();
+        temp4.add(res.getDrawable(R.drawable.leim9));
+        temp4.add(res.getDrawable(R.drawable.huppi9));
+        temp4.add(res.getDrawable(R.drawable.guender9));
+        temp4.add(res.getDrawable(R.drawable.gamp9));
+        graphicsList.add(temp4);
+
+        // 6
+        ArrayList<Drawable> temp5 = new ArrayList<>();
+        temp5.add(res.getDrawable(R.drawable.leim10));
+        temp5.add(res.getDrawable(R.drawable.huppi10));
+        temp5.add(res.getDrawable(R.drawable.guender10));
+        temp5.add(res.getDrawable(R.drawable.gamp10));
+        graphicsList.add(temp5);
+
+        // U
+        ArrayList<Drawable> temp6 = new ArrayList<>();
+        temp6.add(res.getDrawable(R.drawable.leim6));
+        temp6.add(res.getDrawable(R.drawable.huppi6));
+        temp6.add(res.getDrawable(R.drawable.guender6));
+        temp6.add(res.getDrawable(R.drawable.gamp6));
+        graphicsList.add(temp6);
+
+        // O
+        ArrayList<Drawable> temp7 = new ArrayList<>();
+        temp7.add(res.getDrawable(R.drawable.leim6));
+        temp7.add(res.getDrawable(R.drawable.huppi6));
+        temp7.add(res.getDrawable(R.drawable.guender6));
+        temp7.add(res.getDrawable(R.drawable.gamp6));
+        graphicsList.add(temp7);
+
+        // K
+        ArrayList<Drawable> temp8 = new ArrayList<>();
+        temp8.add(res.getDrawable(R.drawable.leimk));
+        temp8.add(res.getDrawable(R.drawable.huppik));
+        temp8.add(res.getDrawable(R.drawable.guenderk));
+        temp8.add(res.getDrawable(R.drawable.gambk));
+        graphicsList.add(temp8);
+
+        // A
+        ArrayList<Drawable> temp9 = new ArrayList<>();
+        temp9.add(res.getDrawable(R.drawable.leim6));
+        temp9.add(res.getDrawable(R.drawable.huppi6));
+        temp9.add(res.getDrawable(R.drawable.guender6));
+        temp9.add(res.getDrawable(R.drawable.gamp6));
+        graphicsList.add(temp9);
+    }
+
+    void selectCurrentImage(){
+        List<Drawable> list = graphicsList.get(drawnCardWithSymbol.symbol);
+        Random random  = new Random();
+        int index = random.nextInt(list.size());
+        currentImage = list.get(index);
+        list.remove(index);
+    }
+
+    Drawable getCurrentImage(){
+        return currentImage;
     }
 }
