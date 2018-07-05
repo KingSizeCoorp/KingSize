@@ -4,11 +4,14 @@ import android.app.Activity;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.movinghead333.kingsize.R;
@@ -32,11 +35,11 @@ public class GameScreenActivity extends AppCompatActivity {
     private GameScreenViewModel mViewModel;
     TextView currentPlayerTextView;
     TextView nextPlayerTextView;
-    TextView cardSymbolTextView;
     TextView cardTypeTextView;
     TextView cardNameTextView;
     Button nextCardButton;
-    //Todo currentCardTextView
+    ImageView image;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,10 +48,10 @@ public class GameScreenActivity extends AppCompatActivity {
 
         currentPlayerTextView = (TextView)findViewById(R.id.gsa_current_player);
         nextPlayerTextView = (TextView)findViewById(R.id.gsa_next_player);
-        cardSymbolTextView = (TextView)findViewById(R.id.gsa_card_symbol);
         cardTypeTextView = (TextView)findViewById(R.id.gsa_card_type);
         cardNameTextView = (TextView)findViewById(R.id.gsa_card_name);
         nextCardButton = (Button)findViewById(R.id.gsa_button_next_card);
+        image = (ImageView)findViewById(R.id.gsa_imageview);
 
         // get caller-intent
         Intent intent = getIntent();
@@ -76,11 +79,11 @@ public class GameScreenActivity extends AppCompatActivity {
     }
 
     private void updateUI(){
-        currentPlayerTextView.setText(mViewModel.getCurrentPlayerName()+" "+mViewModel.getRemainingCards());
+        currentPlayerTextView.setText(mViewModel.getCurrentPlayerName());
         nextPlayerTextView.setText((mViewModel.getNextPlayerName()));
-        cardSymbolTextView.setText(mViewModel.getCurrentCardSymbol());
         cardTypeTextView.setText(mViewModel.getCurrentCardType());
         cardNameTextView.setText(mViewModel.getCurrentlyDrawnCardName());
+        image.setImageDrawable(mViewModel.getCurrentImage());
         if(mViewModel.getRemainingCards() == 0){
             nextCardButton.setText("Zurück zur Spielerauswahl");
         }
