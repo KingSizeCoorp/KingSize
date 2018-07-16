@@ -85,7 +85,9 @@ public class GameScreenActivity extends AppCompatActivity {
         nextPlayerTextView.setText((mViewModel.getNextPlayerName()));
         cardTypeTextView.setText(mViewModel.getCurrentCardType());
         cardNameTextView.setText(mViewModel.getCurrentlyDrawnCardName());
-        image.setImageDrawable(mViewModel.getCurrentImage());
+        image.setImageDrawable(getResources().getDrawable(
+                mViewModel.getCurrentImageResource()
+        ));
         if(mViewModel.getRemainingCards() == 0){
             nextCardButton.setText("Zurück zur Spielerauswahl");
         }

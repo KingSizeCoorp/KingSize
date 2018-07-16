@@ -42,9 +42,9 @@ class GameScreenViewModel extends AndroidViewModel{
     private String currentCardType;
     private String currentlyDrawnCardName;
 
-    private Drawable currentImage;
+    private int currentImageResource;
 
-    List<List<Drawable>> graphicsList;
+    List<List<Integer>> graphicsList;
 
     // ShowStatusEffectsActivity
     private ArrayList<PlayerWithAttribute> playerStatusEffects = new ArrayList<PlayerWithAttribute>();
@@ -205,87 +205,87 @@ class GameScreenViewModel extends AndroidViewModel{
         graphicsList = new ArrayList<>();
 
         // 6
-        ArrayList<Drawable> temp1 = new ArrayList<>();
-        temp1.add(res.getDrawable(R.drawable.leim6));
-        temp1.add(res.getDrawable(R.drawable.huppi6));
-        temp1.add(res.getDrawable(R.drawable.guender6));
-        temp1.add(res.getDrawable(R.drawable.gamp6));
+        ArrayList<Integer> temp1 = new ArrayList<>();
+        temp1.add(R.drawable.leim6);
+        temp1.add(R.drawable.huppi6);
+        temp1.add(R.drawable.guender6);
+        temp1.add(R.drawable.gamp6);
         graphicsList.add(temp1);
 
         // 7
-        ArrayList<Drawable> temp2 = new ArrayList<>();
-        temp2.add(res.getDrawable(R.drawable.leim7));
-        temp2.add(res.getDrawable(R.drawable.huppi7));
-        temp2.add(res.getDrawable(R.drawable.guender7));
-        temp2.add(res.getDrawable(R.drawable.gamp7));
+        ArrayList<Integer> temp2 = new ArrayList<>();
+        temp2.add(R.drawable.leim7);
+        temp2.add(R.drawable.huppi7);
+        temp2.add(R.drawable.guender7);
+        temp2.add(R.drawable.gamp7);
         graphicsList.add(temp2);
 
         // 8
-        ArrayList<Drawable> temp3 = new ArrayList<>();
-        temp3.add(res.getDrawable(R.drawable.leim8));
-        temp3.add(res.getDrawable(R.drawable.huppi8));
-        temp3.add(res.getDrawable(R.drawable.guender8));
-        temp3.add(res.getDrawable(R.drawable.gamp8));
+        ArrayList<Integer> temp3 = new ArrayList<>();
+        temp3.add(R.drawable.leim8);
+        temp3.add(R.drawable.huppi8);
+        temp3.add(R.drawable.guender8);
+        temp3.add(R.drawable.gamp8);
         graphicsList.add(temp3);
 
         // 9
-        ArrayList<Drawable> temp4 = new ArrayList<>();
-        temp4.add(res.getDrawable(R.drawable.leim9));
-        temp4.add(res.getDrawable(R.drawable.huppi9));
-        temp4.add(res.getDrawable(R.drawable.guender9));
-        temp4.add(res.getDrawable(R.drawable.gamp9));
+        ArrayList<Integer> temp4 = new ArrayList<>();
+        temp4.add(R.drawable.leim9);
+        temp4.add(R.drawable.huppi9);
+        temp4.add(R.drawable.guender9);
+        temp4.add(R.drawable.gamp9);
         graphicsList.add(temp4);
 
         // 6
-        ArrayList<Drawable> temp5 = new ArrayList<>();
-        temp5.add(res.getDrawable(R.drawable.leim10));
-        temp5.add(res.getDrawable(R.drawable.huppi10));
-        temp5.add(res.getDrawable(R.drawable.guender10));
-        temp5.add(res.getDrawable(R.drawable.gamp10));
+        ArrayList<Integer> temp5 = new ArrayList<>();
+        temp5.add(R.drawable.leim10);
+        temp5.add(R.drawable.huppi10);
+        temp5.add(R.drawable.guender10);
+        temp5.add(R.drawable.gamp10);
         graphicsList.add(temp5);
 
         // U
-        ArrayList<Drawable> temp6 = new ArrayList<>();
-        temp6.add(res.getDrawable(R.drawable.leim6));
-        temp6.add(res.getDrawable(R.drawable.huppi6));
-        temp6.add(res.getDrawable(R.drawable.guender6));
-        temp6.add(res.getDrawable(R.drawable.gamp6));
+        ArrayList<Integer> temp6 = new ArrayList<>();
+        temp6.add(R.drawable.leim6);
+        temp6.add(R.drawable.huppi6);
+        temp6.add(R.drawable.guender6);
+        temp6.add(R.drawable.gamp6);
         graphicsList.add(temp6);
 
         // O
-        ArrayList<Drawable> temp7 = new ArrayList<>();
-        temp7.add(res.getDrawable(R.drawable.leim6));
-        temp7.add(res.getDrawable(R.drawable.huppi6));
-        temp7.add(res.getDrawable(R.drawable.guender6));
-        temp7.add(res.getDrawable(R.drawable.gamp6));
+        ArrayList<Integer> temp7 = new ArrayList<>();
+        temp7.add(R.drawable.leim6);
+        temp7.add(R.drawable.huppi6);
+        temp7.add(R.drawable.guender6);
+        temp7.add(R.drawable.gamp6);
         graphicsList.add(temp7);
 
         // K
-        ArrayList<Drawable> temp8 = new ArrayList<>();
-        temp8.add(res.getDrawable(R.drawable.leimk));
-        temp8.add(res.getDrawable(R.drawable.huppik));
-        temp8.add(res.getDrawable(R.drawable.guenderk));
-        temp8.add(res.getDrawable(R.drawable.gambk));
+        ArrayList<Integer> temp8 = new ArrayList<>();
+        temp8.add(R.drawable.leimk);
+        temp8.add(R.drawable.huppik);
+        temp8.add(R.drawable.guenderk);
+        temp8.add(R.drawable.gambk);
         graphicsList.add(temp8);
 
         // A
-        ArrayList<Drawable> temp9 = new ArrayList<>();
-        temp9.add(res.getDrawable(R.drawable.leim6));
-        temp9.add(res.getDrawable(R.drawable.huppi6));
-        temp9.add(res.getDrawable(R.drawable.guender6));
-        temp9.add(res.getDrawable(R.drawable.gamp6));
+        ArrayList<Integer> temp9 = new ArrayList<>();
+        temp9.add(R.drawable.leim6);
+        temp9.add(R.drawable.huppi6);
+        temp9.add(R.drawable.guender6);
+        temp9.add(R.drawable.gamp6);
         graphicsList.add(temp9);
     }
 
     void selectCurrentImage(){
-        List<Drawable> list = graphicsList.get(drawnCardWithSymbol.symbol);
+        List<Integer> list = graphicsList.get(drawnCardWithSymbol.symbol);
         Random random  = new Random();
         int index = random.nextInt(list.size());
-        currentImage = list.get(index);
+        currentImageResource = list.get(index);
         list.remove(index);
     }
 
-    Drawable getCurrentImage(){
-        return currentImage;
+    int getCurrentImageResource(){
+        return currentImageResource;
     }
 }
