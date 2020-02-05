@@ -56,7 +56,7 @@ public class KingSizeNetworkDataSource {
     private static final String KEY_POSITIVE_VOTES = "positive_votes";
     private static final String KEY_NEGATIVE_VOTES = "negative_votes";
     private static final String KEY_ID = "id";
-    private String url = "http://pureanarchy.eu:82/data.php";
+    private String url = "http://[2a02:810d:8dc0:e2d:bc55:696c:2522:6d0d]/data.php";
     private ConnectivityManager connectivityManager;
     private NetworkInfo networkInfo;
     private ProgressDialog pDialog;
