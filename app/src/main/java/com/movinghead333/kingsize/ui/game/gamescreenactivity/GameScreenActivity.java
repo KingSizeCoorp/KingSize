@@ -3,9 +3,11 @@ package com.movinghead333.kingsize.ui.game.gamescreenactivity;
 import android.app.Activity;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -92,9 +94,19 @@ public class GameScreenActivity extends AppCompatActivity {
     }
 
     private void onGameFinished(){
-        // todo add dialog between callback to SetupPLayersActivity and GameScreenActivity finish()-call
-        setResult(Activity.RESULT_OK);
-        finish();
+        AlertDialog.Builder adb = new AlertDialog.Builder(this);
+
+        adb.setTitle("Spiel ist vorbei.");
+        adb.setMessage("Zur Spielerauswahl zurückkehren?");
+
+        adb.setPositiveButton("Zurück zur Spielerauswahl", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+
+                setResult(Activity.RESULT_OK);
+                finish();
+            } });
+
+        adb.show();
     }
 
     @Override
