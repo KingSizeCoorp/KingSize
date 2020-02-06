@@ -12,7 +12,7 @@ import android.support.annotation.NonNull;
 import com.movinghead333.kingsize.R;
 
 @Database(entities = {Card.class, CardDeck.class, CardInCardDeckRelation.class, FeedEntry.class},
-        version = 16, exportSchema = false)
+        version = 17, exportSchema = false)
 public abstract class KingSizeLocalDatabase extends RoomDatabase{
 
     private static final String DATABASE_NAME = "kingsize_database";
@@ -81,39 +81,39 @@ public abstract class KingSizeLocalDatabase extends RoomDatabase{
             Resources res = context.getResources();
             standardCards[0] = new Card(res.getString(R.string.card_title_waterfall),
                     res.getString(R.string.card_type_simple_action),
-                    res.getString(R.string.card_description_no_description), 0, 0,
+                    res.getString(R.string.card_description_waterfall), 0, 0,
                     res.getString(R.string.source_standard));
             standardCards[1] = new Card(res.getString(R.string.card_title_joker),
                     res.getString(R.string.card_type_token),
-                    res.getString(R.string.card_description_no_description), 0, 0,
+                    res.getString(R.string.card_description_joker), 0, 0,
                     res.getString(R.string.source_standard));
             standardCards[2] = new Card(res.getString(R.string.card_title_right_mate_drinks),
                     res.getString(R.string.card_type_simple_action),
-                    res.getString(R.string.card_description_no_description), 0, 0,
+                    res.getString(R.string.card_description_right_mate_drinks), 0, 0,
                     res.getString(R.string.source_standard));
             standardCards[3] = new Card(res.getString(R.string.card_title_distribute_two_shots),
                     res.getString(R.string.card_type_simple_action),
-                    res.getString(R.string.card_description_no_description), 0, 0,
+                    res.getString(R.string.card_description_distribute_two_shots), 0, 0,
                     res.getString(R.string.source_standard));
             standardCards[4] = new Card(res.getString(R.string.card_title_drinking_rule),
                     res.getString(R.string.card_type_simple_action),
-                    res.getString(R.string.card_description_no_description), 0, 0,
+                    res.getString(R.string.card_description_drinking_rule), 0, 0,
                     res.getString(R.string.source_standard));
             standardCards[5] = new Card(res.getString(R.string.card_title_thumb_master),
                     res.getString(R.string.card_type_status),
-                    res.getString(R.string.card_description_no_description), 0, 0,
+                    res.getString(R.string.card_description_thumb_master), 0, 0,
                     res.getString(R.string.source_standard));
             standardCards[6] = new Card(res.getString(R.string.card_title_category),
                     res.getString(R.string.card_type_simple_action),
-                    res.getString(R.string.card_description_no_description), 0, 0,
+                    res.getString(R.string.card_description_category), 0, 0,
                     res.getString(R.string.source_standard));
             standardCards[7] = new Card(res.getString(R.string.card_title_question_master),
                     res.getString(R.string.card_type_status),
-                    res.getString(R.string.card_description_no_description), 0, 0,
+                    res.getString(R.string.card_description_question_master), 0, 0,
                     res.getString(R.string.source_standard));
             standardCards[8] = new Card(res.getString(R.string.card_title_rhymetime),
                     res.getString(R.string.card_type_simple_action),
-                    res.getString(R.string.card_description_no_description), 0, 0,
+                    res.getString(R.string.card_description_rhymetime), 0, 0,
                     res.getString(R.string.source_standard));
         }
     }

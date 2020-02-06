@@ -20,6 +20,33 @@
     <string name="card_title_category">Kategorie</string>
     <string name="card_title_question_master">Fragekönig</string>
     <string name="card_title_rhymetime">Rhymetime</string>
+    <string name="card_description_waterfall">
+        Alle Spieler fangen an zu trinken.
+        Der Spieler, welcher aktuell am Zug ist kann jederzeit absetzen.
+        Alle anderen Spieler dürfen erst absetzen, wenn der Spieler links von ihnen abgesetzt hat.</string>
+    <string name="card_description_joker">
+        Der Spieler kann einen Joker einsetzen um nicht trinken zu müssen.</string>
+    <string name="card_description_right_mate_drinks">
+        Der rechte Sitznachbar muss zwei Schlücke trinken.</string>
+    <string name="card_description_distribute_two_shots">
+        Der Spieler der am Zug ist darf zwei Schlücke verteilen.</string>
+    <string name="card_description_drinking_rule">
+        Es darf eine Trinkregel festgelegt werden, welche bis zum Ende des Spiels gilt.</string>
+    <string name="card_description_thumb_master">
+        Wenn der Daumenkönig einen Daumen auf den Tisch legt müssen alle anderen Spieler dies ebenfalls tun.
+        Der letzte Mitspieler, der den Daumen nicht auf dem Tisch, muss trinken.</string>
+    <string name="card_description_category">
+        Der Spieler der gerade am Zug ist darf sich eine Kategorie wünschen.
+        Anschließend nennt er einen Begriff aus dieser Kategorie und es geht reih-um weiter bis ein Mitspieler einen
+        Begriff doppelt nennt oder keinen neuen Begriff parat hat.</string>
+    <string name="card_description_question_master">
+        Der Fragekönig kann anderen Mitspielern eine Frage stellen.
+        Diese dürfen allerdings nicht antworten, da sie sonst trinken müssen.</string>
+    <string name="card_description_rhymetime">
+        Der Spieler der die Karte gezogen hat nennt einen Begriff.
+        Der nächste Spieler in der Runde muss einen Begriff nennen, der sich auf diesen reimt.
+        Dies geschieht solange reihum bis ein Mitspieler keinen neuen Begriff mehr nennen kann oder
+        ein Begriff doppelt genannt wird.</string>
     <string name="card_description_no_description">Keine Beschreibung vorhanden</string>
     <string name="title_activity_change_card">ChangeCardActivity</string>
     <string name="tab_text_1">Tab 1</string>
