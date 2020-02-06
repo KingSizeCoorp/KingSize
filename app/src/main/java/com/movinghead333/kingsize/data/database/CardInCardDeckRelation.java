@@ -27,7 +27,8 @@ import static android.arch.persistence.room.ForeignKey.CASCADE;
         },
         indices = {
             @Index(value = "card_deck_id"),
-            @Index(value = "symbol")
+            @Index(value = "symbol"),
+            @Index(value = "card_id")
         })
 public class CardInCardDeckRelation {
 
