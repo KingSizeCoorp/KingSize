@@ -5,12 +5,14 @@ import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -84,7 +86,7 @@ public class GameScreenActivity extends AppCompatActivity {
         currentPlayerTextView.setText(mViewModel.getCurrentPlayerName());
         nextPlayerTextView.setText((mViewModel.getNextPlayerName()));
         cardTypeTextView.setText(mViewModel.getCurrentCardType());
-        cardNameTextView.setText(mViewModel.getCurrentlyDrawnCardName());
+        cardNameTextView.setText(mViewModel.getCurrentCardName());
         image.setImageDrawable(getResources().getDrawable(
                 mViewModel.getCurrentImageResource()
         ));
@@ -152,5 +154,30 @@ public class GameScreenActivity extends AppCompatActivity {
         intent.putExtras(bundle);
 
         startActivity(intent);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_game, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        AlertDialog.Builder adb = new AlertDialog.Builder(this);
+
+        adb.setTitle(mViewModel.getCurrentCardName());
+        adb.setMessage(mViewModel.getCurrentCardDescription());
+
+        adb.setPositiveButton("ok", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                setResult(Activity.RESULT_OK);
+            }
+        });
+
+        adb.show();
+        Log.d("GameScreenActivity","showing card description in dialog");
+        return true;
     }
 }
