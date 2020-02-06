@@ -43,8 +43,7 @@ public class ShowFeedActivity extends AppCompatActivity {
                 new CustomListItemClickListener() {
                     @Override
                     public void onItemClick(View view, final int position) {
-                        Toast.makeText(ShowFeedActivity.this, "Karten zur eigenen Kollketion hinzugefügt",
-                                Toast.LENGTH_SHORT).show();
+
                         AlertDialog.Builder adb = new AlertDialog.Builder(ShowFeedActivity.this);
 
                         adb.setTitle("Aktion bestätigen");
@@ -55,6 +54,8 @@ public class ShowFeedActivity extends AppCompatActivity {
                         adb.setPositiveButton("Hinzufügen", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 mViewModel.insertCard(position);
+                                Toast.makeText(ShowFeedActivity.this, "Karten zur eigenen Kollketion hinzugefügt",
+                                        Toast.LENGTH_SHORT).show();
                             } });
                         adb.setNegativeButton("Abbrechen", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
