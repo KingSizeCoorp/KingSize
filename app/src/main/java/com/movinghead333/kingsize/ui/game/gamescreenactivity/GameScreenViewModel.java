@@ -167,13 +167,15 @@ class GameScreenViewModel extends AndroidViewModel{
         return currentCardType;
     }
 
-    String getCurrentlyDrawnCardName(){
+    String getCurrentCardName(){
         return currentlyDrawnCardName;
     }
 
     String getCurrentPlayerName(){
         return this.currentPlayerName;
     }
+
+    String getCurrentCardDescription() { return drawnCardWithSymbol.description;}
 
     String getNextPlayerName(){
         return this.nextPlayerName;
