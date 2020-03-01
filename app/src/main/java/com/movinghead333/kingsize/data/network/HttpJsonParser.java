@@ -37,7 +37,7 @@ public class HttpJsonParser {
         try {
 
 
-            URL url = new URL("http://[2a02:810d:8dc0:e2d:bc55:696c:2522:6d0d]/vote.php");
+            URL url = new URL("http://93.214.66.175/vote.php");
 
             HttpURLConnection httpURLConnection = (HttpURLConnection)url.openConnection();
             httpURLConnection.setRequestMethod("POST");
@@ -85,7 +85,7 @@ public class HttpJsonParser {
             title = card.title;
             description = card.description;
 
-            URL url = new URL("http://[2a02:810d:8dc0:e2d:bc55:696c:2522:6d0d]/insertcard.php");
+            URL url = new URL("http://93.214.66.175/insertcard.php");
 
             HttpURLConnection httpURLConnection = (HttpURLConnection)url.openConnection();
             httpURLConnection.setRequestMethod("POST");
